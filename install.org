@@ -1,0 +1,425 @@
+#+TITLE: Coq/SSReflect/MathCompの設定
+#+HTML_HEAD: <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../index.css">
+#+HTML_HEAD: <style>.vspace {  margin-bottom: 20cm;  }</style>
+#+HTML_HEAD: <style type="text/css"> body {width: 70em; font-family: Arial, Helvetica; margin-left: 5em; font-size: large;} </style>
+
+* 設定成功報告
+- [2019-07-12 Fri]: Windows 10, Coq 8.9.1 (opam), MathComp 1.9.0 (opam)
+- [2019-07-08 Mon]: Windows 10, Coq 8.9.1 (binary), MathComp 1.9.0 (source)
+- [2019-05-30 Thu]: Debian 9.7, OCaml 4.06.1, Coq 8.9.1, MathComp 1.9.0 (source)
+- [2019-04-16 Tue]: Debian 9.8, OCaml 4.07.1, Coq 8.9.0 (opam)
+- [2019-04-09 Tue]: Debian 9.7, OCaml 4.06.1, Coq 8.9.0, MathComp-1.8.0 (source)
+- [2018-10-02 Tue]: Debian 9.5, OCaml 4.06.1, Coq 8.8.2 (source), MathComp (github);
+                    Windows 10, OCaml 4.04.0 (opam), Coq 8.8.2 (source), MathComp (gitjhub)
+- [2018-08-07 Tue]: Debian 9.5, OCaml 4.06.0, Coq 8.8.1 (source), MathComp(github);
+                    Windows 10, OCaml 4.04.0 (opam), Coq 8.8.1 (source), MathComp (github)
+- [2018-04-25 Wed]: Debian 9.4, OCaml 4.04.2, Coq 8.8.0 (source), MathComp (github)
+- [2018-03-08 Thu]: Windows 10, OCaml 4.04.0 (opam), Coq 8.7.2 (source), MathComp (github);
+                    Debian 9.3, OCaml 4.04.2, Coq 8.7.2 (source), MathComp (github)
+- [2018-01-16 Tue]: Windows 10, OCaml 4.04.0 (opam), Coq 8.7.1 (source), MathComp (github)
+- [2017-11-28 Tue]: Windows 10, OCaml (opam), Coq 8.7.0 (source), MathComp (github)
+- [2017-10-24 Tue]: Debian 9.1, Coq 8.7.0 (source), MathComp (github);
+                    Debian, Coq 8.7.0 (opam), MathComp 1.6.2 (opam)
+- [2017-09-29 Fri]: Debian 9.1, Coq 8.7-beta1 (source), MathComp (github);
+                    Debian, Coq 8.6.1 (opam), MathComp 1.6.1 (opam)
+- [2017-07-26 Wed]: Debian 9.1, Coq 8.6.1 (source), MathComp (github)
+- [2017-01-12 Thu]: Windows 8.1, Coq (opam)
+- [2017-01-06 Fri]: Debian 8.6, (opam)
+- [2016-12-21 Wed]: Debian 8.6 / Ubuntu 16.04.1 LTS, OCaml 4.04.0 (opam), 
+                    Coq 8.6 (source/github), MathComp 1.6.1 (source/github)
+- [2016-02-01 Mon]: Windows 8.1, Coq 8.5, MathComp 1.6 (binary);
+                    Ubuntu Server 14.04.1 LTS, (source)
+- [2015-10-30 Fri]: (github)
+- [2015-09-07 Mon]: Debian 8.0, (opam)
+- [2015-06-08 Mon]: Windows 8.1 cygwin64, coq-installer-8.5beta2.exe, ssreflectmathcomp-1.5.coq85beta2.exe
+- [2015-04-04 Sat]: Windows 8.1 cygwin64, ssreflectmathcomp-1.5.coq85beta1
+- [2014-11-19 Wed]: Ubuntu Server 14.04.1 LTS, OCaml 4.01.0, camlp5 6.11, Coq 8.4pl5, SSReflect 1.5, MathComp 1.5
+* Coq/SSReflect/MathCompの設定
+設定はUnix系のオペレーティングシステムでスムーズです. ただし, Linuxの
+パッケージマネージャー(Debianのapt等)のバージョンはいつも遅れています
+ので, 勧められません. 使える設定方法は２つあります.  opamによる設定は
+簡単ですが, opamの理解が少し要ります. トラブルはないというわけではあり
+ません. 最新のパッケージが出来上がるまでに時間はあまりかかりません. ソー
+スコードからコンパイルすることもスムーズです. 最新版を設定する方法とし
+て勧めます.
+
+Windowsの場合, バイナリが用意されています. ソースコードからコンパイル
+することは手間がかかります.
+** Unix系のオペレーティングシステムの場合
+*** パッケージからの設定
+OCamlの専用パッケージマネージャー[[https://opam.ocaml.org/][ opam]] でCoqのパッケージを設定ができます. Debianのaptほど遅れていません.
+SSReflectとMathCompを含むCoqライブラリが用意されています([[https://coq.inria.fr/opam/www/][Coq OPAM packages]]).
+現時点[2018-04-25 Wed], ~opam show coq-mathcomp-ssreflect~ によると, 
+1.7.0版のパッケージがあります.
+
+- 最初に, [[https://opam.ocaml.org/doc/Install.html][opamを設定]](バージョン2.0.4 [2019-05-30 Thu])します:
+  + ~sh <(curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh)~
+    * superuserの権利が要ります
+    * ~/usr/local/bin~ にインストールされます
+  + ~opam init~
+    * ~make~, ~m4~, ~gcc~, ~bubblewrap~ が要ります
+    * ~/.profile~ が更新されます
+      - ~.bashrc~ からsource
+    * コンパイラを指定できます; 例えば, ~opam init --comp=4.06.1~
+    * ~eval $(opam env)~ で設定が完了します
+  + opamは既に設定された場合, 最新のパッケージの情報を取得: ~opam update~
+  + 使えるパッケージのリスト: ~opam list -a~
+- 次に, OCamlの環境を設定します:
+  + ~opam switch 4.07.1~
+    * ~opam switch list~ からその他のOCamlのコンパイラを選べます. 現時点[2019-05-30 Thu], 4.07.1は最新です.
+  + ~eval `opam config env`~
+    * ~opam switch~ を行った後, 必要です.
+  + 次のOCamlのプログラムはCoqに必要です(自分の環境の整備によって, 他のプログラムを設定する必要があるかもしれませんが, opamが教えます):
+    * ~opam install camlp5~ (現時点[2019-05-30 Thu], 7.06は最新です)
+    * ~opam install ocamlfind~ (現時点[2019-05-30 Thu], 1.8.0は最新です)
+      - ~conf-m4~ に依存します
+    * ~opam install num~ (現時点[2019-05-30 Thu], 1.1は最新です; Ocaml 4.06.0から必要です)
+- 次に, Coqを設定します:
+  + Coqのリポジトリを追加: ~opam repo add coq-released https://coq.inria.fr/opam/released~
+    * [[https://github.com/coq/opam-coq-archive/tree/master/released/packages][Coqのopamパッケージ]] (prefixは ~coq-~ です)
+    * ~opam repo~ でリポジトリをリストアップできます
+  + ~opam install coq.8.9.1~
+    * Debianで ~pkg-config~, ~libgtksourceview2.0-dev~, ~libgtk-3-dev~ が要ります
+    * 必要なら, 最新のCoqIDEも設定できます: ~opam install coqide~
+- 最後に, MathCompを設定します:
+  + ~opam install coq-mathcomp-ssreflect~
+  + その他のMathCompのパッケージ(prefixは ~coq-mathcomp~ です, バージョン1.8.0):
+    * ~coq-mathcomp-fingroup~
+    * ~coq-mathcomp-algebra~
+    * ~coq-mathcomp-solvable~
+    * ~coq-mathcomp-field~
+    * ~coq-mathcomp-character~
+    * ~coq-mathcomp-finmap~
+    * ~coq-mathcomp-bigenough~
+    * ~coq-mathcomp-sum-of-two-square~, ~coq-mathcomp-multinomials~ (user contrib)
+    * ~coq-mathcomp-odd-order~ (先端な応用ですので, 要らないかもしれません)
+- 今度の更新は, ~opam update~ , ~opam upgrade coq.8.9.1~ (例えば) で済みます.
+  要らなくなったパッケージは ~opam remove coq-mathcomp-odd-order~ (例えば)で消せます.
+  問題が生じる場合, ~opam reinstall coq~ もできます.
+
+opamとCoqに関する追加情報：
+- [[https://coq.inria.fr/opam/www/using.html][Coqのサイトによる設定方法]]
+- [[https://github.com/math-comp/math-comp/blob/master/INSTALL.md][MathCompによる設定の説明]]
+  + ~opam pin~ を用いる
+
+*** ソースコードからのコンパイル
+コンパイルのために必要なソフトウェアは通常のシステムで既にあるオープンソースソフトウェアです.
+Unix系なら, パッケージマネージャーから得られます. 必要なソフトウェアの情報のまとめ:
+- GNU make (バージョン >= 3.81)
+- C compiler
+- TeX/LaTeX (ドキュメントのため)
+- [[http://caml.inria.fr/][OCaml]] (バージョン >= 4.02.3; ~ocaml -version~) (最新版[2018-10-02 Tue]: 4.07.0) ([[http://caml.inria.fr/download.en.html][ダウンロード]])
+- [[https://camlp5.github.io/][Camlp5]] (バージョン >= 6.14;  ~camlp5 -v~, 最新版[2018-07-04 Wed]: 7.06, transitionalモード)
+
+**** ソースコードのアーカイブからコンパイル
+
+Coq 8.9.1[2019-05-21 Tue](SSReflectの一部を含みます)のコンパイル成功報告：
+- ~ocamlc~ などを使える状態かを確認します(Unixで ~$PATH~ に入っていますか? 例えば, ~ocamlc -v~ を試します)
+- ~COQCOMPILEDIRECTORY~ というディレクトリでコンパイル作業します
+- Coqを[[https://github.com/coq/coq/releases/][ダウンロード]] します
+- Coqをソースコードからコンパイルします
+  + ~tar xzf coq-8.9.1.tar.gz~ (~coq-8.9.0~ というディレクトリは作成されます)
+  + ~cd coq-8.9.1~
+  + ~./configure~
+    - ~-usecamlp5~ オプションは要らなくなりました
+    - バイナリの位置に関して, デフォルト選択で結構です (バイナリは ~/usr/local/bin~, ライブラリは ~/usr/local/lib/coq~ 等)
+    - バイナリのインストールは不要なら, ~-local~ を使います
+    - バイナリのインストールの場所を指定するために, ~-prefix~ を使います
+    - lablGtk2を指すために, ~-lablgtkdir /DIR~ を使えるそうです
+    - LablGtk2を見つからないと, CoqIdeをコンパイルできませんが, Coqをちゃんとコンパイルできます
+  + ~make~ (ちょっと時間がかかりますので, ~-j~ で並列コンパイルしてみます)
+    - ~make byte~ でバイトコード版ができます
+  + ~sudo make install~
+    - superuserにならないと, デフォルト選択(~/usr/local/bin~ 等)でのインストールが失敗します
+    - ~-local~ なら不要, superuserにならなくいいです 
+    - SSReflectのプラッグインとセオリーの一部は ~COQINSTALLDIRECTORY/coq-8.8.2/plugins/{ssr,ssrmatching}/~ に置かれます.
+  + ~make clean~ (~-local~ の場合以外)
+  + ~cd ..~
+#+BEGIN_COMMENT
+umask 022 after make world?
+#+END_COMMENT
+- coqtop等は使えるようになった状態であるかどうかを確認します
+  + 特に, Unixで ~$PATH~ に追加します
+  + ~export COQBIN=COQINSTALLDIRECTORY/coq-8.9.1/bin/~ という変数を作っておいていいです
+    (~.bashrc~ファイルなら, ~source .bashrc~を行います)
+- テスト:
+#+BEGIN_SRC
+$ coqtop
+Welcome to Coq 8.9.1 (May 2019)
+
+Coq < 
+#+END_SRC
+
+MathComp 1.9.0[2019-05-30 Thu]のコンパイル成功報告：
+- 既存のMathematical Componentsを削除したほうが無難です
+  + ~COQINSTALLDIRECTORY/user-contrib~ の ~mathcomp~ ディレクトリを削除か名前変更します
+- Mathematical Componentsのsources archiveを[[https://github.com/math-comp/math-comp/releases][ダウンロード]]
+- Mathematical Componentsをコンパイルします:
+  + ~tar xzf math-comp-mathcomp-1.9.0.tar.gz~
+  + ~cd math-comp-mathcomp-1.9.0/mathcomp~
+  + ~export COQBIN=/SOMEWHERE/coq-8.9.1/bin/~ (coqtop等のバイナリがあるディレクトリ)
+  + ~make~ (ちょっと時間がかかりますので, ~-j~ オプションで並列コンパイルしてみます)
+    * ~-j~ オプションで約12分かかります[2019-05-30 Thu]。
+  + ~sudo make install~
+    * その結果で, ライブラリは ~COQINSTALLDIRECTORY/user-contrib/mathcomp~ に置かれます
+  + ~cd ../..~
+- coqtop等は使えるようになった状態であるかどうかを確認します. 例えば:
+#+BEGIN_SRC
+$ coqtop
+Welcome to Coq 8.9.1 (May 2019)
+
+Coq < From mathcomp Require Import eqtype.
+[Loading ML file ssrmatching_plugin.cmxs ... done]
+[Loading ML file ssreflect_plugin.cmxs ... done]
+
+Coq < 
+#+END_SRC
+
+**** [NB: 更新要] githubからのコンパイル
+
+Coq 8.6をコンパイルします.
+- [[https://github.com/coq/coq][github]]からソースコードを取得します: ~git clone https://github.com/coq/coq.git~
+- ~cd coq~
+- ~git ls-remote --heads~
+- trunkブランチからv8.6ブランチに移動： ~git checkout v8.6~
+- 開発版なので, 設定ディレクトリのままにします： ~./configure -local -usecamlp5~
+- ~make world~
+
+MathComp 1.7(?)([2019-01-29 Tue]版)をコンパイルします(SSReflectの一部を含みます):
+- [[https://github.com/math-comp/math-comp][github]]からソースコードを取得します： 
+  + ~git clone https://github.com/math-comp/math-comp.git~
+  + すでに ~clone~ されているなら, ~git pull --rebase~
+- ~cd math-comp/mathcomp~
+- 開発版のCoqを見つかるように： ~export COQBIN=COQINSTALLDIRECTORY/coq-8.9.0/bin/~
+- ~make~
+  + ちょっと時間がかかります
+  + 更新なら, その前, ~make clean~が要るかもしれません
+- ~make install~　か ~sudo make install~
+  + ~COQINSTALLDIRECTORY/coq-8.9.0/user-contrib/mathcomp~ でバイナリは置かれます.
+    * 個人アカウントでバイナリを置くようにした場合, ~sudo~ は不要です.
+  + SSReflectの一部は ~COQINSTALLDIRECTORY/coq-8.9.0/plugins/{ssr,ssrmatching}/~ にすでにあります.
+- バイナリは通常の場所に置かれていない場合, ~coqc~ あるいは ~coqtop~ に教える必要があります.
+  ただし, 指定がない場合, ~COQINSTALLDIRECTORY/coq-8.9.0/user-contrib~ を見に行きますので, 特別な設定はないかぎりに, ~-R~ のオプションは不要になります.
+  それ以外, プラッグインとバイナリが見つかるように, ~-R COQINSTALLDIRECTORY/coq-8.9.0/user-contrib/mathcomp mathcomp~ オプションを追加できます.
+#+BEGIN_SRC
+$ coqtop 
+Welcome to Coq 8.9.0 (January 2019)
+
+Coq < From mathcomp Require Import eqtype.
+[Loading ML file ssrmatching_plugin.cmxs ... done]
+[Loading ML file ssreflect_plugin.cmxs ... done]
+
+Coq < 
+#+END_SRC
+
+** Windows 10の場合
+注意: WindowsでのCoqの設定は長い歴史の問題があります. 
+
+Windowsだと, 先に, [[https://www.cygwin.com/][cygwin]]を用いてUnixのような環境を設定します. ソース
+コードのアーカイブからコンパイルに必要なソフトウェアはcygwinから得られます.
+*** 事前準備: cygwinの設定
+- cygwinをインストールするよう, [[https://www.cygwin.com/][https://www.cygwin.com/]]から, ~setup-x86_64.exe~
+  (最新版: 2.897 [2019-07-08 Mon])をダウンロードして, 実行します.
+  + 最低限として, ~make~, ~unzip~, ~git~, ~patch~, ~diffutils~,
+    ~emacs~, ~emacs-X11~, ~vim~, ~xinit~, ~texlive~ のパケージを選びま
+    す.
+  + 設定は数分かかります.
+- デスクトップの"Cygwin64 Terminal"アイコンをdouble-clickします.
+- Terminalにて, ~startxwin~ を実行して, X11を起動します.
+  + そうすると, System Trayアイコンの中に, Cygwin-X11アイコンができるます.
+    * みどろの「X」が入っている黒い「C」
+  + 右クリックで「システムツール」のメニューからXTermの起動ができます.
+    * そうすると, XTermからemacsの実行ができます
+- cygwinの設定に関して:
+  + ~.bashrc~ に ~export LANG=C~ が望ましいです.
+  + 日本のキーボードを認識できるように, ~setxkbmap -model jp106 -layout jp~ を使えます.
+  + CAPS LOCKをCTRLにするように, 次の内容を含む ~Xmodmap~ ファイルを用意してから,
+    ~.bashrc~ に ~xmodmap /home/username/Xmodmap~ を加えます:
+#+BEGIN_SRC
+keycode 66 = Control_L
+clear Lock
+add Control = Control_L
+#+END_SRC
+- cygwinに関するその他の情報(例えば, cygwinのアンインストール): [[https://cygwin.com/faq][cygwin faq]]
+*** 方法1: Coqのバイナリを使います
+**** Coqを設定
+- [[https://github.com/coq/coq/releases/latest][releaseページ]]から ~coq-8.9.1-installer-windows-x86_64.exe~ を
+  ダウンロードと実行します.
+  + ~C:\Coq~として, Coqに関するバイナリを加えられます
+- ~PATH~ に ~/cygdrive/c/coq/bin~ を加えます
+  + 例えば, ~.bashrc~ に追加 ~export PATH=${PATH}:/cygdrive/c/coq/bin/~ を追加します.
+**** MathCompをソースコードからのコンパイルします
+~coqc~, ~coq_makefile~ などがあれば, 普段通りCoqのライブラリのコンパイルができます.
+
+- Coqのバイナリでは配布されているMathCompは最新ではないかもしれません.
+  + ~rm /cygdrive/c/coq/lib/user_contrib/mathcomp~
+- MathComp 1.9.0を設定するには
+  + [[https://github.com/math-comp/math-comp/releases][source files]] をダウンロードします
+  + unzip, untar, cd, make, make installを用いて設定します.
+  + 結果で, ~user-contrib~ のCoqディレクトーリでMathCompのライブラリなどが追加されます.
+*** 方法2: customなopamを用いて, Coqをコンパイルします
+過去にcygwinのOCamlパッケージの問題はよくあった(ライブラリは足りないこと; ~flexdll~ のありなし)し,
+cygwinで配るopamで設定するOCamlを用いてCoqのコンパイルができなかったので,
+その２つの方法を使っていません. 代わりに, opamのcustomな設定を用いて, MathCompの設定ができます.
+**** opamによるOCaml等の設定
+[[https://fdopen.github.io/opam-repository-mingw/installation/][このページ]]の手動の手順をまとめます:
+- cygwinで次のパケージを設定します:
+  + ~rsync~, ~curl~, ~m4~, ~perl~, ~mingw64-x86_64-gcc-core~ (or
+    mingw64-i686-gcc-core)
+- opamを[[https://github.com/fdopen/opam-repository-mingw/releases/download/0.0.0.2/opam64.tar.xz][ダウンロード]]します.
+- shellで次のコマンドを実行します:
+  + ~tar -xf opam64.tar.xz~
+  + ~bash opam64/install.sh~
+  + ~opam init default "https://github.com/fdopen/opam-repository-mingw.git#opam2" -c "ocaml-variants.4.07.1+mingw64c" --disable-sandboxing~
+    * ~.bash_profile~ を変更していい
+- ~eval $(opam config env)~
+- ~opam switch create 4.07.1+mingw64c~
+  + そのコンパイラーはまだ設定されていないなら
+- ~opam install camlp5~ ([2019-07-12 Fri]'s version: 7.06)
+- ~opam install ocamlfind~ ([2019-07-12 Fri]'s version: 1.8.0)
+- ~conf-m4~ も設定されます
+- ~opam install depext~
+- ~opam install depext-cygwinports~ ([2019-07-12 Fri]'s version: 0.0.7)
+  + その後, ~/usr/x86_64-w64-mingw32/sys-root/mingw/bin~ をパスに加える.
+- ~opam install pcre~
+  + 成功することがあります；依存するライブラリの一分だけ成功しても大丈夫
+- ~opam install lablgtk~
+  + 成功したことはない
+  + 基本的なエラー:
+    ~This package requires gtk+ 2.0 development packages installed on your system~
+**** opamによるCoqやMathCompの設定
+- ~opam repo add coq-released https://coq.inria.fr/opam/released~
+- ~opam install coq.8.9.1~
+- ~export CAML=/home/username/.opam/4.07.1+mingw64c/bin/~
+- ~export COQBIN=/home/username/.opam/4.07.1+mingw64c/bin/~
+- ~opam install coq-mathcomp-ssreflect~
+- ~opam install coq-mathcomp-fingroup~
+- ~opam install coq-mathcomp-algebra~
+- ~opam install coq-mathcomp-field~
+*** 過去の設定報告メモ(参考のため)
+- [2017-01-12 Thu] にcygwin64が ~flexdll~ 0.35を含みます. mingw64のパッケージが ~mingw64-x86_64-xxx~ となりました.
+- Coq 8.5beta2で成功しましたが, math-compのMakefileが正しくファイルの依存関係を理解しません([2015-10-28 Wed]の時点).
+- Windows 8.1 + cygwin64上でcoq-8.5beta1, ssreflect-1.5.coq85beta1/mathcomp-1.5.coq85beta1Coq 8.5beta1のコンパイル成功しました.
+  + 主な問題: 現在[2015-04-04 Sat]のcygwin64のOCamlは動的リンクライブラリをサポートしないため, flexdllからの再コンパイルが必要です.
+    * [[https://github.com/alainfrisch/flexdll][flexdll]] のソースコードをダウンロードします(現時点の最新版:0.34).
+      一時的にcygwin64のOCamlパッケージを設定し, ~mingw64_x86_64-{binutils,gcc-core,runtime}~等も設定します.
+      flexlink.exe等を得るために, ~make demo_mingw64~ を行います. 成功したら, cygwin64のOCamlパッケージを外し, ~PATH~ に作業ディレクトリを追加します.
+    * cygwin64のOCamlパッケージを外して, ソースからコンパイルします.
+  + その他の問題: 
+    + Camlp5の設定: ~./configure; make world; make install~ は成功しますが, なぜか ~gramlib.a~ を手動で ~/cygdrive/c/ocamlmgw64/lib/camlp5~ までコピーしなければなりません.
+    + MathComp-1.5の設定: ~mathcomp-1.5.coq85beta1.tar.gz~ で ~make~ が成功しますが, Error: Could not compile the library to native codeが発生します. ~make install~ は完成します.
+  + 過去にCoqのコンパイルの問題について.
+    基本的に, Makefileの混乱の問題です: ~PATH~ の中にスペースのありなし, ~PATH~ の書方の混乱(Unix風とWindows風の混在, ~.emacs~ でも),
+    ~make~ のバージョンの勘違い, ~configure~ のオプション(~-arch~ で無理に ~linux~ を指定する必要なことがある),
+    動的ライブラリの作成関係(しかたがなく, pluginを諦めて, staticなssrcoqのコンパイル, その際SSReflectのmakeのオプションを換ることがあります:
+    ~make COQC="ssrcoq -coqlib xxx/coq8.4pl4 -q -I ssreflect/v8.4/src -R theories Ssreflect -compile" COQFLAGS=~).
+    等の問題. 
+- WindowsでバイナリからCoq/SSReflectを設定するのは一番簡単な方法です.
+  Coq 8.5とMathComp 1.6の設定成功報告[2016-02-01 Mon]：
+  + 設定済みのCoqの更新なら, コントロールパネルでプログラムアンインス
+    トールをします.
+  + Coqのサイトから, coq-installer-8.5-win64.exe をダウンロードし, 実
+    行します. (Coq files for plugin developersというオプションをわざわ
+    ざ外さなくても良いです.) c:\coq で必要なバイナリ等が置かれます.
+    CoqIdeをメニューから実行できます.
+  + MathCompのサイトから, Windows 64 bits installer for Coq 8.5
+    (ssreflect-mathcomp-installer-1.6-win64.exe )をダウンロードし, 実
+    行します.
+  + c:\coq で必要なファイルが置かれます. メニューからCoqIdeを実行し,
+    From mathcomp Require Import ssreflect. でMathCompの正しい設定を確
+    認します.
+**** [ALTERNATIVE] ソースからのOCamlの設定
+Windows 8.1 + cygwin64上でOCaml 4.02.1(4.04.0も)のコンパイル成功したことがある.
+インストールディレクトリで次の作業を行います:
+- ~cp config/m-nt.h config/m.h~
+- ~cp config/s-nt.h config/s.h~
+- ~cp config/Mafefile.mingw64 config/Makefile~
+- ~make -f Makefile.nt world~
+- ~make -f Makefile.nt install~
+  バイナリ等は ~/cygdrive/c/ocamlmgw64/~ に置かれます. ~/cygdrive/c/ocamlmgw64/bin/~ を ~PATH~ に追加します.
+
+その後, ソースから, Coqなどの設定ができます.
+**** [ALTERNATIVE] ソースコードのアーカイブ・githubからのCoqをのコンパイル
+OCamlやcamlp5等を設定してたら, CoqのソースコードのアーカイブとgithubのMathCompの設定もできます.
+Windows 10で ~configure~ によると([2018-03-08 Thu]):
+#+BEGIN_SRC
+Architecture: win32
+Operating system: Windows_NT
+OS dependent libraries: -cclib -lunix
+OCaml version: 4.04.0
+Camlp5 version: 7.03
+Native dynamic link support: true
+#+END_SRC
+** MacOSの場合
+~opam~ を使えると聞きました. ~Homebrew~ も使えます(https://github.com/coq/coq/wiki/Installation-of-Coq-on-Mac).
+** その他の設定方法
+- Linuxの仮想機械(例えば, [[http://www.virtualbox.org][VirtualBox)]]で作業することは時々聞きますが, 仮想機械のfreezeは目撃したことがあります.
+  [[https://github.com/coq/coq/wiki/Installation%20of%20Coq%20on%20Windows][Coqのwiki]] で詳細な情報があります.
+- [[http://www.mathlibre.org/index-ja.html][MathLibre]]のDVDにCoqとSSReflectとMathCompが入っています.
+- SSReflect/MathCompの古いバージョン (http://ssr.msr-inria.inria.fr/FTP にありましたが、消えました)
+- 原将己によるのバイナリ(Coq8.4pl5まで). 次の手順で設定できます.
+    Coqのダウンロードページから ~coq-installer-8.4pl5.exe~ ([2017-11-28 Tue]時点, ~https://coq.inria.fr/download~ から見つからなってきました) を
+    ダウンロード・インストールし, そして
+    [[https://onedrive.live.com/?authkey=!AKmYUtgzJFpaqfg&id=6A06E091EDF3886F!136&cid=6A06E091EDF3886F][原将己のページ]]から
+    ~ssreflect-windows-1.5-8.4pl5~ と
+    ~mathcomp-windows-1.5-8.4pl5~ をダウンロードし, 適切にコピーします.
+* Proof Generalの設定
+
+インターフェースとして, emacsに慣れているのでしたら, [[https://proofgeneral.github.io/][Proof General]]とい
+う[[https://www.gnu.org/software/emacs/][emacs]]エディターモードをお勧めします.  Unixなら, emacsは必ず入ってい
+ます. Windowsなら, [[https://www.cygwin.com/][cygwin]]で取得できます.  Coqを設定すると, CoqIDEとい
+う専用インターフェースも設定されます.
+
+Proof Generalの設定に, [[https://melpa.org/][MELPA]]とパッケージシステムは進められます:
+- ~.emacs~ に次のコードを加えます：
+#+BEGIN_SRC
+(require 'package)
+(let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
+                    (not (gnutls-available-p))))
+       (proto (if no-ssl "http" "https")))
+  (add-to-list 'package-archives
+               (cons "melpa" (concat proto "://melpa.org/packages/")) t))
+(package-initialize)
+#+END_SRC
+- ~emacs~ にて:
+  + ~M-x package-refresh-contents RET~
+  + ~M-x package-install RET proof-general RET~
+
+SSReflectとMathCompのバイナリは ~PATH~ にない場合, デフォルトな場所で置いていない場合, Coqに教える必要がありますので,
+例えば, ~.emacs~ に次の変数を設定できます:
+#+BEGIN_SRC
+(setq coq-prog-name "COQINSTALLDIRECTORY/coq-8.7.0/bin/coqtop")
+(setq coq-prog-args
+  (cons "-R" (cons "COQINSTALLDIRECTORY/coq-8.7.0/user-contrib/mathcomp" (cons "mathcomp" (cons "-emacs" nil)))))
+#+END_SRC
+
+一方, ~coq-prog-args~ は ~_CoqProject~ ファイルから読み取ることもできます. 
+実際に, ~coq_makefile~ も ~_CoqProject~ ファイルを使いますので, その方法のほうが便利です.
+(~_CoqProject~ の代わりに, 別ファイル名にする場合, emacsで ~coq-project-filename~ を設定できます.)
+
+emacsで ~tt.v~ という空のファイルを開いてみて, Proof Generalが機動するかどうかを確認します.
+~From mathcomp Require Import eqtype.~ が通れば, 問題ないでしょう.
+
+#+BEGIN_COMMENT
+  + 開発版のProof Generalなら, SSReflectのためにシンタックスハイライトが多少入っています.
+    そうでない場合, またはSSReflectのために最新のシンタックスハイライトが要るなら、
+    SSReflect/MathCompの ~pg-ssr.el~ ファイルを
+    emacsに教える必要があります. 例えば：
+#+BEGIN_SRC
+(load-file "MCINSTALLDIRECTORY/math-comp/mathcomp/ssreflect/pg-ssr.el")
+#+END_SRC
+#+END_COMMENT
+
+* 追加情報
+
+ソースコードやバイナリのダウンロードのまとめ：
+- [[http://coq.inria.fr/download][Coq]] ([[https://github.com/coq/coq][github]], [[https://github.com/coq/coq/releases/][beta版など]])
+- [[http://math-comp.github.io/math-comp/][Mathematical Components]] ([[https://github.com/math-comp/math-comp][github]])
+- [[https://proofgeneral.github.io/][Proof General]]
+
+[[http://mzp.hatenablog.com/entry/2014/04/29/105144][ssreflectインストール方法まとめ(Windowsもあるよ!)]], みずぴー日記
+
+
+
+
