@@ -258,6 +258,15 @@ add Control = Control_L
 - [[https://docs.microsoft.com/ja-jp/windows/wsl/install-win10][WSL本体と好きなLinuxディストリビューションをインストールします]]. 
   Linux初心者の方にはUbuntu 18.04をおすすめします.
 - スタートメニューまたはWindowsの検索窓からLinuxを起動して, ユーザー名とパスワードを入力します.
+- WSL上でEmacsを使いたいなら, Xorgサーバーを設定しなければなりません.
+  まずは[[https://sourceforge.net/projects/vcxsrv/][VcxSrv]]をダウンロードしてインストールします. WSLのshellで
+  ~DISPLAY~ という環境変数の設定も必要です.　Ubuntu 18.04の場合は,
+  ~.bashrc~ に次のコードを追加します:
+#+BEGIN_SRC
+export DISPLAY=localhost:0.0
+  #+END_SRC
+  VcxSrvを起動して, bashを再起動するとemacsが使えます.
+
 *** 方法1 (cygwin + バイナリ): cygwin上Coqのバイナリを使います
 **** Coqを設定
 - [[https://github.com/coq/coq/releases/latest][releaseページ]]から ~coq-8.9.1-installer-windows-x86_64.exe~ を
@@ -395,19 +404,9 @@ Native dynamic link support: true
 * Proof Generalの設定
 
 インターフェースとして, emacsに慣れているのでしたら, [[https://proofgeneral.github.io/][Proof General]]とい
-う[[https://www.gnu.org/software/emacs/][emacs]]エディターモードをお勧めします.  Unixなら, emacsは必ず入ってい
-ます. Windowsなら, [[https://www.cygwin.com/][cygwin]]で取得できます.  Coqを設定すると, CoqIDEとい
-う専用インターフェースも設定されます.
-
-WSL上でEmacsを使いたいなら, Xorgサーバーを設定しなければなりません. まずは[[https://sourceforge.net/projects/vcxsrv/][VcxSrv]]をダウンロード
-してインストールします.
-
-WSLのshellで~DISPLAY~という環境変数の設定も必要です.　Ubuntu 18.04の場合は, ~~/.bashrc~に次のコードを追加します:
-#+BEGIN_SRC
-export DISPLAY=localhost:0.0
-#+END_SRC
-
-VcxSrvを起動して, bashを再起動するとemacsが使えます.
+う[[https://www.gnu.org/software/emacs/][emacs]]エディターモードをお勧めします.
+- Unix(WindowsのWSLを含む)なら, emacsは必ず入っています.
+- Windowsなら, [[https://www.cygwin.com/][cygwin]]で取得できます.  Coqを設定すると, CoqIDEという専用インターフェースも設定されます.
 
 Proof Generalの設定に, [[https://melpa.org/][MELPA]]とパッケージシステムは進められます:
 - ~.emacs~ に次のコードを加えます：
