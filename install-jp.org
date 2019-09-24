@@ -226,9 +226,13 @@ Coq <
 ** Windows 10の場合
 注意: WindowsでのCoqの設定は長い歴史の問題があります. 
 
-Windowsだと, 先に, [[https://www.cygwin.com/][cygwin]]もしくは[[https://docs.microsoft.com/ja-jp/windows/wsl/install-win10][WSL]]を用いてUnixのような環境を設定します. 
-*** 事前準備: cygwin/WSLの設定
-**** cygwinの場合
+Windowsで3つの方法があります:
+- 方法1: cygwin + バイナリ (cygwin上Coqのバイナリを使います)
+- 方法2: cygwin + opam (customなopamを用いて, Coqをコンパイルします)
+- 方法3: WSL + opam (opamを用いて, Coqをコンパイルします)
+
+*** 事前準備
+**** [[https://www.cygwin.com/][cygwin]]の設定(方法1・方法2)
 - cygwinをインストールするよう, [[https://www.cygwin.com/][https://www.cygwin.com/]]から, ~setup-x86_64.exe~
   (最新版: 2.897 [2019-07-08 Mon])をダウンロードして, 実行します.
   + 最低限として, ~make~, ~unzip~, ~git~, ~patch~, ~diffutils~,
@@ -252,22 +256,30 @@ clear Lock
 add Control = Control_L
 #+END_SRC
 - cygwinに関するその他の情報(例えば, cygwinのアンインストール): [[https://cygwin.com/faq][cygwin faq]]
-**** WSLの場合
-- [[https://support.microsoft.com/ja-jp/help/13443/windows-which-version-am-i-running][Windowsのバージョンを確認します]]. 
-  必要であれば1903以降のバージョンにアップデートします.
-- [[https://docs.microsoft.com/ja-jp/windows/wsl/install-win10][WSL本体と好きなLinuxディストリビューションをインストールします]]. 
-  Linux初心者の方にはUbuntu 18.04をおすすめします.
-- スタートメニューまたはWindowsの検索窓からLinuxを起動して, ユーザー名とパスワードを入力します.
-- WSL上でEmacsを使いたいなら, Xorgサーバーを設定しなければなりません.
-  まずは[[https://sourceforge.net/projects/vcxsrv/][VcxSrv]]をダウンロードしてインストールします. WSLのshellで
-  ~DISPLAY~ という環境変数の設定も必要です.　Ubuntu 18.04の場合は,
-  ~.bashrc~ に次のコードを追加します:
-#+BEGIN_SRC
-export DISPLAY=localhost:0.0
-  #+END_SRC
-  VcxSrvを起動して, bashを再起動するとemacsが使えます.
-
-*** 方法1 (cygwin + バイナリ): cygwin上Coqのバイナリを使います
+**** [[https://docs.microsoft.com/ja-jp/windows/wsl/install-win10][WSL]]の設定(方法3)
+- Windowsのバージョンを確認します: ~Windows Key + R~ を入力し, ~winver~ を実行します ([[https://support.microsoft.com/ja-jp/help/13443/windows-which-version-am-i-running][ref]]).
+  
+  + 必要であれば1903以降のバージョンにアップデートします.
+- WSL本体と好きなLinuxディストリビューションをインストールします ([[https://docs.microsoft.com/ja-jp/windows/wsl/install-win10][ref]]):
+  1. 管理者としてWindows PowerShellを起動
+  2. ~Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux~ を実行します
+  3. 再起動します
+  4. Microsoft Storeから, Linuxのディストリビューションをダウンロード・設定します.
+     * Debian GNU/Linuxは広く使われています. Linux初心者の方にはUbuntu 18.04をおすすめします.
+- スタートメニューまたはWindowsの検索窓からLinuxを起動します.
+  1. ユーザー名とパスワードを入力します.
+  2. パッケージマネージャーを使って, 基本的なソフトウェアをインストールします:
+     - Ubuntu 18.04の場合には ~sudo add-apt-repository ppa:avsm/ppa~ を実行します
+     - ~sudo apt update~
+     - ~sudo apt-get install emacs~
+- WSL上でemacsを使いたいなら, Xorgサーバーは便利でしょう.
+  1. [[https://sourceforge.net/projects/vcxsrv/][VcXsrv]]をダウンロードして, インストールします.
+  2. ~XLaunch~ アイコンでVcXsrvを起動します.
+  3. ~multiple windows~ ・ ~start no client~ を選びます.  
+- WSLのshellで ~DISPLAY~ という環境変数の設定も必要です: ~export DISPLAY=localhost:0.0~
+  + ~.bashrc~ にそのコマンドを追加できます (Ubuntu 18.04で確認済み).
+  + VcXsrvを起動して, bashを再起動するとX上emacsが使えます.
+*** 方法1 (cygwin + バイナリ)
 **** Coqを設定
 - [[https://github.com/coq/coq/releases/latest][releaseページ]]から ~coq-8.9.1-installer-windows-x86_64.exe~ を
   ダウンロードと実行します.
@@ -283,7 +295,7 @@ export DISPLAY=localhost:0.0
   + [[https://github.com/math-comp/math-comp/releases][source files]] をダウンロードします
   + unzip, untar, cd, make, make installを用いて設定します.
   + 結果で, ~user-contrib~ のCoqディレクトーリでMathCompのライブラリなどが追加されます.
-*** 方法2 (cygwin + opam): customなopamを用いて, Coqをコンパイルします
+*** 方法2 (cygwin + opam)
 過去にcygwinのOCamlパッケージの問題はよくあった(ライブラリは足りないこと; ~flexdll~ のありなし)し,
 cygwinで配るopamで設定するOCamlを用いてCoqのコンパイルができなかったので,
 その２つの方法を使っていません. 代わりに, opamのcustomな設定を用いて, MathCompの設定ができます.
@@ -322,18 +334,28 @@ cygwinで配るopamで設定するOCamlを用いてCoqのコンパイルがで�
 - ~opam install coq-mathcomp-fingroup~
 - ~opam install coq-mathcomp-algebra~
 - ~opam install coq-mathcomp-field~
-*** 方法3 (WSL + opam): opamを用いて, Coqをコンパイルします
-- WSLディストリビューションのパッケージマネージャーを使って, opamをインストールします. Ubuntu 18.04の場合には次のコマンドを実行します:
-  + ~sudo add-apt-repository ppa:avsm/ppa~
-  + ~sudo apt update~
-  + ~sudo apt install opam~
-  他のディストリビューションの場合には[[https://opam.ocaml.org/doc/Install.html][opamのウェブサイト]]を参照します.
+*** 方法3 (WSL + opam)
+- WSLディストリビューションのパッケージマネージャーを使って, opamをインストールします:
+  1. ~sudo apt install opam~
+  2. ~opam init --disable-sandboxing~ (近い将来 ~--disable-sandboxing~ は要らなくなるそうです)
+     * 時間がかかります.
+  3. ~opam switch create 4.08.1~
+     * 時間がかかります.
+  4. Debianに基づくディストリビューション以外の場合には[[https://opam.ocaml.org/doc/Install.html][opamのウェブサイト]]を参照.
 - ~opam install coq~
+  + 現時点最[2019-09-24 Tue]新版8.9.1
+  + 時間がかかります.
+  + 開発版の設定には ([2019-09-24 Tue]):
+    * ~opam repo add coq-core-dev https://coq.inria.fr/opam/core-dev~
+    * ~opam install coq.8.10+beta3~
 - CoqIDEを使いたいなら, GTK+のヘッダファイルが必要です.
-  + Ubuntu 18.04の場合: ~sudo apt install libgtk2.0-dev libexpat1-dev~
-- ~opam install coqide~
-- 上記と同じ方法でMathCompをインストール
-
+  + ~sudo apt install libgtk2.0-dev libexpat1-dev~ (Ubuntu 18.04, Debian 10で確認済み)
+    * あるいは ~sudo apt install libgtk-3-dev libgtksourceview-3.0-dev libexpat1-dev~
+  + ~opam install coqide~
+    * あるいは ~opam install coqide.8.10+beta3~
+- MathCompを設定します
+  + ~opam repo add coq-released https://coq.inria.fr/opam/released~
+  + ~opam install coq-mathcomp-ssreflect~, etc.
 *** 過去の設定報告メモ(参考のため)
 - [2017-01-12 Thu] にcygwin64が ~flexdll~ 0.35を含みます. mingw64のパッケージが ~mingw64-x86_64-xxx~ となりました.
 - Coq 8.5beta2で成功しましたが, math-compのMakefileが正しくファイルの依存関係を理解しません([2015-10-28 Wed]の時点).
@@ -452,7 +474,7 @@ emacsで ~tt.v~ という空のファイルを開いてみて, Proof Generalが�
 
 ソースコードやバイナリのダウンロードのまとめ：
 - [[http://coq.inria.fr/download][Coq]] ([[https://github.com/coq/coq][github]], [[https://github.com/coq/coq/releases/][beta版など]])
-- [[http://math-comp.github.io/math-comp/][Mathematical Components]] ([[https://github.com/math-comp/math-comp][github]])
+- [[http://math-comp.github.io/][Mathematical Components]] ([[https://github.com/math-comp/math-comp][github]])
 - [[https://proofgeneral.github.io/][Proof General]]
 
 [[http://mzp.hatenablog.com/entry/2014/04/29/105144][ssreflectインストール方法まとめ(Windowsもあるよ!)]], みずぴー日記
