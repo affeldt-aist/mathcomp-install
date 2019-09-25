@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-09-25 Wed 11:00 -->
+<!-- 2019-09-25 Wed 11:13 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Installation of MathComp on Windows 10</title>
@@ -234,44 +234,44 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org55760dd">1. Methods 1 and 2</a>
+<li><a href="#org04fcf9a">1. Methods 1 and 2</a>
 <ul>
-<li><a href="#orgca41e33">1.1. Step 0: Install cygwin</a></li>
-<li><a href="#orgd1255a7">1.2. method 1: cygwin + binaries (Install MathComp using Coq Binaries)</a>
+<li><a href="#org0bb1e56">1.1. Step 0: Install cygwin</a></li>
+<li><a href="#org9a5eba9">1.2. Method 1: cygwin + binaries (Install MathComp using Coq Binaries)</a>
 <ul>
-<li><a href="#orgd3cb7d2">1.2.1. Step 1-a: Install Coq</a></li>
-<li><a href="#orgf575d39">1.2.2. Step 1-b: Install MathComp</a></li>
+<li><a href="#orgc807a24">1.2.1. Step 1-a: Install Coq</a></li>
+<li><a href="#org6374030">1.2.2. Step 1-b: Install MathComp</a></li>
 </ul>
 </li>
-<li><a href="#orgf000342">1.3. method 2: cygwin + opam (Install MathComp using opam)</a>
+<li><a href="#org1f8b4ec">1.3. Method 2: cygwin + opam (Install MathComp using opam)</a>
 <ul>
-<li><a href="#org8bde6b2">1.3.1. Step 2-a: Install opam</a></li>
-<li><a href="#org2d0faf3">1.3.2. Step 2-b: Install Coq</a></li>
-<li><a href="#org71a09d0">1.3.3. Step 2-c: Install MathComp</a></li>
+<li><a href="#org7098dc2">1.3.1. Step 2-a: Install opam</a></li>
+<li><a href="#org170bdd2">1.3.2. Step 2-b: Install Coq</a></li>
+<li><a href="#org3516046">1.3.3. Step 2-c: Install MathComp</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orga2a9b86">2. Method 3: WSL + opam</a>
+<li><a href="#org1ba535e">2. Method 3: WSL + opam</a>
 <ul>
-<li><a href="#orgbb5330a">2.1. Step 0: Install WSL</a></li>
-<li><a href="#org15746a8">2.2. Install opam, Coq, and MathComp</a></li>
+<li><a href="#orgdf9bb00">2.1. Step 0: Install WSL</a></li>
+<li><a href="#orgc0ee983">2.2. Install opam, Coq, and MathComp</a></li>
 </ul>
 </li>
-<li><a href="#orgf2070bc">3. Install Proof General</a></li>
-<li><a href="#org97da996">4. Troubleshooting and Failures</a>
+<li><a href="#org0733ec0">3. Install Proof General</a></li>
+<li><a href="#orgd1b493c">4. Troubleshooting and Failures</a>
 <ul>
-<li><a href="#org8712ad4">4.1. Cygwin Troubleshooting</a></li>
-<li><a href="#org1ca8e85">4.2. Opam Troubleshooting</a></li>
-<li><a href="#orgdc1d11c">4.3. Cygwin's opam troubleshooting</a>
+<li><a href="#org33a4c04">4.1. Cygwin Troubleshooting</a></li>
+<li><a href="#org2cd3941">4.2. Opam Troubleshooting</a></li>
+<li><a href="#org3652ca9">4.3. Cygwin's opam troubleshooting</a>
 <ul>
-<li><a href="#org32f208e">4.3.1. Install OCaml with cygwin's opam on Windows 10</a></li>
+<li><a href="#org07f2785">4.3.1. Install OCaml with cygwin's opam on Windows 10</a></li>
 </ul>
 </li>
-<li><a href="#org8f85c52">4.4. Failure Installing Coq from the source code using cygwin's opam's OCaml</a>
+<li><a href="#orge6e9161">4.4. Failure Installing Coq from the source code using cygwin's opam's OCaml</a>
 <ul>
-<li><a href="#org8799469">4.4.1. Using cygwin's opam</a></li>
-<li><a href="#org33ab280">4.4.2. From the source, using cygwin's opam's Ocaml</a></li>
+<li><a href="#org0dc6bc1">4.4.1. Using cygwin's opam</a></li>
+<li><a href="#org6e3bb05">4.4.2. From the source, using cygwin's opam's Ocaml</a></li>
 </ul>
 </li>
 </ul>
@@ -289,7 +289,7 @@ Warning: file access with cygwin is slow compared to a native Linux
 installation.  Method 2 uses a custom installation of "opam for
 Windows" (cygwin's opam does not seem to be usable), it results in a
 more comfortable working environment, but installation is slow and may
-fail because opam supports for Windows is rather new.  Method 1 avoids
+fail because opam support for Windows is rather new.  Method 1 avoids
 opam completely and uses the binary distribution of Coq for Windows 10
 to compile the desired libraries one after the other using <code>make</code>. It
 is quick, has always worked, but the result can be a bit clunky.
@@ -298,15 +298,16 @@ is quick, has always worked, but the result can be a bit clunky.
 <p>
 Method 3 relies on Windows Subsystem for Linux. The resulting working
 environment is reportedly comfortable, but WSL is rather new, and
-installation is slow.
+installation is slow. As of today <span class="timestamp-wrapper"><span class="timestamp">[2019-09-25 Wed]</span></span>, this is maybe the
+best compromise.
 </p>
 
-<div id="outline-container-org55760dd" class="outline-2">
-<h2 id="org55760dd"><span class="section-number-2">1</span> Methods 1 and 2</h2>
+<div id="outline-container-org04fcf9a" class="outline-2">
+<h2 id="org04fcf9a"><span class="section-number-2">1</span> Methods 1 and 2</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-orgca41e33" class="outline-3">
-<h3 id="orgca41e33"><span class="section-number-3">1.1</span> Step 0: Install cygwin</h3>
+<div id="outline-container-org0bb1e56" class="outline-3">
+<h3 id="org0bb1e56"><span class="section-number-3">1.1</span> Step 0: Install cygwin</h3>
 <div class="outline-text-3" id="text-1-1">
 <ul class="org-ul">
 <li>Download and execute <code>setup-x86_64.exe</code> from <a href="https://www.cygwin.com/">https://www.cygwin.com/</a>
@@ -328,12 +329,12 @@ among the System Tray icons</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgd1255a7" class="outline-3">
-<h3 id="orgd1255a7"><span class="section-number-3">1.2</span> method 1: cygwin + binaries (Install MathComp using Coq Binaries)</h3>
+<div id="outline-container-org9a5eba9" class="outline-3">
+<h3 id="org9a5eba9"><span class="section-number-3">1.2</span> Method 1: cygwin + binaries (Install MathComp using Coq Binaries)</h3>
 <div class="outline-text-3" id="text-1-2">
 </div>
-<div id="outline-container-orgd3cb7d2" class="outline-4">
-<h4 id="orgd3cb7d2"><span class="section-number-4">1.2.1</span> Step 1-a: Install Coq</h4>
+<div id="outline-container-orgc807a24" class="outline-4">
+<h4 id="orgc807a24"><span class="section-number-4">1.2.1</span> Step 1-a: Install Coq</h4>
 <div class="outline-text-4" id="text-1-2-1">
 <ul class="org-ul">
 <li>Download and execute <code>coq-8.9.1-installer-windows-x86_64.exe</code> from
@@ -349,8 +350,8 @@ the <a href="https://github.com/coq/coq/releases/latest">release page</a>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgf575d39" class="outline-4">
-<h4 id="orgf575d39"><span class="section-number-4">1.2.2</span> Step 1-b: Install MathComp</h4>
+<div id="outline-container-org6374030" class="outline-4">
+<h4 id="org6374030"><span class="section-number-4">1.2.2</span> Step 1-b: Install MathComp</h4>
 <div class="outline-text-4" id="text-1-2-2">
 <ul class="org-ul">
 <li>The MathComp library that comes with the Coq binaries is maybe not
@@ -369,8 +370,8 @@ directory of the Coq installation</li>
 </div>
 </div>
 </div>
-<div id="outline-container-orgf000342" class="outline-3">
-<h3 id="orgf000342"><span class="section-number-3">1.3</span> method 2: cygwin + opam (Install MathComp using opam)</h3>
+<div id="outline-container-org1f8b4ec" class="outline-3">
+<h3 id="org1f8b4ec"><span class="section-number-3">1.3</span> Method 2: cygwin + opam (Install MathComp using opam)</h3>
 <div class="outline-text-3" id="text-1-3">
 <p>
 The following results in a more comfortable working environment but
@@ -379,8 +380,8 @@ with a working OCaml compiler to compile Coq from the source and go on
 installing MathComp as in Method 1.
 </p>
 </div>
-<div id="outline-container-org8bde6b2" class="outline-4">
-<h4 id="org8bde6b2"><span class="section-number-4">1.3.1</span> Step 2-a: Install opam</h4>
+<div id="outline-container-org7098dc2" class="outline-4">
+<h4 id="org7098dc2"><span class="section-number-4">1.3.1</span> Step 2-a: Install opam</h4>
 <div class="outline-text-4" id="text-1-3-1">
 <ul class="org-ul">
 <li>For opam to work, add a few more useful programs by re-running the
@@ -398,13 +399,13 @@ cygwin installer
 <li><code>eval $(opam config env)</code></li>
 <li><code>opam switch create 4.07.1+mingw64c</code>
 <ul class="org-ul">
-<li>if for some reason the right OCaml compiler is still not here</li>
+<li>if the right OCaml compiler is not here</li>
 </ul></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org2d0faf3" class="outline-4">
-<h4 id="org2d0faf3"><span class="section-number-4">1.3.2</span> Step 2-b: Install Coq</h4>
+<div id="outline-container-org170bdd2" class="outline-4">
+<h4 id="org170bdd2"><span class="section-number-4">1.3.2</span> Step 2-b: Install Coq</h4>
 <div class="outline-text-4" id="text-1-3-2">
 <ul class="org-ul">
 <li><code>opam install camlp5</code> (<span class="timestamp-wrapper"><span class="timestamp">[2019-07-12 Fri]</span></span>'s version: 7.06)</li>
@@ -430,8 +431,8 @@ prevent you from installing Coq, MathComp, etc.</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org71a09d0" class="outline-4">
-<h4 id="org71a09d0"><span class="section-number-4">1.3.3</span> Step 2-c: Install MathComp</h4>
+<div id="outline-container-org3516046" class="outline-4">
+<h4 id="org3516046"><span class="section-number-4">1.3.3</span> Step 2-c: Install MathComp</h4>
 <div class="outline-text-4" id="text-1-3-3">
 <ul class="org-ul">
 <li><code>export CAML=/home/username/.opam/4.07.1+mingw64c/bin/</code></li>
@@ -445,12 +446,12 @@ prevent you from installing Coq, MathComp, etc.</li>
 </div>
 </div>
 </div>
-<div id="outline-container-orga2a9b86" class="outline-2">
-<h2 id="orga2a9b86"><span class="section-number-2">2</span> Method 3: WSL + opam</h2>
+<div id="outline-container-org1ba535e" class="outline-2">
+<h2 id="org1ba535e"><span class="section-number-2">2</span> Method 3: WSL + opam</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-orgbb5330a" class="outline-3">
-<h3 id="orgbb5330a"><span class="section-number-3">2.1</span> Step 0: Install WSL</h3>
+<div id="outline-container-orgdf9bb00" class="outline-3">
+<h3 id="orgdf9bb00"><span class="section-number-3">2.1</span> Step 0: Install WSL</h3>
 <div class="outline-text-3" id="text-2-1">
 <ul class="org-ul">
 <li>Check the version of Windows 10: type <code>Windows Key + R</code>, execute <code>winver</code>.
@@ -467,7 +468,7 @@ prevent you from installing Coq, MathComp, etc.</li>
 <li>Debian GNU/Linux is a safe choice, Ubuntu 18.04 might be easier for beginners</li>
 </ul></li>
 </ol></li>
-<li>Execute Linux from Windows' Start Menu or Search Windows
+<li>Execute Linux from Windows' Start Menu or the search window
 <ol class="org-ol">
 <li>Choose a user name and password</li>
 <li>Install basic software using the package manager
@@ -477,22 +478,22 @@ prevent you from installing Coq, MathComp, etc.</li>
 <li><code>sudo apt-get install emacs</code></li>
 </ul></li>
 </ol></li>
-<li>Better to have n Xorg server to use emacs
+<li>Better to have an Xorg server to use emacs
 <ol class="org-ol">
 <li>download and install <a href="https://sourceforge.net/projects/vcxsrv/">VcXsrv</a></li>
 <li>execute VcXsrv using the <code>XLaunch</code> icon</li>
 <li>choose the options <code>multiple windows</code> ・ <code>start no client</code></li>
 </ol></li>
-<li>Sett the <code>DISPLAY</code> environment variable through WSL's shell: <code>export DISPLAY=localhost:0.0</code>
+<li>Set the <code>DISPLAY</code> environment variable through WSL's shell: <code>export DISPLAY=localhost:0.0</code>
 <ul class="org-ul">
-<li>You may want to add this comment to <code>.bashrc</code> (checked with Ubuntu 18.04)</li>
+<li>You may want to add this <code>export</code> command to <code>.bashrc</code> (checked with Ubuntu 18.04)</li>
 <li>Start VcXsrv, restart bash, and then emacs should be usable as an independent window</li>
 </ul></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org15746a8" class="outline-3">
-<h3 id="org15746a8"><span class="section-number-3">2.2</span> Install opam, Coq, and MathComp</h3>
+<div id="outline-container-orgc0ee983" class="outline-3">
+<h3 id="orgc0ee983"><span class="section-number-3">2.2</span> Install opam, Coq, and MathComp</h3>
 <div class="outline-text-3" id="text-2-2">
 <ul class="org-ul">
 <li>Install opam using the package manager of WLS's Linux distribution:
@@ -541,8 +542,8 @@ prevent you from installing Coq, MathComp, etc.</li>
 </div>
 </div>
 </div>
-<div id="outline-container-orgf2070bc" class="outline-2">
-<h2 id="orgf2070bc"><span class="section-number-2">3</span> Install Proof General</h2>
+<div id="outline-container-org0733ec0" class="outline-2">
+<h2 id="org0733ec0"><span class="section-number-2">3</span> Install Proof General</h2>
 <div class="outline-text-2" id="text-3">
 <ul class="org-ul">
 <li>Install proof general following the instructions <a href="https://proofgeneral.github.io/">online</a></li>
@@ -551,12 +552,12 @@ MathComp almost as if you were on a Linux-based system</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org97da996" class="outline-2">
-<h2 id="org97da996"><span class="section-number-2">4</span> Troubleshooting and Failures</h2>
+<div id="outline-container-orgd1b493c" class="outline-2">
+<h2 id="orgd1b493c"><span class="section-number-2">4</span> Troubleshooting and Failures</h2>
 <div class="outline-text-2" id="text-4">
 </div>
-<div id="outline-container-org8712ad4" class="outline-3">
-<h3 id="org8712ad4"><span class="section-number-3">4.1</span> Cygwin Troubleshooting</h3>
+<div id="outline-container-org33a4c04" class="outline-3">
+<h3 id="org33a4c04"><span class="section-number-3">4.1</span> Cygwin Troubleshooting</h3>
 <div class="outline-text-3" id="text-4-1">
 <ul class="org-ul">
 <li>Cygwin may be confused by a non-American keyboard; you can change
@@ -578,8 +579,8 @@ xmodmap /home/username/Xmodmap
 </pre>
 </div>
 </div>
-<div id="outline-container-org1ca8e85" class="outline-3">
-<h3 id="org1ca8e85"><span class="section-number-3">4.2</span> Opam Troubleshooting</h3>
+<div id="outline-container-org2cd3941" class="outline-3">
+<h3 id="org2cd3941"><span class="section-number-3">4.2</span> Opam Troubleshooting</h3>
 <div class="outline-text-3" id="text-4-2">
 <ul class="org-ul">
 <li>You may witness <code>Device or resource busy</code> when installing with opam,
@@ -592,12 +593,12 @@ This package requires gtk+ 2.0 development packages installed on your system
 </pre>
 </div>
 </div>
-<div id="outline-container-orgdc1d11c" class="outline-3">
-<h3 id="orgdc1d11c"><span class="section-number-3">4.3</span> Cygwin's opam troubleshooting</h3>
+<div id="outline-container-org3652ca9" class="outline-3">
+<h3 id="org3652ca9"><span class="section-number-3">4.3</span> Cygwin's opam troubleshooting</h3>
 <div class="outline-text-3" id="text-4-3">
 </div>
-<div id="outline-container-org32f208e" class="outline-4">
-<h4 id="org32f208e"><span class="section-number-4">4.3.1</span> Install OCaml with cygwin's opam on Windows 10</h4>
+<div id="outline-container-org07f2785" class="outline-4">
+<h4 id="org07f2785"><span class="section-number-4">4.3.1</span> Install OCaml with cygwin's opam on Windows 10</h4>
 <div class="outline-text-4" id="text-4-3-1">
 <p>
 It is possible to install the OCaml compiler using cygwin's opam
@@ -621,12 +622,12 @@ be used to compile Coq.
 </div>
 </div>
 </div>
-<div id="outline-container-org8f85c52" class="outline-3">
-<h3 id="org8f85c52"><span class="section-number-3">4.4</span> Failure Installing Coq from the source code using cygwin's opam's OCaml</h3>
+<div id="outline-container-orge6e9161" class="outline-3">
+<h3 id="orge6e9161"><span class="section-number-3">4.4</span> Failure Installing Coq from the source code using cygwin's opam's OCaml</h3>
 <div class="outline-text-3" id="text-4-4">
 </div>
-<div id="outline-container-org8799469" class="outline-4">
-<h4 id="org8799469"><span class="section-number-4">4.4.1</span> Using cygwin's opam</h4>
+<div id="outline-container-org0dc6bc1" class="outline-4">
+<h4 id="org0dc6bc1"><span class="section-number-4">4.4.1</span> Using cygwin's opam</h4>
 <div class="outline-text-4" id="text-4-4-1">
 <p>
 Installation fails because Coq's <code>configure</code> is confused by cygwin:
@@ -637,8 +638,8 @@ Installation fails because Coq's <code>configure</code> is confused by cygwin:
 </ul>
 </div>
 </div>
-<div id="outline-container-org33ab280" class="outline-4">
-<h4 id="org33ab280"><span class="section-number-4">4.4.2</span> From the source, using cygwin's opam's Ocaml</h4>
+<div id="outline-container-org6e3bb05" class="outline-4">
+<h4 id="org6e3bb05"><span class="section-number-4">4.4.2</span> From the source, using cygwin's opam's Ocaml</h4>
 <div class="outline-text-4" id="text-4-4-2">
 <p>
 Installation fails with an "address space is already occupied error" for <code>dllunix.so</code>:
@@ -654,7 +655,7 @@ Installation fails with an "address space is already occupied error" for <code>d
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Reynald Affeldt</p>
-<p class="date">Created: 2019-09-25 Wed 11:00</p>
+<p class="date">Created: 2019-09-25 Wed 11:13</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
