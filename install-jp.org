@@ -226,13 +226,13 @@ Coq <
 ** Windows 10の場合
 注意: WindowsでのCoqの設定は長い歴史の問題があります. 
 
-Windowsで3つの方法があります:
+Windowsで3つの設定方法を説明します:
 - 方法1: cygwin + バイナリ (cygwin上Coqのバイナリを使います)
-- 方法2: cygwin + opam (customなopamを用いて, Coqをコンパイルします)
-- 方法3: WSL + opam (opamを用いて, Coqをコンパイルします)
+- 方法2: cygwin + opam (customなopamを用いてCoqをコンパイルします)
+- 方法3: WSL + opam (WSLでopamを用いてCoqをコンパイルします)
 
 *** 事前準備
-**** [[https://www.cygwin.com/][cygwin]]の設定(方法1・方法2)
+**** [[https://www.cygwin.com/][方法1・方法2: cygwin]]の設定
 - cygwinをインストールするよう, [[https://www.cygwin.com/][https://www.cygwin.com/]]から, ~setup-x86_64.exe~
   (最新版: 2.897 [2019-07-08 Mon])をダウンロードして, 実行します.
   + 最低限として, ~make~, ~unzip~, ~git~, ~patch~, ~diffutils~,
@@ -256,29 +256,28 @@ clear Lock
 add Control = Control_L
 #+END_SRC
 - cygwinに関するその他の情報(例えば, cygwinのアンインストール): [[https://cygwin.com/faq][cygwin faq]]
-**** [[https://docs.microsoft.com/ja-jp/windows/wsl/install-win10][WSL]]の設定(方法3)
+**** [[https://docs.microsoft.com/ja-jp/windows/wsl/install-win10][方法3: WSL]]の設定
 - Windowsのバージョンを確認します: ~Windows Key + R~ を入力し, ~winver~ を実行します ([[https://support.microsoft.com/ja-jp/help/13443/windows-which-version-am-i-running][ref]]).
-  
-  + 必要であれば1903以降のバージョンにアップデートします.
+  + 必要であれば1903以降のバージョンにアップデートします
 - WSL本体と好きなLinuxディストリビューションをインストールします ([[https://docs.microsoft.com/ja-jp/windows/wsl/install-win10][ref]]):
   1. 管理者としてWindows PowerShellを起動
   2. ~Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux~ を実行します
   3. 再起動します
-  4. Microsoft Storeから, Linuxのディストリビューションをダウンロード・設定します.
-     * Debian GNU/Linuxは広く使われています. Linux初心者の方にはUbuntu 18.04をおすすめします.
-- スタートメニューまたはWindowsの検索窓からLinuxを起動します.
-  1. ユーザー名とパスワードを入力します.
+  4. Microsoft Storeから, Linuxのディストリビューションをダウンロード・設定します
+     * Debian GNU/Linuxは広く使われています. Linux初心者の方にはUbuntu 18.04をおすすめします
+- スタートメニューまたはWindowsの検索窓からLinuxを起動します
+  1. ユーザー名とパスワードを入力します
   2. パッケージマネージャーを使って, 基本的なソフトウェアをインストールします:
      - Ubuntu 18.04の場合には ~sudo add-apt-repository ppa:avsm/ppa~ を実行します
      - ~sudo apt update~
      - ~sudo apt-get install emacs~
-- WSL上でemacsを使いたいなら, Xorgサーバーは便利でしょう.
-  1. [[https://sourceforge.net/projects/vcxsrv/][VcXsrv]]をダウンロードして, インストールします.
-  2. ~XLaunch~ アイコンでVcXsrvを起動します.
-  3. ~multiple windows~ ・ ~start no client~ を選びます.  
+- WSL上でemacsを使いたいなら, Xorgサーバーは便利でしょう
+  1. [[https://sourceforge.net/projects/vcxsrv/][VcXsrv]]をダウンロードして, インストールします
+  2. ~XLaunch~ アイコンでVcXsrvを起動します
+  3. ~multiple windows~ ・ ~start no client~ を選びます
 - WSLのshellで ~DISPLAY~ という環境変数の設定も必要です: ~export DISPLAY=localhost:0.0~
-  + ~.bashrc~ にそのコマンドを追加できます (Ubuntu 18.04で確認済み).
-  + VcXsrvを起動して, bashを再起動するとX上emacsが使えます.
+  + ~.bashrc~ にそのコマンドを追加できます (Ubuntu 18.04で確認済み)
+  + VcXsrvを起動して, bashを再起動するとX上emacsが使えます
 *** 方法1 (cygwin + バイナリ)
 **** Coqを設定
 - [[https://github.com/coq/coq/releases/latest][releaseページ]]から ~coq-8.9.1-installer-windows-x86_64.exe~ を
