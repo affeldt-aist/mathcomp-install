@@ -15,6 +15,7 @@
 #+END_EXPORT
 
 * 設定成功報告
+- [2020-08-18 Tue]: Ubuntu 20.04.1 LTS, Coq 8.12.0 (opam), MathComp 1.12.0 (opam)
 - [2019-09-24 Tue]: Windows 10, Coq 8.10beta3 (WSL)
 - [2019-07-12 Fri]: Windows 10, Coq 8.9.1 (opam), MathComp 1.9.0 (opam)
 - [2019-07-08 Mon]: Windows 10, Coq 8.9.1 (binary), MathComp 1.9.0 (source)
@@ -61,40 +62,42 @@ Windowsの場合, バイナリが用意されています. ソースコードか
 *** パッケージからの設定
 OCamlの専用パッケージマネージャー[[https://opam.ocaml.org/][ opam]] でCoqのパッケージを設定ができます. Debianのaptほど遅れていません.
 SSReflectとMathCompを含むCoqライブラリが用意されています([[https://coq.inria.fr/opam/www/][Coq OPAM packages]]).
-現時点[2018-04-25 Wed], ~opam show coq-mathcomp-ssreflect~ によると, 
-1.7.0版のパッケージがあります.
+現時点[2020-08-18 Tue], ~opam show coq-mathcomp-ssreflect~ によると,
+1.11.0版のパッケージがあります.
 
-- 最初に, [[https://opam.ocaml.org/doc/Install.html][opamを設定]](バージョン2.0.4 [2019-05-30 Thu])します:
+- 最初に, [[https://opam.ocaml.org/doc/Install.html][opamを設定]](バージョン2.0.7 [2020-08-18 Tue])します:
   + ~sh <(curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh)~
-    * superuserの権利が要ります
+    * superuserの権利が要るかもしれません
     * ~/usr/local/bin~ にインストールされます
   + ~opam init~
     * ~make~, ~m4~, ~gcc~, ~bubblewrap~ が要ります
     * ~/.profile~ が更新されます
-      - ~.bashrc~ からsource
-    * コンパイラを指定できます; 例えば, ~opam init --comp=4.06.1~
+      - ~.bashrc~ からsourceしなくていいです
+    * コンパイラを指定できます; 例えば, ~opam init --comp=4.10.0~
     * ~eval $(opam env)~ で設定が完了します
   + opamは既に設定された場合, 最新のパッケージの情報を取得: ~opam update~
   + 使えるパッケージのリスト: ~opam list -a~
 - 次に, OCamlの環境を設定します:
-  + ~opam switch 4.07.1~
-    * ~opam switch list~ からその他のOCamlのコンパイラを選べます. 現時点[2019-05-30 Thu], 4.07.1は最新です.
+  + ~opam switch 4.10.0~
+    * 初めての設定なら, ~opam switch create 4.10.0~
+    * ~opam switch list~ からその他のOCamlのコンパイラを選べます. 現時点[2020-08-18 Tue], 4.10.0は最新です.
   + ~eval `opam config env`~
     * ~opam switch~ を行った後, 必要です.
   + 次のOCamlのプログラムはCoqに必要です(自分の環境の整備によって, 他のプログラムを設定する必要があるかもしれませんが, opamが教えます):
-    * ~opam install camlp5~ (現時点[2019-05-30 Thu], 7.06は最新です)
-    * ~opam install ocamlfind~ (現時点[2019-05-30 Thu], 1.8.0は最新です)
+    * ~opam install camlp5~ (現時点[2020-08-18 Tue], 8.00 alphaは最新です)
+    * ~opam install ocamlfind~ (現時点[2020-08-18 Tue], 1.8.1は最新です)
       - ~conf-m4~ に依存します
-    * ~opam install num~ (現時点[2019-05-30 Thu], 1.1は最新です; Ocaml 4.06.0から必要です)
+    * ~opam install num~ (現時点[2020-08-18 Tue], 1.3は最新です; Ocaml 4.06.0から必要です)
 - 次に, Coqを設定します:
   + Coqのリポジトリを追加: ~opam repo add coq-released https://coq.inria.fr/opam/released~
     * [[https://github.com/coq/opam-coq-archive/tree/master/released/packages][Coqのopamパッケージ]] (prefixは ~coq-~ です)
     * ~opam repo~ でリポジトリをリストアップできます
-  + ~opam install coq.8.9.1~
-    * Debianで ~pkg-config~, ~libgtksourceview2.0-dev~, ~libgtk-3-dev~ が要ります
+  + ~opam install coq.8.12.0~ (現時点[2020-08-18 Tue]最新版)
     * 必要なら, 最新のCoqIDEも設定できます: ~opam install coqide~
+    * Debian/Ubuntuで ~libgtksourceview-3.0-dev~, ~libgtk-3-dev~,
+      ~libexpat1-dev~, ~libcairo2-dev~ が要ります (~pkg-config~ は要らなくなりましたか)
 - 最後に, MathCompを設定します:
-  + ~opam install coq-mathcomp-ssreflect~
+  + ~opam install coq-mathcomp-ssreflect.1.11.0~
   + その他のMathCompのパッケージ(prefixは ~coq-mathcomp~ です, バージョン1.8.0):
     * ~coq-mathcomp-fingroup~
     * ~coq-mathcomp-algebra~
@@ -105,7 +108,7 @@ SSReflectとMathCompを含むCoqライブラリが用意されています([[htt
     * ~coq-mathcomp-bigenough~
     * ~coq-mathcomp-sum-of-two-square~, ~coq-mathcomp-multinomials~ (user contrib)
     * ~coq-mathcomp-odd-order~ (先端な応用ですので, 要らないかもしれません)
-- 今度の更新は, ~opam update~ , ~opam upgrade coq.8.9.1~ (例えば) で済みます.
+- 今度の更新は, ~opam update~ , ~opam upgrade coq.8.12.0~ (例えば) で済みます.
   要らなくなったパッケージは ~opam remove coq-mathcomp-odd-order~ (例えば)で消せます.
   問題が生じる場合, ~opam reinstall coq~ もできます.
 

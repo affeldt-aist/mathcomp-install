@@ -2,7 +2,7 @@
 
 We present three ways to install MathComp on Windows 10.
 
-Method 1 and 2 rely on [[https://www.cygwin.com][cygwin]] to recreate a Linux-like environment
+Method 1 and 2 rely on [[https://www.cygwin.com][cygwin]] to recreate a Linux-like environment.
 Warning: file access with cygwin is slow compared to a native Linux
 installation.  Method 2 uses a custom installation of "opam for
 Windows" (cygwin's opam does not seem to be usable), it results in a
