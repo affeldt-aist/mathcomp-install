@@ -15,7 +15,8 @@
 #+END_EXPORT
 
 * 設定成功報告
-- [2020-08-18 Tue]: Ubuntu 20.04.1 LTS, Coq 8.12.0 (opam), MathComp 1.12.0 (opam)
+- [2020-11-09 Mon]: Ubuntu 20.04.1 LTS, Coq github master, MathComp github master
+- [2020-08-18 Tue]: Ubuntu 20.04.1 LTS, Coq 8.12.0 (opam), MathComp 1.11.0 (opam)
 - [2019-09-24 Tue]: Windows 10, Coq 8.10beta3 (WSL)
 - [2019-07-12 Fri]: Windows 10, Coq 8.9.1 (opam), MathComp 1.9.0 (opam)
 - [2019-07-08 Mon]: Windows 10, Coq 8.9.1 (binary), MathComp 1.9.0 (source)
@@ -51,21 +52,21 @@
 設定はUnix系のオペレーティングシステムでスムーズです. ただし, Linuxの
 パッケージマネージャー(Debianのapt等)のバージョンはいつも遅れています
 ので, 勧められません. 使える設定方法は２つあります.  opamによる設定は
-簡単ですが, opamの理解が少し要ります. トラブルはないというわけではあり
-ません. 最新のパッケージが出来上がるまでに時間はあまりかかりません. ソー
-スコードからコンパイルすることもスムーズです. 最新版を設定する方法とし
-て勧めます.
+簡単ですが, opamの理解が少し要ります. 最新のパッケージが出来上がるまで
+に時間はあまりかかりません. トラブルはあまりありません. ソースコードか
+らコンパイルすることもスムーズです. 最新版を設定する方法として勧めます
+(リーリスされいないライブラリ(githubのmasterなど)を使いたいとき).
 
-Windowsの場合, バイナリが用意されています. ソースコードからコンパイル
-することは手間がかかります.
+Windowsの場合, バイナリが用意されています(近い将来に [[https://github.com/coq/platform][Coq platform]] に頼れ
+ると期待します). ソースコードからコンパイルすることは手間がかかります.
 ** Unix系のオペレーティングシステムの場合
 *** パッケージからの設定
 OCamlの専用パッケージマネージャー[[https://opam.ocaml.org/][ opam]] でCoqのパッケージを設定ができます. Debianのaptほど遅れていません.
 SSReflectとMathCompを含むCoqライブラリが用意されています([[https://coq.inria.fr/opam/www/][Coq OPAM packages]]).
-現時点[2020-08-18 Tue], ~opam show coq-mathcomp-ssreflect~ によると,
+現時点[2020-11-09 Mon], ~opam show coq-mathcomp-ssreflect~ によると,
 1.11.0版のパッケージがあります.
 
-- 最初に, [[https://opam.ocaml.org/doc/Install.html][opamを設定]](バージョン2.0.7 [2020-08-18 Tue])します:
+- 最初に, [[https://opam.ocaml.org/doc/Install.html][opamを設定]]([2020-11-09 Mon]時点、Debian系のOS上のバージョン2.0.7 )します:
   + ~sh <(curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh)~
     * superuserの権利が要るかもしれません
     * ~/usr/local/bin~ にインストールされます
@@ -73,29 +74,35 @@ SSReflectとMathCompを含むCoqライブラリが用意されています([[htt
     * ~make~, ~m4~, ~gcc~, ~bubblewrap~ が要ります
     * ~/.profile~ が更新されます
       - ~.bashrc~ からsourceしなくていいです
-    * コンパイラを指定できます; 例えば, ~opam init --comp=4.10.0~
+    * コンパイラを指定できます; 例えば, ~opam init --comp=4.11.0~
     * ~eval $(opam env)~ で設定が完了します
   + opamは既に設定された場合, 最新のパッケージの情報を取得: ~opam update~
   + 使えるパッケージのリスト: ~opam list -a~
 - 次に, OCamlの環境を設定します:
-  + ~opam switch 4.10.0~
-    * 初めての設定なら, ~opam switch create 4.10.0~
-    * ~opam switch list~ からその他のOCamlのコンパイラを選べます. 現時点[2020-08-18 Tue], 4.10.0は最新です.
-  + ~eval `opam config env`~
-    * ~opam switch~ を行った後, 必要です.
-  + 次のOCamlのプログラムはCoqに必要です(自分の環境の整備によって, 他のプログラムを設定する必要があるかもしれませんが, opamが教えます):
-    * ~opam install camlp5~ (現時点[2020-08-18 Tue], 8.00 alphaは最新です)
-    * ~opam install ocamlfind~ (現時点[2020-08-18 Tue], 1.8.1は最新です)
+  + ~opam switch 4.11.1~
+    * 初めての設定なら, ~opam switch create 4.11.1~
+      - ~opam switch list-available~ で可能な選択肢が分かります
+      - ~opam switch list~ ですでに用意されているOCamlのコンパイラを選べます
+　　　 - [2020-11-09 Mon]時点, 4.12.0は最新です
+  + ~eval `opam config env`~ また ~eval $(opam env)~
+    * ~opam switch~ を行った後, 必要です
+  + 次にCoqに必要なOCamlのプログラムを設定します(個人の環境の整備によって, 他のプログラムを設定する必要があるかもしれませんが, opamが教えます):
+    * ~opam update~ で最新バージョンの情報を取得します
+    * ~opam install camlp5~ ([2020-11-09 Mon]時点, 8.00 alpha06は最新です)
+      - ~conf-perl~ に依存します
+    * ~opam install ocamlfind~ ([2020-11-09 Mon]時点, 1.8.1は最新です)
       - ~conf-m4~ に依存します
-    * ~opam install num~ (現時点[2020-08-18 Tue], 1.3は最新です; Ocaml 4.06.0から必要です)
+    * ~opam install num~ ([2020-11-09 Mon]時点, 1.3は最新です; Ocaml 4.06.0から必要です)
 - 次に, Coqを設定します:
   + Coqのリポジトリを追加: ~opam repo add coq-released https://coq.inria.fr/opam/released~
+    * ~opam repo add coq-released --set-default~ を行うと、これから新しい ~switch~ を作ると、Coqのリポジトリを自動的に追加されます
     * [[https://github.com/coq/opam-coq-archive/tree/master/released/packages][Coqのopamパッケージ]] (prefixは ~coq-~ です)
     * ~opam repo~ でリポジトリをリストアップできます
-  + ~opam install coq.8.12.0~ (現時点[2020-08-18 Tue]最新版)
-    * 必要なら, 最新のCoqIDEも設定できます: ~opam install coqide~
-    * Debian/Ubuntuで ~libgtksourceview-3.0-dev~, ~libgtk-3-dev~,
-      ~libexpat1-dev~, ~libcairo2-dev~ が要ります (~pkg-config~ は要らなくなりましたか)
+  + ~opam install coq.8.12.0~ ([2020-11-09 Mon]時点, 最新版)
+    * ~conf-findutils~ に依存します
+    * 必要なら, 最新のCoqIDEも設定できます: ~opam install coqide~ (10つ以上の依存するライブラリも設定されます)
+    * Debian/Ubuntuで 新しいライブラリの設定が要るかもしれません: ~libgtksourceview-3.0-dev~, ~libgtk-3-dev~,
+      ~libexpat1-dev~, ~libcairo2-dev~ (など?) (~pkg-config~ は要らなくなりましたか?)
 - 最後に, MathCompを設定します:
   + ~opam install coq-mathcomp-ssreflect.1.11.0~
   + その他のMathCompのパッケージ(prefixは ~coq-mathcomp~ です, バージョン1.8.0):
@@ -118,70 +125,84 @@ opamとCoqに関する追加情報：
   + ~opam pin~ を用いる
 
 *** ソースコードからのコンパイル
+
 コンパイルのために必要なソフトウェアは通常のシステムで既にあるオープンソースソフトウェアです.
 Unix系なら, パッケージマネージャーから得られます. 必要なソフトウェアの情報のまとめ:
 - GNU make (バージョン >= 3.81)
 - C compiler
 - TeX/LaTeX (ドキュメントのため)
-- [[http://caml.inria.fr/][OCaml]] (バージョン >= 4.02.3; ~ocaml -version~) (最新版[2018-10-02 Tue]: 4.07.0) ([[http://caml.inria.fr/download.en.html][ダウンロード]])
-- [[https://camlp5.github.io/][Camlp5]] (バージョン >= 6.14;  ~camlp5 -v~, 最新版[2018-07-04 Wed]: 7.06, transitionalモード)
+- [[https://ocaml.org/][OCaml]] (バージョン >= 4.05.0; ~ocaml -version~) ([2020-11-09 Mon]時点の最新版: 4.12.0) ([[https://ocaml.org/docs/install.html][インストール]])
+- [[https://github.com/ocaml/Zarith][ZArith]] ([2020-11-09 Mon]時点、最新版: 1.10)
+  + インストール: ~opam install zarith~
+    * パッケージマネージャーから: ~libgmp-dev~
+- CoqIDEのため: [[https://github.com/garrigue/lablgtk][lablgtk3-sourceview3]], gtk+3, gtksourceview3
+  + インストール: ~opam install lablgtk3-sourceview3~
+    * パッケージマネージャーから: ~libcairo2-dev~, ~libexpat1-dev~, ~libgtk-3-dev~, ~libgtksourceview-3.0-dev~
+- [[https://camlp5.github.io/][Camlp5]] (バージョン >= 6.14?;  ~camlp5 -v~, 最新版[2020-11-09 Mon]: 8.00, transitionalモード?)
+  + 不要になりましたか?
 
 **** ソースコードのアーカイブからコンパイル
 
-Coq 8.9.1[2019-05-21 Tue](SSReflectの一部を含みます)のコンパイル成功報告：
+Coq(SSReflectの一部を含みます)のコンパイル成功報告：
 - ~ocamlc~ などを使える状態かを確認します(Unixで ~$PATH~ に入っていますか? 例えば, ~ocamlc -v~ を試します)
-- ~COQCOMPILEDIRECTORY~ というディレクトリでコンパイル作業します
-- Coqを[[https://github.com/coq/coq/releases/][ダウンロード]] します
+- Coqをダウンロードします
+  + gitで: ~git clone https://github.com/coq/coq.git~
+    * ~git ls-remote --heads~
+    * trunkブランチからv8.12ブランチに移動: ~git checkout v8.12~
+  + または, アーカイブを [[https://github.com/coq/coq/releases/][ダウンロード]] します
+- できたディレクトリを ~COQCOMPILEDIRECTORY~ と呼びます
 - Coqをソースコードからコンパイルします
-  + ~tar xzf coq-8.9.1.tar.gz~ (~coq-8.9.0~ というディレクトリは作成されます)
-  + ~cd coq-8.9.1~
+  + ~cd coq~ あるいは ~cd coq-8.12.0~
   + ~./configure~
-    - ~-usecamlp5~ オプションは要らなくなりました
-    - バイナリの位置に関して, デフォルト選択で結構です (バイナリは ~/usr/local/bin~, ライブラリは ~/usr/local/lib/coq~ 等)
     - バイナリのインストールは不要なら, ~-local~ を使います
+    - バイナリの位置に関して, デフォルト選択で結構です
+      (バイナリは ~/usr/local/bin~, ライブラリは ~/usr/local/lib/coq~ 等, superuserになる必要があります)
     - バイナリのインストールの場所を指定するために, ~-prefix~ を使います
-    - lablGtk2を指すために, ~-lablgtkdir /DIR~ を使えるそうです
-    - LablGtk2を見つからないと, CoqIdeをコンパイルできませんが, Coqをちゃんとコンパイルできます
-  + ~make~ (ちょっと時間がかかりますので, ~-j~ で並列コンパイルしてみます)
-    - ~make byte~ でバイトコード版ができます
+  + ~make~ (ちょっと時間がかかりますので, ~-jX~ で並列コンパイルできます)
+    - ~make byte~ でバイトコード版もできます(デバグに使います)
   + ~sudo make install~
+    - ~-local~ なら不要 (superuserにならなくいいです)
     - superuserにならないと, デフォルト選択(~/usr/local/bin~ 等)でのインストールが失敗します
-    - ~-local~ なら不要, superuserにならなくいいです 
-    - SSReflectのプラッグインとセオリーの一部は ~COQINSTALLDIRECTORY/coq-8.8.2/plugins/{ssr,ssrmatching}/~ に置かれます.
-  + ~make clean~ (~-local~ の場合以外)
+    - SSReflectのプラッグインとセオリー(の一部)は
+      ~COQINSTALLDIRECTORY/plugins/{ssr,ssrmatching,ssrsearch}/~ と
+      ~COQINSTALLDIRECTORY/theories/ssr~ に置かれます
+  + ~-local~ の場合以外, ~make clean~ できます
   + ~cd ..~
-#+BEGIN_COMMENT
-umask 022 after make world?
-#+END_COMMENT
 - coqtop等は使えるようになった状態であるかどうかを確認します
-  + 特に, Unixで ~$PATH~ に追加します
-  + ~export COQBIN=COQINSTALLDIRECTORY/coq-8.9.1/bin/~ という変数を作っておいていいです
-    (~.bashrc~ファイルなら, ~source .bashrc~を行います)
+  + ~export COQBIN=COQINSTALLDIRECTORY/bin/~ という変数を作っておいていいです
+    (~.bashrc~ ファイルなら, ~source .bashrc~ を行います)
+  + 特に, Unixで ~$PATH~ に追加します(例えば, ~export PATH=$COQBIN:$PATH~)    
 - テスト:
 #+BEGIN_SRC
 $ coqtop
-Welcome to Coq 8.9.1 (May 2019)
+Welcome to machine:directory,master (commit)
 
 Coq < 
 #+END_SRC
 
-MathComp 1.9.0[2019-05-30 Thu]のコンパイル成功報告：
-- 既存のMathematical Componentsを削除したほうが無難です
+MathComp 1.11.0[2020-11-09 Mon]のコンパイル成功報告：
+- 既存のMathCompを削除したほうが無難です
   + ~COQINSTALLDIRECTORY/user-contrib~ の ~mathcomp~ ディレクトリを削除か名前変更します
-- Mathematical Componentsのsources archiveを[[https://github.com/math-comp/math-comp/releases][ダウンロード]]
-- Mathematical Componentsをコンパイルします:
-  + ~tar xzf math-comp-mathcomp-1.9.0.tar.gz~
-  + ~cd math-comp-mathcomp-1.9.0/mathcomp~
-  + ~export COQBIN=/SOMEWHERE/coq-8.9.1/bin/~ (coqtop等のバイナリがあるディレクトリ)
-  + ~make~ (ちょっと時間がかかりますので, ~-j~ オプションで並列コンパイルしてみます)
-    * ~-j~ オプションで約12分かかります[2019-05-30 Thu]。
+- MathCompのsourcesのソースをダウンロードします
+  + ~git clone https://github.com/math-comp/math-comp.git~
+    * すでに ~clone~ されているなら, ~git pull --rebase~
+  + または, アーカイブを [[https://github.com/math-comp/math-comp/releases][ダウンロード]] します
+- MathCompをコンパイルします:
+  + ~cd math-comp/mathcomp~
+  + ~export COQBIN=/COQINSTALLDIRECTORY/bin/~ (coqtop等のバイナリがあるディレクトリ)
+  + ~export PATH=$COQBIN:$PATH~
+  + ~make~ (ちょっと時間がかかりますので, ~-j~ オプションで並列コンパイルできます)
+    * ~-j~ オプションで約10分かかります
+    * 更新なら, その前, ~make clean~ が要るかもしれません
   + ~sudo make install~
     * その結果で, ライブラリは ~COQINSTALLDIRECTORY/user-contrib/mathcomp~ に置かれます
+    * しないと、明確に示す必要があります
+    * localインストールなら, superuserならなくていいです
   + ~cd ../..~
 - coqtop等は使えるようになった状態であるかどうかを確認します. 例えば:
 #+BEGIN_SRC
 $ coqtop
-Welcome to Coq 8.9.1 (May 2019)
+Welcome to machine:directory,master (commit)
 
 Coq < From mathcomp Require Import eqtype.
 [Loading ML file ssrmatching_plugin.cmxs ... done]
@@ -190,43 +211,10 @@ Coq < From mathcomp Require Import eqtype.
 Coq < 
 #+END_SRC
 
-**** [NB: 更新要] githubからのコンパイル
-
-Coq 8.6をコンパイルします.
-- [[https://github.com/coq/coq][github]]からソースコードを取得します: ~git clone https://github.com/coq/coq.git~
-- ~cd coq~
-- ~git ls-remote --heads~
-- trunkブランチからv8.6ブランチに移動： ~git checkout v8.6~
-- 開発版なので, 設定ディレクトリのままにします： ~./configure -local -usecamlp5~
-- ~make world~
-
-MathComp 1.7(?)([2019-01-29 Tue]版)をコンパイルします(SSReflectの一部を含みます):
-- [[https://github.com/math-comp/math-comp][github]]からソースコードを取得します： 
-  + ~git clone https://github.com/math-comp/math-comp.git~
-  + すでに ~clone~ されているなら, ~git pull --rebase~
-- ~cd math-comp/mathcomp~
-- 開発版のCoqを見つかるように： ~export COQBIN=COQINSTALLDIRECTORY/coq-8.9.0/bin/~
-- ~make~
-  + ちょっと時間がかかります
-  + 更新なら, その前, ~make clean~が要るかもしれません
-- ~make install~　か ~sudo make install~
-  + ~COQINSTALLDIRECTORY/coq-8.9.0/user-contrib/mathcomp~ でバイナリは置かれます.
-    * 個人アカウントでバイナリを置くようにした場合, ~sudo~ は不要です.
-  + SSReflectの一部は ~COQINSTALLDIRECTORY/coq-8.9.0/plugins/{ssr,ssrmatching}/~ にすでにあります.
-- バイナリは通常の場所に置かれていない場合, ~coqc~ あるいは ~coqtop~ に教える必要があります.
-  ただし, 指定がない場合, ~COQINSTALLDIRECTORY/coq-8.9.0/user-contrib~ を見に行きますので, 特別な設定はないかぎりに, ~-R~ のオプションは不要になります.
-  それ以外, プラッグインとバイナリが見つかるように, ~-R COQINSTALLDIRECTORY/coq-8.9.0/user-contrib/mathcomp mathcomp~ オプションを追加できます.
-#+BEGIN_SRC
-$ coqtop 
-Welcome to Coq 8.9.0 (January 2019)
-
-Coq < From mathcomp Require Import eqtype.
-[Loading ML file ssrmatching_plugin.cmxs ... done]
-[Loading ML file ssreflect_plugin.cmxs ... done]
-
-Coq < 
-#+END_SRC
-
+さらに, MathComp上のライブラリをソースからコンパイルする場合,
+今後そのライブラリの ~_CoqProject~ を更新します.
+例えば, ~-R ../math-comp/mathcomp mathcomp~ の追加によって,
+ソースからコンパイルしたMathCompを指せます.
 ** Windows 10の場合
 注意: WindowsでのCoqの設定は長い歴史の問題があります. 
 
