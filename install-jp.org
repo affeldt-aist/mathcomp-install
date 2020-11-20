@@ -15,6 +15,7 @@
 #+END_EXPORT
 
 * 設定成功報告
+- [2020-11-20 Fri]: Debian 10.6, Coq 8.12.1 (opam), MathComp 1.11.0 (opam)
 - [2020-11-09 Mon]: Ubuntu 20.04.1 LTS, Coq github master, MathComp github master
 - [2020-08-18 Tue]: Ubuntu 20.04.1 LTS, Coq 8.12.0 (opam), MathComp 1.11.0 (opam)
 - [2019-09-24 Tue]: Windows 10, Coq 8.10beta3 (WSL)
@@ -67,13 +68,15 @@ SSReflectとMathCompを含むCoqライブラリが用意されています([[htt
 1.11.0版のパッケージがあります.
 
 - 最初に, [[https://opam.ocaml.org/doc/Install.html][opamを設定]]([2020-11-09 Mon]時点、Debian系のOS上のバージョン2.0.7 )します:
-  + ~sh <(curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh)~
-    * superuserの権利が要るかもしれません
-    * ~/usr/local/bin~ にインストールされます
+  + opamをダウンロードします
+    * ~sh <(curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh)~
+      - superuserの権利が要るかもしれません
+      - ~/usr/local/bin~ にインストールされます
+    * あるいは, オペレーティングシステムのパッケージマネージャーを使います(例えば, ~sudo apt get install opam~)
   + ~opam init~
     * ~make~, ~m4~, ~gcc~, ~bubblewrap~ が要ります
     * ~/.profile~ が更新されます
-      - ~.bashrc~ からsourceしなくていいです
+      - 次のログイン, 反映されます(~.bashrc~ から同じ更新しなくてもいいでしょう)
     * コンパイラを指定できます; 例えば, ~opam init --comp=4.11.0~
     * ~eval $(opam env)~ で設定が完了します
   + opamは既に設定された場合, 最新のパッケージの情報を取得: ~opam update~
@@ -92,17 +95,17 @@ SSReflectとMathCompを含むCoqライブラリが用意されています([[htt
       - ~conf-perl~ に依存します
     * ~opam install ocamlfind~ ([2020-11-09 Mon]時点, 1.8.1は最新です)
       - ~conf-m4~ に依存します
-    * ~opam install num~ ([2020-11-09 Mon]時点, 1.3は最新です; Ocaml 4.06.0から必要です)
+    * ~opam install num~ ([2020-11-20 Fri]時点, 1.4は最新です; Ocaml 4.06.0から必要です)
 - 次に, Coqを設定します:
   + Coqのリポジトリを追加: ~opam repo add coq-released https://coq.inria.fr/opam/released~
     * ~opam repo add coq-released --set-default~ を行うと、これから新しい ~switch~ を作ると、Coqのリポジトリを自動的に追加されます
     * [[https://github.com/coq/opam-coq-archive/tree/master/released/packages][Coqのopamパッケージ]] (prefixは ~coq-~ です)
     * ~opam repo~ でリポジトリをリストアップできます
-  + ~opam install coq.8.12.0~ ([2020-11-09 Mon]時点, 最新版)
+  + ~opam install coq.8.12.1~ ([2020-11-20 Fri]時点, 最新版)
     * ~conf-findutils~ に依存します
     * 必要なら, 最新のCoqIDEも設定できます: ~opam install coqide~ (10つ以上の依存するライブラリも設定されます)
     * Debian/Ubuntuで 新しいライブラリの設定が要るかもしれません: ~libgtksourceview-3.0-dev~, ~libgtk-3-dev~,
-      ~libexpat1-dev~, ~libcairo2-dev~ (など?) (~pkg-config~ は要らなくなりましたか?)
+      ~libexpat1-dev~, ~libcairo2-dev~ (~pkg-config~ は要らなくなりましたか?)
 - 最後に, MathCompを設定します:
   + ~opam install coq-mathcomp-ssreflect.1.11.0~
   + その他のMathCompのパッケージ(prefixは ~coq-mathcomp~ です, バージョン1.8.0):
@@ -115,7 +118,7 @@ SSReflectとMathCompを含むCoqライブラリが用意されています([[htt
     * ~coq-mathcomp-bigenough~
     * ~coq-mathcomp-sum-of-two-square~, ~coq-mathcomp-multinomials~ (user contrib)
     * ~coq-mathcomp-odd-order~ (先端な応用ですので, 要らないかもしれません)
-- 今度の更新は, ~opam update~ , ~opam upgrade coq.8.12.0~ (例えば) で済みます.
+- 今度の更新は, ~opam update~ , ~opam upgrade coq.8.12.1~ (例えば) で済みます.
   要らなくなったパッケージは ~opam remove coq-mathcomp-odd-order~ (例えば)で消せます.
   問題が生じる場合, ~opam reinstall coq~ もできます.
 
@@ -425,16 +428,23 @@ Proof Generalの設定に, [[https://melpa.org/][MELPA]]とパッケージシス
 - ~.emacs~ に次のコードを加えます：
 #+BEGIN_SRC
 (require 'package)
-(let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
-                    (not (gnutls-available-p))))
-       (proto (if no-ssl "http" "https")))
-  (add-to-list 'package-archives
-               (cons "melpa" (concat proto "://melpa.org/packages/")) t))
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+;; Comment/uncomment this line to enable MELPA Stable if desired.  See `package-archive-priorities`
+;; and `package-pinned-packages`. Most users will not need or want to do this.
+;;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (package-initialize)
 #+END_SRC
 - ~emacs~ にて:
   + ~M-x package-refresh-contents RET~
-  + ~M-x package-install RET proof-general RET~
+  + install Proof General
+    * ~M-x package-install RET proof-general RET~
+    * あるいは, ~M-x package-list RET~, ~proof-general~ の行で ~i~ を押して, ~x~ を押すと, 設定されます.
+- ちゃんと ~coqtop~ が見えるターミナルから, ~emacs tt.v~ を実行して,
+  ~From mathcomp Require Import eqtype~ を書いて, ~C-c C-n~ で実行できるかどうか設定の確認できます.
+
+Proof Generalを設定したように, [[https://github.com/cpitclaudel/company-coq][company-coq]] を追加で設定すると, 数学的な記号はきれいに表示されますので, おすすめです。
+
+** 特別な設定の読み込み
 
 SSReflectとMathCompのバイナリは ~PATH~ にない場合, デフォルトな場所で置いていない場合, Coqに教える必要がありますので,
 例えば, ~.emacs~ に次の変数を設定できます:
@@ -447,19 +457,6 @@ SSReflectとMathCompのバイナリは ~PATH~ にない場合, デフォルト�
 一方, ~coq-prog-args~ は ~_CoqProject~ ファイルから読み取ることもできます. 
 実際に, ~coq_makefile~ も ~_CoqProject~ ファイルを使いますので, その方法のほうが便利です.
 (~_CoqProject~ の代わりに, 別ファイル名にする場合, emacsで ~coq-project-filename~ を設定できます.)
-
-emacsで ~tt.v~ という空のファイルを開いてみて, Proof Generalが機動するかどうかを確認します.
-~From mathcomp Require Import eqtype.~ が通れば, 問題ないでしょう.
-
-#+BEGIN_COMMENT
-  + 開発版のProof Generalなら, SSReflectのためにシンタックスハイライトが多少入っています.
-    そうでない場合, またはSSReflectのために最新のシンタックスハイライトが要るなら、
-    SSReflect/MathCompの ~pg-ssr.el~ ファイルを
-    emacsに教える必要があります. 例えば：
-#+BEGIN_SRC
-(load-file "MCINSTALLDIRECTORY/math-comp/mathcomp/ssreflect/pg-ssr.el")
-#+END_SRC
-#+END_COMMENT
 
 * 追加情報
 
