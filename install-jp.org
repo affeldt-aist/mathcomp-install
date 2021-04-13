@@ -15,6 +15,7 @@
 #+END_EXPORT
 
 * 設定成功報告
+- [2021-04-12 Mon]: Windows 10 Home, Coq 8.13.2, MathComp 1.12 (WSL2)
 - [2020-11-20 Fri]: Debian 10.6, Coq 8.12.1 (opam), MathComp 1.11.0 (opam)
 - [2020-11-09 Mon]: Ubuntu 20.04.1 LTS, Coq github master, MathComp github master
 - [2020-08-18 Tue]: Ubuntu 20.04.1 LTS, Coq 8.12.0 (opam), MathComp 1.11.0 (opam)
@@ -67,48 +68,47 @@ SSReflectとMathCompを含むCoqライブラリが用意されています([[htt
 現時点[2020-11-09 Mon], ~opam show coq-mathcomp-ssreflect~ によると,
 1.11.0版のパッケージがあります.
 
-- 最初に, [[https://opam.ocaml.org/doc/Install.html][opamを設定]]([2020-11-09 Mon]時点、Debian系のOS上のバージョン2.0.7 )します:
+- 最初に, [[https://opam.ocaml.org/doc/Install.html][opamを設定]]します:  
   + opamをダウンロードします
-    * ~sh <(curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh)~
+    * オペレーティングシステムのパッケージマネージャーを使います(例えば, ~sudo apt get install opam~).
+      [2021-04-12 Mon] 時点、Debian系のOS上のバージョンは2.0.3以上ですので, 大丈夫でしょう.
+    * あるいは, ~sh <(curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh)~
       - superuserの権利が要るかもしれません
       - ~/usr/local/bin~ にインストールされます
-    * あるいは, オペレーティングシステムのパッケージマネージャーを使います(例えば, ~sudo apt get install opam~)
   + ~opam init~
     * ~make~, ~m4~, ~gcc~, ~bubblewrap~ が要ります
     * ~/.profile~ が更新されます
       - 次のログイン, 反映されます(~.bashrc~ から同じ更新しなくてもいいでしょう)
-    * コンパイラを指定できます; 例えば, ~opam init --comp=4.11.0~
+    * コンパイラを指定できます; 例えば, ~opam init --comp=4.11.2~
     * ~eval $(opam env)~ で設定が完了します
   + opamは既に設定された場合, 最新のパッケージの情報を取得: ~opam update~
   + 使えるパッケージのリスト: ~opam list -a~
 - 次に, OCamlの環境を設定します:
-  + ~opam switch 4.11.1~
-    * 初めての設定なら, ~opam switch create 4.11.1~
+  + ~opam switch 4.11.2~
+    * 初めての設定なら, ~opam switch create 4.11.2~
       - ~opam switch list-available~ で可能な選択肢が分かります
       - ~opam switch list~ ですでに用意されているOCamlのコンパイラを選べます
-　　　 - [2020-11-09 Mon]時点, 4.12.0は最新です
+　　　 - [2021-04-12 Mon] 時点, 4.13.0は最新です
   + ~eval `opam config env`~ また ~eval $(opam env)~
     * ~opam switch~ を行った後, 必要です
   + 次にCoqに必要なOCamlのプログラムを設定します(個人の環境の整備によって, 他のプログラムを設定する必要があるかもしれませんが, opamが教えます):
     * ~opam update~ で最新バージョンの情報を取得します
-    * ~opam install camlp5~ ([2020-11-09 Mon]時点, 8.00 alpha06は最新です)
-      - ~conf-perl~ に依存します
-    * ~opam install ocamlfind~ ([2020-11-09 Mon]時点, 1.8.1は最新です)
-      - ~conf-m4~ に依存します
-    * ~opam install num~ ([2020-11-20 Fri]時点, 1.4は最新です; Ocaml 4.06.0から必要です)
+    * ~opam install ocamlfind~ ([2021-04-12 Mon]時点, 1.9.1は最新です)
+    * ~opam install num~ ([2021-04-12 Mon]時点, 1.4は最新です; Ocaml 4.06.0から必要です)
 - 次に, Coqを設定します:
   + Coqのリポジトリを追加: ~opam repo add coq-released https://coq.inria.fr/opam/released~
     * ~opam repo add coq-released --set-default~ を行うと、これから新しい ~switch~ を作ると、Coqのリポジトリを自動的に追加されます
     * [[https://github.com/coq/opam-coq-archive/tree/master/released/packages][Coqのopamパッケージ]] (prefixは ~coq-~ です)
     * ~opam repo~ でリポジトリをリストアップできます
-  + ~opam install coq.8.12.1~ ([2020-11-20 Fri]時点, 最新版)
-    * ~conf-findutils~ に依存します
+  + ~opam install coq.8.13.2~ ([2021-04-12 Mon]時点, 最新版)
+    * ~conf-findutils~, ~conf-gmp~, ~zarith~ に依存します
+      - Debian/Ubuntuで 新しいライブラリの設定が要るかもしれません: ~libgmp-dev~
     * 必要なら, 最新のCoqIDEも設定できます: ~opam install coqide~ (10つ以上の依存するライブラリも設定されます)
-    * Debian/Ubuntuで 新しいライブラリの設定が要るかもしれません: ~libgtksourceview-3.0-dev~, ~libgtk-3-dev~,
-      ~libexpat1-dev~, ~libcairo2-dev~ (~pkg-config~ は要らなくなりましたか?)
+      - Debian/Ubuntuで 新しいライブラリの設定が要るかもしれません: ~pkg-config~,
+        ~libcairo2-dev~, ~libexpat1-dev~, ~libgtk-3-dev~, ~libgtksourceview-3.0-dev~
 - 最後に, MathCompを設定します:
-  + ~opam install coq-mathcomp-ssreflect.1.11.0~
-  + その他のMathCompのパッケージ(prefixは ~coq-mathcomp~ です, バージョン1.8.0):
+  + ~opam install coq-mathcomp-ssreflect.1.12.0~
+  + その他のMathCompのパッケージ(prefixは ~coq-mathcomp~ です):
     * ~coq-mathcomp-fingroup~
     * ~coq-mathcomp-algebra~
     * ~coq-mathcomp-solvable~
@@ -118,7 +118,7 @@ SSReflectとMathCompを含むCoqライブラリが用意されています([[htt
     * ~coq-mathcomp-bigenough~
     * ~coq-mathcomp-sum-of-two-square~, ~coq-mathcomp-multinomials~ (user contrib)
     * ~coq-mathcomp-odd-order~ (先端な応用ですので, 要らないかもしれません)
-- 今度の更新は, ~opam update~ , ~opam upgrade coq.8.12.1~ (例えば) で済みます.
+- 今度の更新は, ~opam update~ , ~opam upgrade coq.8.13.2~ (例えば) で済みます.
   要らなくなったパッケージは ~opam remove coq-mathcomp-odd-order~ (例えば)で消せます.
   問題が生じる場合, ~opam reinstall coq~ もできます.
 
@@ -224,8 +224,7 @@ Coq <
 Windowsで3つの設定方法を説明します:
 - 方法1: cygwin + バイナリ (cygwin上Coqのバイナリを使います)
 - 方法2: cygwin + opam (customなopamを用いてCoqをコンパイルします)
-- 方法3: WSL + opam (WSLでopamを用いてCoqをコンパイルします)
-
+- 方法3: WSL 2 + opam (WSL 2でopamを用いてCoqをコンパイルします)
 *** 事前準備
 **** [[https://www.cygwin.com/][方法1・方法2: cygwin]]の設定
 - cygwinをインストールするよう, [[https://www.cygwin.com/][https://www.cygwin.com/]]から, ~setup-x86_64.exe~
@@ -251,28 +250,38 @@ clear Lock
 add Control = Control_L
 #+END_SRC
 - cygwinに関するその他の情報(例えば, cygwinのアンインストール): [[https://cygwin.com/faq][cygwin faq]]
-**** [[https://docs.microsoft.com/ja-jp/windows/wsl/install-win10][方法3: WSL]]の設定
+**** [[https://docs.microsoft.com/ja-jp/windows/wsl/install-win10][方法3: WSL 2]] の設定
 - Windowsのバージョンを確認します: ~Windows Key + R~ を入力し, ~winver~ を実行します ([[https://support.microsoft.com/ja-jp/help/13443/windows-which-version-am-i-running][ref]]).
   + 必要であれば1903以降のバージョンにアップデートします
-- WSL本体と好きなLinuxディストリビューションをインストールします ([[https://docs.microsoft.com/ja-jp/windows/wsl/install-win10][ref]]):
-  1. 管理者としてWindows PowerShellを起動
-  2. ~Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux~ を実行します
-  3. 再起動します
-  4. Microsoft Storeから, Linuxのディストリビューションをダウンロード・設定します
-     * Debian GNU/Linuxは広く使われています. Linux初心者の方にはUbuntu 18.04をおすすめします
+- WSL 2本体と好きなLinuxディストリビューションをインストールします ([[https://docs.microsoft.com/ja-jp/windows/wsl/install-win10][ref]]):
+  1. 管理者としてWindows PowerShellを起動し, 次のコマンドを実行ます:
+     ~dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart~
+  2. 再起動します
+  3. 管理者としてWindows PowerShellを起動し, 次のコマンドを実行します:
+     ~dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart~
+  4. 再起動します
+  5. Linux カーネル更新プログラム パッケージを[[https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi][ダウンロード]]し, 実行します.
+  6. バーションを設定します:
+     ~wsl --set-default-version 2~
+  7. Microsoft Storeから, Linuxのディストリビューションをダウンロード・設定します
+     * Debian GNU/LinuxとUbuntuは広く使われています.
 - スタートメニューまたはWindowsの検索窓からLinuxを起動します
   1. ユーザー名とパスワードを入力します
   2. パッケージマネージャーを使って, 基本的なソフトウェアをインストールします:
-     - Ubuntu 18.04の場合には ~sudo add-apt-repository ppa:avsm/ppa~ を実行します
+     - Ubuntu 18.04の場合には ~sudo add-apt-repository ppa:avsm/ppa~ を実行します.
      - ~sudo apt update~
      - ~sudo apt-get install emacs~
-- WSL上でemacsを使いたいなら, Xorgサーバーは便利でしょう
+- WSL 2上でX上のemacs・vscodeなどを使うように, Xorgサーバーを設定します:
   1. [[https://sourceforge.net/projects/vcxsrv/][VcXsrv]]をダウンロードして, インストールします
   2. ~XLaunch~ アイコンでVcXsrvを起動します
-  3. ~multiple windows~ ・ ~start no client~ を選びます
-- WSLのshellで ~DISPLAY~ という環境変数の設定も必要です: ~export DISPLAY=localhost:0.0~
-  + ~.bashrc~ にそのコマンドを追加できます (Ubuntu 18.04で確認済み)
-  + VcXsrvを起動して, bashを再起動するとX上emacsが使えます
+  3. ~multiple windows~ ・ ~start no client~ ・ ~Disable access control~ を選び, configurationを保存します
+  4. Windows 10の設定を調整します
+     + 設定の「ファイアウォールとネットワーク保護」を開きます
+     + 「パブリックネットワーク」の下にある「詳細設定」にクリックします
+     + 「受信の規則」の「VcXsrv windows xserver」を開きます
+     + 「全般」の「操作」を「接続を許可する」にします.
+- WSLのshellで ~DISPLAY~ という環境変数の設定も必要です
+  + ~./bashrc~ に ~export DISPLAY=$(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null):0~ を加えます
 *** 方法1 (cygwin + バイナリ)
 **** Coqを設定
 - [[https://github.com/coq/coq/releases/latest][releaseページ]]から ~coq-8.9.1-installer-windows-x86_64.exe~ を
@@ -329,27 +338,8 @@ cygwinで配るopamで設定するOCamlを用いてCoqのコンパイルがで�
 - ~opam install coq-mathcomp-algebra~
 - ~opam install coq-mathcomp-field~
 *** 方法3 (WSL + opam)
-- WSLディストリビューションのパッケージマネージャーを使って, opamをインストールします:
-  1. ~sudo apt install opam~
-  2. ~opam init --disable-sandboxing~ (近い将来 ~--disable-sandboxing~ は要らなくなるそうです)
-     * 時間がかかります.
-  3. ~opam switch create 4.08.1~
-     * 時間がかかります.
-  4. Debianに基づくディストリビューション以外の場合には[[https://opam.ocaml.org/doc/Install.html][opamのウェブサイト]]を参照.
-- ~opam install coq~
-  + 現時点最[2019-09-24 Tue]新版8.9.1
-  + 時間がかかります.
-  + 開発版の設定には ([2019-09-24 Tue]):
-    * ~opam repo add coq-core-dev https://coq.inria.fr/opam/core-dev~
-    * ~opam install coq.8.10+beta3~
-- CoqIDEを使いたいなら, GTK+のヘッダファイルが必要です.
-  + ~sudo apt install libgtk2.0-dev libexpat1-dev~ (Ubuntu 18.04, Debian 10で確認済み)
-    * あるいは ~sudo apt install libgtk-3-dev libgtksourceview-3.0-dev libexpat1-dev~
-  + ~opam install coqide~
-    * あるいは ~opam install coqide.8.10+beta3~
-- MathCompを設定します
-  + ~opam repo add coq-released https://coq.inria.fr/opam/released~
-  + ~opam install coq-mathcomp-ssreflect~, etc.
+- WSL 2の設定が済んでいるなら, 上記の
+  2.1.1 「パッケージからの設定」と同じ手順になります.
 *** 過去の設定報告メモ(参考のため)
 - [2017-01-12 Thu] にcygwin64が ~flexdll~ 0.35を含みます. mingw64のパッケージが ~mingw64-x86_64-xxx~ となりました.
 - Coq 8.5beta2で成功しましたが, math-compのMakefileが正しくファイルの依存関係を理解しません([2015-10-28 Wed]の時点).
@@ -404,13 +394,37 @@ OCaml version: 4.04.0
 Camlp5 version: 7.03
 Native dynamic link support: true
 #+END_SRC
+****  WSL 1の設定
+- Windowsのバージョンを確認します: ~Windows Key + R~ を入力し, ~winver~ を実行します ([[https://support.microsoft.com/ja-jp/help/13443/windows-which-version-am-i-running][ref]]).
+  + 必要であれば1903以降のバージョンにアップデートします
+- WSL本体と好きなLinuxディストリビューションをインストールします ([[https://docs.microsoft.com/ja-jp/windows/wsl/install-win10][ref]]):
+  1. 管理者としてWindows PowerShellを起動
+  2. ~Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux~ を実行します
+  3. 再起動します
+  4. Microsoft Storeから, Linuxのディストリビューションをダウンロード・設定します
+     * Debian GNU/Linuxは広く使われています. Linux初心者の方にはUbuntu 18.04をおすすめします
+- スタートメニューまたはWindowsの検索窓からLinuxを起動します
+  1. ユーザー名とパスワードを入力します
+  2. パッケージマネージャーを使って, 基本的なソフトウェアをインストールします:
+     - Ubuntu 18.04の場合には ~sudo add-apt-repository ppa:avsm/ppa~ を実行します
+     - ~sudo apt update~
+     - ~sudo apt-get install emacs~
+- WSL上でemacsを使いたいなら, Xorgサーバーは便利でしょう
+  1. [[https://sourceforge.net/projects/vcxsrv/][VcXsrv]]をダウンロードして, インストールします
+  2. ~XLaunch~ アイコンでVcXsrvを起動します
+  3. ~multiple windows~ ・ ~start no client~ を選びます
+- WSLのshellで ~DISPLAY~ という環境変数の設定も必要です: ~export DISPLAY=localhost:0.0~
+  + ~.bashrc~ にそのコマンドを追加できます (Ubuntu 18.04で確認済み)
+  + VcXsrvを起動して, bashを再起動するとX上emacsが使えます
+- これから, 上記の2.1.1と同じ手順になりますが, ~opam~ の最初設定だけしまいます：
+  ~opam init --disable-sandboxing~
 ** MacOSの場合
 ~opam~ を使えると聞きました. ~Homebrew~ も使えます(https://github.com/coq/coq/wiki/Installation-of-Coq-on-Mac).
 ** その他の設定方法
 - Linuxの仮想機械(例えば, [[http://www.virtualbox.org][VirtualBox)]]で作業することは時々聞きますが, 仮想機械のfreezeは目撃したことがあります.
   [[https://github.com/coq/coq/wiki/Installation%20of%20Coq%20on%20Windows][Coqのwiki]] で詳細な情報があります.
 - [[http://www.mathlibre.org/index-ja.html][MathLibre]]のDVDにCoqとSSReflectとMathCompが入っています.
-- SSReflect/MathCompの古いバージョン (http://ssr.msr-inria.inria.fr/FTP にありましたが、消えました)
+- [[https://github.com/math-comp/mathcomp-history-before-github][SSReflect/MathCompの古いバージョン]]
 - 原将己によるのバイナリ(Coq8.4pl5まで). 次の手順で設定できます.
     Coqのダウンロードページから ~coq-installer-8.4pl5.exe~ ([2017-11-28 Tue]時点, ~https://coq.inria.fr/download~ から見つからなってきました) を
     ダウンロード・インストールし, そして
@@ -428,10 +442,8 @@ Proof Generalの設定に, [[https://melpa.org/][MELPA]]とパッケージシス
 - ~.emacs~ に次のコードを加えます：
 #+BEGIN_SRC
 (require 'package)
+;; (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3") ; see remark below
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-;; Comment/uncomment this line to enable MELPA Stable if desired.  See `package-archive-priorities`
-;; and `package-pinned-packages`. Most users will not need or want to do this.
-;;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (package-initialize)
 #+END_SRC
 - ~emacs~ にて:
