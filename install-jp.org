@@ -279,7 +279,8 @@ add Control = Control_L
      + 設定の「ファイアウォールとネットワーク保護」を開きます
      + 「パブリックネットワーク」の下にある「詳細設定」にクリックします
      + 「受信の規則」の「VcXsrv windows xserver」を開きます
-     + 「全般」の「操作」を「接続を許可する」にします.
+     + 「全般」の「操作」を「接続を許可する」にします
+     + 「スクープ」に「192.168.0.0/16」を追加します
 - WSLのshellで ~DISPLAY~ という環境変数の設定も必要です
   + ~./bashrc~ に ~export DISPLAY=$(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null):0~ を加えます
 *** 方法1 (cygwin + バイナリ)
@@ -394,7 +395,7 @@ OCaml version: 4.04.0
 Camlp5 version: 7.03
 Native dynamic link support: true
 #+END_SRC
-****  WSL 1の設定
+**** WSL 1の設定
 - Windowsのバージョンを確認します: ~Windows Key + R~ を入力し, ~winver~ を実行します ([[https://support.microsoft.com/ja-jp/help/13443/windows-which-version-am-i-running][ref]]).
   + 必要であれば1903以降のバージョンにアップデートします
 - WSL本体と好きなLinuxディストリビューションをインストールします ([[https://docs.microsoft.com/ja-jp/windows/wsl/install-win10][ref]]):

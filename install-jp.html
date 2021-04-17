@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-04-13 Tue 09:33 -->
+<!-- 2021-04-17 Sat 16:55 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Coq/SSReflect/MathCompの設定</title>
@@ -260,34 +260,34 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgb8d9412">1. 設定成功報告</a></li>
-<li><a href="#orgdc75a52">2. Coq/SSReflect/MathCompの設定</a>
+<li><a href="#org13aa392">1. 設定成功報告</a></li>
+<li><a href="#org19eba5d">2. Coq/SSReflect/MathCompの設定</a>
 <ul>
-<li><a href="#orgd0c3377">2.1. Unix系のオペレーティングシステムの場合</a>
+<li><a href="#org6588e08">2.1. Unix系のオペレーティングシステムの場合</a>
 <ul>
-<li><a href="#orgf160702">2.1.1. パッケージからの設定</a></li>
-<li><a href="#orgf2d740d">2.1.2. ソースコードからのコンパイル</a></li>
+<li><a href="#orgb46f834">2.1.1. パッケージからの設定</a></li>
+<li><a href="#org989283c">2.1.2. ソースコードからのコンパイル</a></li>
 </ul>
 </li>
-<li><a href="#orgbc6c718">2.2. Windows 10の場合</a>
+<li><a href="#orgbe2bfbc">2.2. Windows 10の場合</a>
 <ul>
-<li><a href="#org0a6559a">2.2.1. 事前準備</a></li>
-<li><a href="#org7a6346d">2.2.2. 方法1 (cygwin + バイナリ)</a></li>
-<li><a href="#org8f0df26">2.2.3. 方法2 (cygwin + opam)</a></li>
-<li><a href="#orgb4d39ac">2.2.4. 方法3 (WSL + opam)</a></li>
-<li><a href="#orgd7300c4">2.2.5. 過去の設定報告メモ(参考のため)</a></li>
+<li><a href="#orgb7a9f69">2.2.1. 事前準備</a></li>
+<li><a href="#org16960f9">2.2.2. 方法1 (cygwin + バイナリ)</a></li>
+<li><a href="#org039c7b2">2.2.3. 方法2 (cygwin + opam)</a></li>
+<li><a href="#orgb353613">2.2.4. 方法3 (WSL + opam)</a></li>
+<li><a href="#orgaee3421">2.2.5. 過去の設定報告メモ(参考のため)</a></li>
 </ul>
 </li>
-<li><a href="#orge8c7a05">2.3. MacOSの場合</a></li>
-<li><a href="#org077ae42">2.4. その他の設定方法</a></li>
+<li><a href="#orgd904033">2.3. MacOSの場合</a></li>
+<li><a href="#org8d11927">2.4. その他の設定方法</a></li>
 </ul>
 </li>
-<li><a href="#org2566754">3. Proof Generalの設定</a>
+<li><a href="#orgb9c6361">3. Proof Generalの設定</a>
 <ul>
-<li><a href="#org3fb7b5f">3.1. 特別な設定の読み込み</a></li>
+<li><a href="#org719de61">3.1. 特別な設定の読み込み</a></li>
 </ul>
 </li>
-<li><a href="#org8c20ab5">4. 追加情報</a></li>
+<li><a href="#org9710eea">4. 追加情報</a></li>
 </ul>
 </div>
 </div>
@@ -298,8 +298,8 @@ for the JavaScript code in this tag.
 </span>
 </p>
 
-<div id="outline-container-orgb8d9412" class="outline-2">
-<h2 id="orgb8d9412"><span class="section-number-2">1</span> 設定成功報告</h2>
+<div id="outline-container-org13aa392" class="outline-2">
+<h2 id="org13aa392"><span class="section-number-2">1</span> 設定成功報告</h2>
 <div class="outline-text-2" id="text-1">
 <ul class="org-ul">
 <li><span class="timestamp-wrapper"><span class="timestamp">[2021-04-12 Mon]</span></span>: Windows 10 Home, Coq 8.13.2, MathComp 1.12 (WSL2)</li>
@@ -340,8 +340,8 @@ Ubuntu Server 14.04.1 LTS, (source)</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgdc75a52" class="outline-2">
-<h2 id="orgdc75a52"><span class="section-number-2">2</span> Coq/SSReflect/MathCompの設定</h2>
+<div id="outline-container-org19eba5d" class="outline-2">
+<h2 id="org19eba5d"><span class="section-number-2">2</span> Coq/SSReflect/MathCompの設定</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 設定はUnix系のオペレーティングシステムでスムーズです. ただし, Linuxの
@@ -358,12 +358,12 @@ Windowsの場合, バイナリが用意されています(近い将来に <a hre
 ると期待します). ソースコードからコンパイルすることは手間がかかります.
 </p>
 </div>
-<div id="outline-container-orgd0c3377" class="outline-3">
-<h3 id="orgd0c3377"><span class="section-number-3">2.1</span> Unix系のオペレーティングシステムの場合</h3>
+<div id="outline-container-org6588e08" class="outline-3">
+<h3 id="org6588e08"><span class="section-number-3">2.1</span> Unix系のオペレーティングシステムの場合</h3>
 <div class="outline-text-3" id="text-2-1">
 </div>
-<div id="outline-container-orgf160702" class="outline-4">
-<h4 id="orgf160702"><span class="section-number-4">2.1.1</span> パッケージからの設定</h4>
+<div id="outline-container-orgb46f834" class="outline-4">
+<h4 id="orgb46f834"><span class="section-number-4">2.1.1</span> パッケージからの設定</h4>
 <div class="outline-text-4" id="text-2-1-1">
 <p>
 OCamlの専用パッケージマネージャー<a href="https://opam.ocaml.org/"> opam</a> でCoqのパッケージを設定ができます. Debianのaptほど遅れていません.
@@ -481,8 +481,8 @@ opamとCoqに関する追加情報：
 </div>
 </div>
 
-<div id="outline-container-orgf2d740d" class="outline-4">
-<h4 id="orgf2d740d"><span class="section-number-4">2.1.2</span> ソースコードからのコンパイル</h4>
+<div id="outline-container-org989283c" class="outline-4">
+<h4 id="org989283c"><span class="section-number-4">2.1.2</span> ソースコードからのコンパイル</h4>
 <div class="outline-text-4" id="text-2-1-2">
 <p>
 コンパイルのために必要なソフトウェアは通常のシステムで既にあるオープンソースソフトウェアです.
@@ -515,7 +515,7 @@ Unix系なら, パッケージマネージャーから得られます. 必要な
 </div>
 
 <ol class="org-ol">
-<li><a id="org4281be1"></a>ソースコードのアーカイブからコンパイル<br />
+<li><a id="org8670f9f"></a>ソースコードのアーカイブからコンパイル<br />
 <div class="outline-text-5" id="text-2-1-2-1">
 <p>
 Coq(SSReflectの一部を含みます)のコンパイル成功報告：
@@ -630,8 +630,8 @@ Coq &lt;
 </ol>
 </div>
 </div>
-<div id="outline-container-orgbc6c718" class="outline-3">
-<h3 id="orgbc6c718"><span class="section-number-3">2.2</span> Windows 10の場合</h3>
+<div id="outline-container-orgbe2bfbc" class="outline-3">
+<h3 id="orgbe2bfbc"><span class="section-number-3">2.2</span> Windows 10の場合</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 注意: WindowsでのCoqの設定は長い歴史の問題があります. 
@@ -646,12 +646,12 @@ Windowsで3つの設定方法を説明します:
 <li>方法3: WSL 2 + opam (WSL 2でopamを用いてCoqをコンパイルします)</li>
 </ul>
 </div>
-<div id="outline-container-org0a6559a" class="outline-4">
-<h4 id="org0a6559a"><span class="section-number-4">2.2.1</span> 事前準備</h4>
+<div id="outline-container-orgb7a9f69" class="outline-4">
+<h4 id="orgb7a9f69"><span class="section-number-4">2.2.1</span> 事前準備</h4>
 <div class="outline-text-4" id="text-2-2-1">
 </div>
 <ol class="org-ol">
-<li><a id="orgd060528"></a><a href="https://www.cygwin.com/">方法1・方法2: cygwin</a>の設定<br />
+<li><a id="org876c13e"></a><a href="https://www.cygwin.com/">方法1・方法2: cygwin</a>の設定<br />
 <div class="outline-text-5" id="text-2-2-1-1">
 <ul class="org-ul">
 <li>cygwinをインストールするよう, <a href="https://www.cygwin.com/">https://www.cygwin.com/</a>から, <code>setup-x86_64.exe</code>
@@ -692,7 +692,7 @@ add Control = Control_L
 </ul>
 </div>
 </li>
-<li><a id="orga39a9dd"></a><a href="https://docs.microsoft.com/ja-jp/windows/wsl/install-win10">方法3: WSL 2</a> の設定<br />
+<li><a id="org65a6cc3"></a><a href="https://docs.microsoft.com/ja-jp/windows/wsl/install-win10">方法3: WSL 2</a> の設定<br />
 <div class="outline-text-5" id="text-2-2-1-2">
 <ul class="org-ul">
 <li>Windowsのバージョンを確認します: <code>Windows Key + R</code> を入力し, <code>winver</code> を実行します (<a href="https://support.microsoft.com/ja-jp/help/13443/windows-which-version-am-i-running">ref</a>).
@@ -735,7 +735,8 @@ add Control = Control_L
 <li>設定の「ファイアウォールとネットワーク保護」を開きます</li>
 <li>「パブリックネットワーク」の下にある「詳細設定」にクリックします</li>
 <li>「受信の規則」の「VcXsrv windows xserver」を開きます</li>
-<li>「全般」の「操作」を「接続を許可する」にします.</li>
+<li>「全般」の「操作」を「接続を許可する」にします</li>
+<li>「スクープ」に「192.168.0.0/16」を追加します</li>
 </ul></li>
 </ol></li>
 <li>WSLのshellで <code>DISPLAY</code> という環境変数の設定も必要です
@@ -747,12 +748,12 @@ add Control = Control_L
 </li>
 </ol>
 </div>
-<div id="outline-container-org7a6346d" class="outline-4">
-<h4 id="org7a6346d"><span class="section-number-4">2.2.2</span> 方法1 (cygwin + バイナリ)</h4>
+<div id="outline-container-org16960f9" class="outline-4">
+<h4 id="org16960f9"><span class="section-number-4">2.2.2</span> 方法1 (cygwin + バイナリ)</h4>
 <div class="outline-text-4" id="text-2-2-2">
 </div>
 <ol class="org-ol">
-<li><a id="org4b73784"></a>Coqを設定<br />
+<li><a id="org48cd94f"></a>Coqを設定<br />
 <div class="outline-text-5" id="text-2-2-2-1">
 <ul class="org-ul">
 <li><a href="https://github.com/coq/coq/releases/latest">releaseページ</a>から <code>coq-8.9.1-installer-windows-x86_64.exe</code> を
@@ -767,7 +768,7 @@ add Control = Control_L
 </ul>
 </div>
 </li>
-<li><a id="org3487396"></a>MathCompをソースコードからのコンパイルします<br />
+<li><a id="orgcc35b45"></a>MathCompをソースコードからのコンパイルします<br />
 <div class="outline-text-5" id="text-2-2-2-2">
 <p>
 <code>coqc</code>, <code>coq_makefile</code> などがあれば, 普段通りCoqのライブラリのコンパイルができます.
@@ -789,8 +790,8 @@ add Control = Control_L
 </li>
 </ol>
 </div>
-<div id="outline-container-org8f0df26" class="outline-4">
-<h4 id="org8f0df26"><span class="section-number-4">2.2.3</span> 方法2 (cygwin + opam)</h4>
+<div id="outline-container-org039c7b2" class="outline-4">
+<h4 id="org039c7b2"><span class="section-number-4">2.2.3</span> 方法2 (cygwin + opam)</h4>
 <div class="outline-text-4" id="text-2-2-3">
 <p>
 過去にcygwinのOCamlパッケージの問題はよくあった(ライブラリは足りないこと; <code>flexdll</code> のありなし)し,
@@ -799,7 +800,7 @@ cygwinで配るopamで設定するOCamlを用いてCoqのコンパイルがで�
 </p>
 </div>
 <ol class="org-ol">
-<li><a id="org7092cb5"></a>opamによるOCaml等の設定<br />
+<li><a id="org04afe9d"></a>opamによるOCaml等の設定<br />
 <div class="outline-text-5" id="text-2-2-3-1">
 <p>
 <a href="https://fdopen.github.io/opam-repository-mingw/installation/">このページ</a>の手動の手順をまとめます:
@@ -846,7 +847,7 @@ mingw64-i686-gcc-core)</li>
 </ul>
 </div>
 </li>
-<li><a id="org3ca5775"></a>opamによるCoqやMathCompの設定<br />
+<li><a id="org6f80439"></a>opamによるCoqやMathCompの設定<br />
 <div class="outline-text-5" id="text-2-2-3-2">
 <ul class="org-ul">
 <li><code>opam repo add coq-released https://coq.inria.fr/opam/released</code></li>
@@ -862,8 +863,8 @@ mingw64-i686-gcc-core)</li>
 </li>
 </ol>
 </div>
-<div id="outline-container-orgb4d39ac" class="outline-4">
-<h4 id="orgb4d39ac"><span class="section-number-4">2.2.4</span> 方法3 (WSL + opam)</h4>
+<div id="outline-container-orgb353613" class="outline-4">
+<h4 id="orgb353613"><span class="section-number-4">2.2.4</span> 方法3 (WSL + opam)</h4>
 <div class="outline-text-4" id="text-2-2-4">
 <ul class="org-ul">
 <li>WSL 2の設定が済んでいるなら, 上記の
@@ -871,8 +872,8 @@ mingw64-i686-gcc-core)</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgd7300c4" class="outline-4">
-<h4 id="orgd7300c4"><span class="section-number-4">2.2.5</span> 過去の設定報告メモ(参考のため)</h4>
+<div id="outline-container-orgaee3421" class="outline-4">
+<h4 id="orgaee3421"><span class="section-number-4">2.2.5</span> 過去の設定報告メモ(参考のため)</h4>
 <div class="outline-text-4" id="text-2-2-5">
 <ul class="org-ul">
 <li><span class="timestamp-wrapper"><span class="timestamp">[2017-01-12 Thu] </span></span> にcygwin64が <code>flexdll</code> 0.35を含みます. mingw64のパッケージが <code>mingw64-x86_64-xxx</code> となりました.</li>
@@ -917,7 +918,7 @@ From mathcomp Require Import ssreflect. でMathCompの正しい設定を確
 </ul>
 </div>
 <ol class="org-ol">
-<li><a id="org1d447e7"></a>[ALTERNATIVE] ソースからのOCamlの設定<br />
+<li><a id="orga1ba20b"></a>[ALTERNATIVE] ソースからのOCamlの設定<br />
 <div class="outline-text-5" id="text-2-2-5-1">
 <p>
 Windows 8.1 + cygwin64上でOCaml 4.02.1(4.04.0も)のコンパイル成功したことがある.
@@ -937,7 +938,7 @@ Windows 8.1 + cygwin64上でOCaml 4.02.1(4.04.0も)のコンパイル成功し�
 </p>
 </div>
 </li>
-<li><a id="org424150c"></a>[ALTERNATIVE] ソースコードのアーカイブ・githubからのCoqをのコンパイル<br />
+<li><a id="orgb54d020"></a>[ALTERNATIVE] ソースコードのアーカイブ・githubからのCoqをのコンパイル<br />
 <div class="outline-text-5" id="text-2-2-5-2">
 <p>
 OCamlやcamlp5等を設定してたら, CoqのソースコードのアーカイブとgithubのMathCompの設定もできます.
@@ -953,7 +954,7 @@ Native dynamic link support: true
 </pre>
 </div>
 </li>
-<li><a id="orgd271e76"></a>WSL 1の設定<br />
+<li><a id="org23865a6"></a>WSL 1の設定<br />
 <div class="outline-text-5" id="text-2-2-5-3">
 <ul class="org-ul">
 <li>Windowsのバージョンを確認します: <code>Windows Key + R</code> を入力し, <code>winver</code> を実行します (<a href="https://support.microsoft.com/ja-jp/help/13443/windows-which-version-am-i-running">ref</a>).
@@ -999,16 +1000,16 @@ Native dynamic link support: true
 </ol>
 </div>
 </div>
-<div id="outline-container-orge8c7a05" class="outline-3">
-<h3 id="orge8c7a05"><span class="section-number-3">2.3</span> MacOSの場合</h3>
+<div id="outline-container-orgd904033" class="outline-3">
+<h3 id="orgd904033"><span class="section-number-3">2.3</span> MacOSの場合</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 <code>opam</code> を使えると聞きました. <code>Homebrew</code> も使えます(<a href="https://github.com/coq/coq/wiki/Installation-of-Coq-on-Mac">https://github.com/coq/coq/wiki/Installation-of-Coq-on-Mac</a>).
 </p>
 </div>
 </div>
-<div id="outline-container-org077ae42" class="outline-3">
-<h3 id="org077ae42"><span class="section-number-3">2.4</span> その他の設定方法</h3>
+<div id="outline-container-org8d11927" class="outline-3">
+<h3 id="org8d11927"><span class="section-number-3">2.4</span> その他の設定方法</h3>
 <div class="outline-text-3" id="text-2-4">
 <ul class="org-ul">
 <li>Linuxの仮想機械(例えば, <a href="http://www.virtualbox.org">VirtualBox)</a>で作業することは時々聞きますが, 仮想機械のfreezeは目撃したことがあります.
@@ -1025,8 +1026,8 @@ Coqのダウンロードページから <code>coq-installer-8.4pl5.exe</code> (<
 </div>
 </div>
 </div>
-<div id="outline-container-org2566754" class="outline-2">
-<h2 id="org2566754"><span class="section-number-2">3</span> Proof Generalの設定</h2>
+<div id="outline-container-orgb9c6361" class="outline-2">
+<h2 id="orgb9c6361"><span class="section-number-2">3</span> Proof Generalの設定</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 インターフェースとして, emacsに慣れているのでしたら, <a href="https://proofgeneral.github.io/">Proof General</a>とい
@@ -1068,8 +1069,8 @@ Proof Generalを設定したように, <a href="https://github.com/cpitclaudel/c
 </p>
 </div>
 
-<div id="outline-container-org3fb7b5f" class="outline-3">
-<h3 id="org3fb7b5f"><span class="section-number-3">3.1</span> 特別な設定の読み込み</h3>
+<div id="outline-container-org719de61" class="outline-3">
+<h3 id="org719de61"><span class="section-number-3">3.1</span> 特別な設定の読み込み</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 SSReflectとMathCompのバイナリは <code>PATH</code> にない場合, デフォルトな場所で置いていない場合, Coqに教える必要がありますので,
@@ -1090,8 +1091,8 @@ SSReflectとMathCompのバイナリは <code>PATH</code> にない場合, デフ
 </div>
 </div>
 
-<div id="outline-container-org8c20ab5" class="outline-2">
-<h2 id="org8c20ab5"><span class="section-number-2">4</span> 追加情報</h2>
+<div id="outline-container-org9710eea" class="outline-2">
+<h2 id="org9710eea"><span class="section-number-2">4</span> 追加情報</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 ソースコードやバイナリのダウンロードのまとめ：
@@ -1110,7 +1111,7 @@ SSReflectとMathCompのバイナリは <code>PATH</code> にない場合, デフ
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Reynald Affeldt</p>
-<p class="date">Created: 2021-04-13 Tue 09:33</p>
+<p class="date">Created: 2021-04-17 Sat 16:55</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
