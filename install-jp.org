@@ -103,9 +103,6 @@ SSReflectとMathCompを含むCoqライブラリが用意されています([[htt
   + ~opam install coq.8.13.2~ ([2021-04-12 Mon]時点, 最新版)
     * ~conf-findutils~, ~conf-gmp~, ~zarith~ に依存します
       - Debian/Ubuntuで 新しいライブラリの設定が要るかもしれません: ~libgmp-dev~
-    * 必要なら, 最新のCoqIDEも設定できます: ~opam install coqide~ (10つ以上の依存するライブラリも設定されます)
-      - Debian/Ubuntuで 新しいライブラリの設定が要るかもしれません: ~pkg-config~,
-        ~libcairo2-dev~, ~libexpat1-dev~, ~libgtk-3-dev~, ~libgtksourceview-3.0-dev~
 - 最後に, MathCompを設定します:
   + ~opam install coq-mathcomp-ssreflect.1.12.0~
   + その他のMathCompのパッケージ(prefixは ~coq-mathcomp~ です):
@@ -341,7 +338,101 @@ cygwinで配るopamで設定するOCamlを用いてCoqのコンパイルがで�
 *** 方法3 (WSL + opam)
 - WSL 2の設定が済んでいるなら, 上記の
   2.1.1 「パッケージからの設定」と同じ手順になります.
-*** 過去の設定報告メモ(参考のため)
+** MacOSの場合
+~opam~ を使えると聞きました. ~Homebrew~ も使えます(https://github.com/coq/coq/wiki/Installation-of-Coq-on-Mac).
+** その他の設定方法
+- Linuxの仮想機械(例えば, [[http://www.virtualbox.org][VirtualBox)]]で作業することは時々聞きますが, 仮想機械のfreezeは目撃したことがあります.
+  [[https://github.com/coq/coq/wiki/Installation%20of%20Coq%20on%20Windows][Coqのwiki]] で詳細な情報があります.
+- [[http://www.mathlibre.org/index-ja.html][MathLibre]]のDVDにCoqとSSReflectとMathCompが入っています.
+- [[https://github.com/math-comp/mathcomp-history-before-github][SSReflect/MathCompの古いバージョン]]
+- 原将己によるのバイナリ(Coq8.4pl5まで). 次の手順で設定できます.
+    Coqのダウンロードページから ~coq-installer-8.4pl5.exe~ ([2017-11-28 Tue]時点, ~https://coq.inria.fr/download~ から見つからなってきました) を
+    ダウンロード・インストールし, そして
+    [[https://onedrive.live.com/?authkey=!AKmYUtgzJFpaqfg&id=6A06E091EDF3886F!136&cid=6A06E091EDF3886F][原将己のページ]]から
+    ~ssreflect-windows-1.5-8.4pl5~ と
+    ~mathcomp-windows-1.5-8.4pl5~ をダウンロードし, 適切にコピーします.
+* IDEの設定
+** Proof Generalの設定
+インターフェースとして, emacsに慣れているのでしたら, [[https://proofgeneral.github.io/][Proof General]]とい
+う[[https://www.gnu.org/software/emacs/][emacs]]エディターモードをお勧めします.
+- Unix(WindowsのWSLを含む)なら, emacsは必ず入っています.
+- Windowsなら, [[https://www.cygwin.com/][cygwin]]で取得できます.  Coqを設定すると, CoqIDEという専用インターフェースも設定されます.
+
+Proof Generalの設定に, [[https://melpa.org/][MELPA]]とパッケージシステムは進められます:
+- ~.emacs~ に次のコードを加えます：
+#+BEGIN_SRC
+(require 'package)
+;; (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3") ; see remark below
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(package-initialize)
+#+END_SRC
+- ~emacs~ にて:
+  + ~M-x package-refresh-contents RET~
+  + install Proof General
+    * ~M-x package-install RET proof-general RET~
+    * あるいは, ~M-x package-list RET~, ~proof-general~ の行で ~i~ を押して, ~x~ を押すと, 設定されます.
+- ちゃんと ~coqtop~ が見えるターミナルから, ~emacs tt.v~ を実行して,
+  ~From mathcomp Require Import eqtype~ を書いて, ~C-c C-n~ で実行できるかどうか設定の確認できます.
+
+Proof Generalを設定したように, [[https://github.com/cpitclaudel/company-coq][company-coq]] を追加で設定すると, 数学的な記号はきれいに表示されますので, おすすめです。
+
+*** 特別な設定の読み込み
+
+SSReflectとMathCompのバイナリは ~PATH~ にない場合, デフォルトな場所で置いていない場合, Coqに教える必要がありますので,
+例えば, ~.emacs~ に次の変数を設定できます:
+#+BEGIN_SRC
+(setq coq-prog-name "COQINSTALLDIRECTORY/coq-8.7.0/bin/coqtop")
+(setq coq-prog-args
+  (cons "-R" (cons "COQINSTALLDIRECTORY/coq-8.7.0/user-contrib/mathcomp" (cons "mathcomp" (cons "-emacs" nil)))))
+#+END_SRC
+
+一方, ~coq-prog-args~ は ~_CoqProject~ ファイルから読み取ることもできます. 
+実際に, ~coq_makefile~ も ~_CoqProject~ ファイルを使いますので, その方法のほうが便利です.
+(~_CoqProject~ の代わりに, 別ファイル名にする場合, emacsで ~coq-project-filename~ を設定できます.)
+
+** CoqIDEの設定
+伝統的なIDEです. ~opam~ を用いて, 設定できます:
+- ~coq~ を設定してから, ~opam install coqide~ (10つ以上の依存するライブラリも設定されます)
+  + Debian/Ubuntuで 新しいライブラリの設定が要るかもしれません: ~pkg-config~,
+    ~libcairo2-dev~, ~libexpat1-dev~, ~libgtk-3-dev~, ~libgtksourceview-3.0-dev~
+** vscodeの設定
+[[https://code.visualstudio.com/][Visual Studio Code]] から ~.deb~ や ~.rpm~ をダウンロードし,
+~sudo dpkg -i code_1.55.2-1618307277_amd64.deb~ ([2021-04-21 Wed]の時点) 設定します.
+すると, ~code~ というエディターを使えます.
+
+~Extensions~ アイコン(あるいはCTRL-SHIFT-X)から,
+~Marketplace~ から ~VSCoq~ ([2021-04-21 Wed]時点: バーション0.3.4) を設定します.
+** IDEの基本的な使い方
+- ショートカット:
+
+#+ATTR_HTML: border-style: solid; border-width:1px
+|------------------------------------+----------------------+----------------------+----------------|
+|                                    | Proof General        | CoqIDE               | VSCoq          |
+|------------------------------------+----------------------+----------------------+----------------|
+| *１つタクティックの実行*           | CTRL-C CTRL-N        | CTRL ALT \downarrow  | ALT \downarrow |
+| *１つタクティックのUndo*           | CTRL-C CTRL-U        | CTRL ALT \uparrow    |                |
+| *カーソルまでのタクティックの実行* | CTRL-C CTRL-ENTER    | CTRL ALT \rightarrow |                |
+| *Check*                            | CTRL-C CTRL-A CTRL-C |                      |                |
+| *Print*                            | CTRL-C CTRL-A CTRL-P |                      |                |
+| *About*                            | CTRL-C CTRL-A CTRL-B |                      |                |
+| *Locate*                           | CTRL-C CTRL-A CTRL-L |                      |                |
+| *Coqをinterrupt*                   | CTRL-C CTRL-C        |                      |                |
+| *Coqをkill*                        | CTRL-C CTRL-X        |                      |                |
+|------------------------------------+----------------------+----------------------+----------------|
+
+- Proof Generalのメニュー:
+  + Coq \rightarrow 3 Windows mode layout \rightarrow hybrid
+
+* 追加情報
+
+ソースコードやバイナリのダウンロードのまとめ：
+- [[http://coq.inria.fr/download][Coq]] ([[https://github.com/coq/coq][github]], [[https://github.com/coq/coq/releases/][beta版など]])
+- [[http://math-comp.github.io/][Mathematical Components]] ([[https://github.com/math-comp/math-comp][github]])
+- [[https://proofgeneral.github.io/][Proof General]]
+
+[[http://mzp.hatenablog.com/entry/2014/04/29/105144][ssreflectインストール方法まとめ(Windowsもあるよ!)]], みずぴー日記
+
+* [参考のため] Coq/SSReflect/MathCompの設定 Windowsの場合 過去の設定報告メモ
 - [2017-01-12 Thu] にcygwin64が ~flexdll~ 0.35を含みます. mingw64のパッケージが ~mingw64-x86_64-xxx~ となりました.
 - Coq 8.5beta2で成功しましたが, math-compのMakefileが正しくファイルの依存関係を理解しません([2015-10-28 Wed]の時点).
 - Windows 8.1 + cygwin64上でcoq-8.5beta1, ssreflect-1.5.coq85beta1/mathcomp-1.5.coq85beta1Coq 8.5beta1のコンパイル成功しました.
@@ -373,7 +464,7 @@ cygwinで配るopamで設定するOCamlを用いてCoqのコンパイルがで�
   + c:\coq で必要なファイルが置かれます. メニューからCoqIdeを実行し,
     From mathcomp Require Import ssreflect. でMathCompの正しい設定を確
     認します.
-**** [ALTERNATIVE] ソースからのOCamlの設定
+** [ALTERNATIVE] ソースからのOCamlの設定
 Windows 8.1 + cygwin64上でOCaml 4.02.1(4.04.0も)のコンパイル成功したことがある.
 インストールディレクトリで次の作業を行います:
 - ~cp config/m-nt.h config/m.h~
@@ -384,7 +475,7 @@ Windows 8.1 + cygwin64上でOCaml 4.02.1(4.04.0も)のコンパイル成功し�
   バイナリ等は ~/cygdrive/c/ocamlmgw64/~ に置かれます. ~/cygdrive/c/ocamlmgw64/bin/~ を ~PATH~ に追加します.
 
 その後, ソースから, Coqなどの設定ができます.
-**** [ALTERNATIVE] ソースコードのアーカイブ・githubからのCoqをのコンパイル
+** [ALTERNATIVE] ソースコードのアーカイブ・githubからのCoqをのコンパイル
 OCamlやcamlp5等を設定してたら, CoqのソースコードのアーカイブとgithubのMathCompの設定もできます.
 Windows 10で ~configure~ によると([2018-03-08 Thu]):
 #+BEGIN_SRC
@@ -395,7 +486,7 @@ OCaml version: 4.04.0
 Camlp5 version: 7.03
 Native dynamic link support: true
 #+END_SRC
-**** WSL 1の設定
+** WSL 1の設定
 - Windowsのバージョンを確認します: ~Windows Key + R~ を入力し, ~winver~ を実行します ([[https://support.microsoft.com/ja-jp/help/13443/windows-which-version-am-i-running][ref]]).
   + 必要であれば1903以降のバージョンにアップデートします
 - WSL本体と好きなLinuxディストリビューションをインストールします ([[https://docs.microsoft.com/ja-jp/windows/wsl/install-win10][ref]]):
@@ -419,67 +510,3 @@ Native dynamic link support: true
   + VcXsrvを起動して, bashを再起動するとX上emacsが使えます
 - これから, 上記の2.1.1と同じ手順になりますが, ~opam~ の最初設定だけしまいます：
   ~opam init --disable-sandboxing~
-** MacOSの場合
-~opam~ を使えると聞きました. ~Homebrew~ も使えます(https://github.com/coq/coq/wiki/Installation-of-Coq-on-Mac).
-** その他の設定方法
-- Linuxの仮想機械(例えば, [[http://www.virtualbox.org][VirtualBox)]]で作業することは時々聞きますが, 仮想機械のfreezeは目撃したことがあります.
-  [[https://github.com/coq/coq/wiki/Installation%20of%20Coq%20on%20Windows][Coqのwiki]] で詳細な情報があります.
-- [[http://www.mathlibre.org/index-ja.html][MathLibre]]のDVDにCoqとSSReflectとMathCompが入っています.
-- [[https://github.com/math-comp/mathcomp-history-before-github][SSReflect/MathCompの古いバージョン]]
-- 原将己によるのバイナリ(Coq8.4pl5まで). 次の手順で設定できます.
-    Coqのダウンロードページから ~coq-installer-8.4pl5.exe~ ([2017-11-28 Tue]時点, ~https://coq.inria.fr/download~ から見つからなってきました) を
-    ダウンロード・インストールし, そして
-    [[https://onedrive.live.com/?authkey=!AKmYUtgzJFpaqfg&id=6A06E091EDF3886F!136&cid=6A06E091EDF3886F][原将己のページ]]から
-    ~ssreflect-windows-1.5-8.4pl5~ と
-    ~mathcomp-windows-1.5-8.4pl5~ をダウンロードし, 適切にコピーします.
-* Proof Generalの設定
-
-インターフェースとして, emacsに慣れているのでしたら, [[https://proofgeneral.github.io/][Proof General]]とい
-う[[https://www.gnu.org/software/emacs/][emacs]]エディターモードをお勧めします.
-- Unix(WindowsのWSLを含む)なら, emacsは必ず入っています.
-- Windowsなら, [[https://www.cygwin.com/][cygwin]]で取得できます.  Coqを設定すると, CoqIDEという専用インターフェースも設定されます.
-
-Proof Generalの設定に, [[https://melpa.org/][MELPA]]とパッケージシステムは進められます:
-- ~.emacs~ に次のコードを加えます：
-#+BEGIN_SRC
-(require 'package)
-;; (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3") ; see remark below
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(package-initialize)
-#+END_SRC
-- ~emacs~ にて:
-  + ~M-x package-refresh-contents RET~
-  + install Proof General
-    * ~M-x package-install RET proof-general RET~
-    * あるいは, ~M-x package-list RET~, ~proof-general~ の行で ~i~ を押して, ~x~ を押すと, 設定されます.
-- ちゃんと ~coqtop~ が見えるターミナルから, ~emacs tt.v~ を実行して,
-  ~From mathcomp Require Import eqtype~ を書いて, ~C-c C-n~ で実行できるかどうか設定の確認できます.
-
-Proof Generalを設定したように, [[https://github.com/cpitclaudel/company-coq][company-coq]] を追加で設定すると, 数学的な記号はきれいに表示されますので, おすすめです。
-
-** 特別な設定の読み込み
-
-SSReflectとMathCompのバイナリは ~PATH~ にない場合, デフォルトな場所で置いていない場合, Coqに教える必要がありますので,
-例えば, ~.emacs~ に次の変数を設定できます:
-#+BEGIN_SRC
-(setq coq-prog-name "COQINSTALLDIRECTORY/coq-8.7.0/bin/coqtop")
-(setq coq-prog-args
-  (cons "-R" (cons "COQINSTALLDIRECTORY/coq-8.7.0/user-contrib/mathcomp" (cons "mathcomp" (cons "-emacs" nil)))))
-#+END_SRC
-
-一方, ~coq-prog-args~ は ~_CoqProject~ ファイルから読み取ることもできます. 
-実際に, ~coq_makefile~ も ~_CoqProject~ ファイルを使いますので, その方法のほうが便利です.
-(~_CoqProject~ の代わりに, 別ファイル名にする場合, emacsで ~coq-project-filename~ を設定できます.)
-
-* 追加情報
-
-ソースコードやバイナリのダウンロードのまとめ：
-- [[http://coq.inria.fr/download][Coq]] ([[https://github.com/coq/coq][github]], [[https://github.com/coq/coq/releases/][beta版など]])
-- [[http://math-comp.github.io/][Mathematical Components]] ([[https://github.com/math-comp/math-comp][github]])
-- [[https://proofgeneral.github.io/][Proof General]]
-
-[[http://mzp.hatenablog.com/entry/2014/04/29/105144][ssreflectインストール方法まとめ(Windowsもあるよ!)]], みずぴー日記
-
-
-
-
