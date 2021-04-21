@@ -9,7 +9,7 @@ The purpose is to maintain instructions to install [MathComp](https://math-comp.
 - in Japanese (片言注意! ^_^)
 
 Here is the result:
-- [Coq/SSReflect/MathCompの設定](http://htmlpreview.github.com/?https://github.com/affeldt-aist/mathcomp-install/blob/master/install-jp.html)
+- [Coq/SSReflect/MathCompの設定](http://htmlpreview.github.io/?https://github.com/affeldt-aist/mathcomp-install/blob/master/install-jp.html)
 
 ## Additional information
 
