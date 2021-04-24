@@ -117,7 +117,7 @@ SSReflectとMathCompを含むCoqライブラリが用意されています([[htt
 - 今度の更新は, ~opam update~ , ~opam upgrade coq.8.13.2~ (例えば) で済みます.
   要らなくなったパッケージは ~opam remove coq-mathcomp-odd-order~ (例えば)で消せます.
   問題が生じる場合, ~opam reinstall coq~ もできます.
-*** ソースコードからのコンパイル
+*** [ADVANCED] ソースコードからのコンパイル
 
 コンパイルのために必要なソフトウェアは通常のシステムで既にあるオープンソースソフトウェアです.
 Unix系なら, パッケージマネージャーから得られます. 必要なソフトウェアの情報のまとめ:
@@ -210,38 +210,15 @@ Coq <
 ソースからコンパイルしたMathCompを指せます.
 ** Windows 10の場合
 注意: WindowsでのCoqの設定は長い歴史の問題がありますので, 複数の方法を説明しますが,
-「方法3: WSL 2 + opam」を勧めます.
+設定のために時間があるなら「方法1: WSL 2 + opam」を勧めます.
+時間ない場合,「方法2: cygwin + バイナリ」を勧めます.
 
 Windowsで3つの設定方法を説明します:
-- 方法1: cygwin + バイナリ (cygwin上Coqのバイナリを使います)
-- 方法2: cygwin + opam (customなopamを用いてCoqをコンパイルします)
-- 方法3: WSL 2 + opam (WSL 2でopamを用いてCoqをコンパイルします)
+- 方法1: WSL 2 + opam (WSL 2でopamを用いてCoqをコンパイルします)
+- 方法2: cygwin + バイナリ (cygwin上Coqのバイナリを使います)
+- 方法3: cygwin + opam (customなopamを用いてCoqをコンパイルします)
 *** 事前準備
-**** [[https://www.cygwin.com/][方法1・方法2: cygwin]]の設定
-- cygwinをインストールするよう, [[https://www.cygwin.com/][https://www.cygwin.com/]]から, ~setup-x86_64.exe~
-  (最新版: 2.897 [2019-07-08 Mon])をダウンロードして, 実行します.
-  + 最低限として, ~make~, ~unzip~, ~git~, ~patch~, ~diffutils~,
-    ~emacs~, ~emacs-X11~, ~vim~, ~xinit~, ~texlive~ のパケージを選びま
-    す.
-  + 設定は数分かかります.
-- デスクトップの"Cygwin64 Terminal"アイコンをdouble-clickします.
-- Terminalにて, ~startxwin~ を実行して, X11を起動します.
-  + そうすると, System Trayアイコンの中に, Cygwin-X11アイコンができるます.
-    * みどろの「X」が入っている黒い「C」
-  + 右クリックで「システムツール」のメニューからXTermの起動ができます.
-    * そうすると, XTermからemacsの実行ができます
-- cygwinの設定に関して:
-  + ~.bashrc~ に ~export LANG=C~ が望ましいです.
-  + 日本のキーボードを認識できるように, ~setxkbmap -model jp106 -layout jp~ を使えます.
-  + CAPS LOCKをCTRLにするように, 次の内容を含む ~Xmodmap~ ファイルを用意してから,
-    ~.bashrc~ に ~xmodmap /home/username/Xmodmap~ を加えます:
-#+BEGIN_SRC
-keycode 66 = Control_L
-clear Lock
-add Control = Control_L
-#+END_SRC
-- cygwinに関するその他の情報(例えば, cygwinのアンインストール): [[https://cygwin.com/faq][cygwin faq]]
-**** [[https://docs.microsoft.com/ja-jp/windows/wsl/install-win10][方法3: WSL 2]] の設定
+**** [[https://docs.microsoft.com/ja-jp/windows/wsl/install-win10][方法1: WSL 2]] の設定
 - Windowsのバージョンを確認します: ~Windows Key + R~ を入力し, ~winver~ を実行します ([[https://support.microsoft.com/ja-jp/help/13443/windows-which-version-am-i-running][ref]]).
   + 必要であれば1903以降のバージョンにアップデートします
 - WSL 2本体と好きなLinuxディストリビューションをインストールします ([[https://docs.microsoft.com/ja-jp/windows/wsl/install-win10][ref]]):
@@ -274,22 +251,40 @@ add Control = Control_L
      + 「スクープ」に「192.168.0.0/16」を追加します
 - WSLのshellで ~DISPLAY~ という環境変数の設定も必要です
   + ~./bashrc~ に ~export DISPLAY=$(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null):0~ を加えます
-*** 方法1 (cygwin + バイナリ)
-**** Coqを設定
+**** [[https://www.cygwin.com/][方法2・方法3: cygwin]]の設定
+- cygwinをインストールするよう, [[https://www.cygwin.com/][https://www.cygwin.com/]]から, ~setup-x86_64.exe~
+  (最新版: 2.897 [2019-07-08 Mon])をダウンロードして, 実行します.
+  + 最低限として, ~make~, ~unzip~, ~git~, ~patch~, ~diffutils~,
+    ~emacs~, ~emacs-X11~, ~vim~, ~xinit~, ~texlive~ のパケージを選びま
+    す.
+  + 設定は数分かかります.
+- デスクトップの"Cygwin64 Terminal"アイコンをdouble-clickします.
+- Terminalにて, ~startxwin~ を実行して, X11を起動します.
+  + そうすると, System Trayアイコンの中に, Cygwin-X11アイコンができるます.
+    * みどろの「X」が入っている黒い「C」
+  + 右クリックで「システムツール」のメニューからXTermの起動ができます.
+    * そうすると, XTermからemacsの実行ができます
+- cygwinの設定に関して:
+  + ~.bashrc~ に ~export LANG=C~ が望ましいです.
+  + 日本のキーボードを認識できるように, ~setxkbmap -model jp106 -layout jp~ を使えます.
+  + CAPS LOCKをCTRLにするように, 次の内容を含む ~Xmodmap~ ファイルを用意してから,
+    ~.bashrc~ に ~xmodmap /home/username/Xmodmap~ を加えます:
+#+BEGIN_SRC
+keycode 66 = Control_L
+clear Lock
+add Control = Control_L
+#+END_SRC
+- cygwinに関するその他の情報(例えば, cygwinのアンインストール): [[https://cygwin.com/faq][cygwin faq]]
+*** 方法1 (WSL 2 + opam)
+- WSL 2の設定が済んでいるなら, 上記の
+  2.1.1 「パッケージからの設定」と同じ手順になります.
+*** 方法2 (cygwin + バイナリ)
 - [[https://github.com/coq/platform/releases][Coq Platformのreleaseページ]] から, バイナリーをダウンロードと実行します.
+**** COMMENT update
   + ~C:\Coq~として, Coqに関するバイナリを加えられます
 - ~PATH~ に ~/cygdrive/c/coq/bin~ を加えます
   + 例えば, ~.bashrc~ に追加 ~export PATH=${PATH}:/cygdrive/c/coq/bin/~ を追加します.
-**** MathCompをソースコードからのコンパイルします
-~coqc~, ~coq_makefile~ などがあれば, 普段通りCoqのライブラリのコンパイルができます.
-
-- Coqのバイナリでは配布されているMathCompは最新ではないかもしれません.
-  + ~rm /cygdrive/c/coq/lib/user_contrib/mathcomp~
-- MathComp 1.9.0を設定するには
-  + [[https://github.com/math-comp/math-comp/releases][source files]] をダウンロードします
-  + unzip, untar, cd, make, make installを用いて設定します.
-  + 結果で, ~user-contrib~ のCoqディレクトーリでMathCompのライブラリなどが追加されます.
-*** 方法2 (cygwin + opam)
+*** [ADVANCED] 方法3 (cygwin + opam)
 過去にcygwinのOCamlパッケージの問題はよくあった(ライブラリは足りないこと; ~flexdll~ のありなし)し,
 cygwinで配るopamで設定するOCamlを用いてCoqのコンパイルができなかったので,
 その２つの方法を使っていません. 代わりに, opamのcustomな設定を用いて, MathCompの設定ができます.
@@ -328,9 +323,6 @@ cygwinで配るopamで設定するOCamlを用いてCoqのコンパイルがで�
 - ~opam install coq-mathcomp-fingroup~
 - ~opam install coq-mathcomp-algebra~
 - ~opam install coq-mathcomp-field~
-*** 方法3 (WSL 2 + opam)
-- WSL 2の設定が済んでいるなら, 上記の
-  2.1.1 「パッケージからの設定」と同じ手順になります.
 ** MacOSの場合
 [[https://github.com/coq/platform][Coq platform]] または ~Homebrew~ を使えます: https://github.com/coq/coq/wiki/Installation-of-Coq-on-Mac
 * IDEの設定

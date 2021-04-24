@@ -2,91 +2,25 @@
 
 We present three ways to install MathComp on Windows 10.
 
-Method 1 and 2 rely on [[https://www.cygwin.com][cygwin]] to recreate a Linux-like environment.
-Warning: file access with cygwin is slow compared to a native Linux
-installation.  Method 2 uses a custom installation of "opam for
-Windows" (cygwin's opam does not seem to be usable), it results in a
-more comfortable working environment, but installation is slow and may
-fail because opam support for Windows is rather new.  Method 1 avoids
-opam completely and uses the binary distribution of Coq for Windows 10
-to compile the desired libraries one after the other using ~make~. It
-is quick, has always worked, but the result can be a bit clunky.
-
-Method 3 relies on Windows Subsystem for Linux. The resulting working
+Method 1 relies on Windows Subsystem for Linux. The resulting working
 environment is reportedly comfortable, but WSL is rather new, and
-installation is slow. As of today [2021-04-23 Fri], this is maybe the
-best compromise.
+installation takes time. As of today [2021-04-23 Fri], this is however
+maybe the best compromise.
 
-* Methods 1 and 2
-** Step 0: Install cygwin
-- Download and execute ~setup-x86_64.exe~ from [[https://www.cygwin.com/][https://www.cygwin.com/]]
-  + Choose ~xinit~, ~make~, ~diffutils~, ~patch~, ~unzip~, ~git~,
-    ~emacs~, ~emacs-X11~, ~vim~, ~texlive~ to have a minimal working
-    environment
-- Double-click the "Cygwin64 Terminal" on the Desktop
-- In the terminal, execute ~startxwin~ to start X11
-  + An Cygwin-X11 icon (a black "C" with a green "X" inside) appears
-    among the System Tray icons
-  + Right-clicking the Cygwin-X11 icon gives access to ~xterm~
-    * You can launch ~emacs~ from the command line
-** Method 1: cygwin + binaries (Install MathComp using Coq Binaries)
-*** Step 1-a: Install Coq
-- Download and execute ~coq-8.9.1-installer-windows-x86_64.exe~ from
-  the [[https://github.com/coq/coq/releases/latest][release page]]
-  + This will add the Coq distribution as the ~C:\Coq~ directory
-- Add ~/cygdrive/c/coq/bin~ to ~PATH~
-  + By appending ~export PATH=${PATH}:/cygdrive/c/coq/bin/~ to
-    ~.bashrc~ for example
-*** Step 1-b: Install MathComp
-- The MathComp library that comes with the Coq binaries is maybe not
-  up-to-date
-  + ~rm /cygdrive/c/coq/lib/user_contrib/mathcomp~
-- Install MathComp 1.9.0
-  + Download the [[https://github.com/math-comp/math-comp/releases][source files]]
-  + Installation amounts to: unzip, untar, cd, make, make install
-  + As a result the MathComp libraries populate the ~user-contrib~
-    directory of the Coq installation
-** Method 2: cygwin + opam (Install MathComp using opam)
-The following results in a more comfortable working environment but
-the process is slow and may fail. Still, at least, it should leave you
-with a working OCaml compiler to compile Coq from the source and go on
-installing MathComp as in Method 1.
-*** Step 2-a: Install opam
-- For opam to work, add a few more useful programs by re-running the
-  cygwin installer
-  + ~rsync~, ~curl~, ~m4~, ~perl~, ~mingw64-x86_64-gcc-core~
-- [[https://github.com/fdopen/opam-repository-mingw/releases/download/0.0.0.2/opam64.tar.xz][Download]] opam
-- ~tar -xf opam64.tar.xz~
-- ~bash opam64/install.sh~
-- ~opam init default "https://github.com/fdopen/opam-repository-mingw.git#opam2" -c "ocaml-variants.4.07.1+mingw64c" --disable-sandboxing~
-  + this modifies ~.bash_profile~
-- ~eval $(opam config env)~
-- ~opam switch create 4.07.1+mingw64c~
-  + if the right OCaml compiler is not here
-*** Step 2-b: Install Coq
-- ~opam install camlp5~ ([2019-07-12 Fri]'s version: 7.06)
-- ~opam install ocamlfind~ ([2019-07-12 Fri]'s version: 1.8.0)
-- ~opam install depext~ ([2019-07-12 Fri]'s version: transition)
-- ~opam install depext-cygwinports~ ([2019-07-12 Fri]'s version: 0.0.7)
-  + Add ~/usr/x86_64-w64-mingw32/sys-root/mingw/bin~ to ~PATH~ as indicated
-- ~opam install pcre~
-  + mail fail partially, but this is no worry because it should not
-    prevent you from installing Coq, MathComp, etc.
-- try ~opam install lablgtk~
-  + the complete installation is likely to fail, this means no
-    ~coqIDE~, but this is no problem because there is Proof General
-- ~opam install num~ ([2019-07-12 Fri]'s version: 1.2)
-- ~opam repo add coq-released https://coq.inria.fr/opam/released~
-- ~opam install coq.8.9.1~
-*** Step 2-c: Install MathComp
-- ~export CAML=/home/username/.opam/4.07.1+mingw64c/bin/~
-- ~export COQBIN=/home/username/.opam/4.07.1+mingw64c/bin/~
-- ~opam install coq-mathcomp-ssreflect~ ([2019-07-12 Fri]'s version: 1.9.0)
-- ~opam install coq-mathcomp-fingroup~
-- ~opam install coq-mathcomp-algebra~
-- ~opam install coq-mathcomp-field~
-* Method 3: WSL 2 + opam
-** Step 0: Install WSL
+Method 2 and 3 rely on [[https://www.cygwin.com][cygwin]] to recreate a Linux-like environment.
+Warning: file access with cygwin is slow compared to a native Linux
+installation.
+Method 2 avoids opam completely and uses the binary distribution of
+Coq for Windows 10 to compile the desired libraries one after the
+other using ~make~. It is quick, has always worked, but the result can
+be a bit clunky.
+Method 3 uses a custom installation of "opam for Windows" (cygwin's
+opam does not seem to be usable), it results in a more comfortable
+working environment, but installation is slow and may fail because
+opam support for Windows is rather new.
+
+* Method 1: WSL 2 + opam
+** Step 0: Install WSL 2
 - Check the version of Windows 10: type ~Windows Key + R~, execute ~winver~.
   + Upgrade to 1903 if necessary
 - Choose a Linux distribution for WSL ([[https://docs.microsoft.com/en-us/windows/wsl/install-win10][ref]]):
@@ -142,6 +76,64 @@ installing MathComp as in Method 1.
 - Install MathComp
   + ~opam repo add coq-released https://coq.inria.fr/opam/released~
   + ~opam install coq-mathcomp-ssreflect~, etc.
+* Methods 2 and 3
+** Step 0: Install cygwin
+- Download and execute ~setup-x86_64.exe~ from [[https://www.cygwin.com/][https://www.cygwin.com/]]
+  + Choose ~xinit~, ~make~, ~diffutils~, ~patch~, ~unzip~, ~git~,
+    ~emacs~, ~emacs-X11~, ~vim~, ~texlive~ to have a minimal working
+    environment
+- Double-click the "Cygwin64 Terminal" on the Desktop
+- In the terminal, execute ~startxwin~ to start X11
+  + An Cygwin-X11 icon (a black "C" with a green "X" inside) appears
+    among the System Tray icons
+  + Right-clicking the Cygwin-X11 icon gives access to ~xterm~
+    * You can launch ~emacs~ from the command line
+** Method 2: cygwin + binaries (Install MathComp using the Coq Platform Binaries)
+- Download and execute the Coq Platform from the [[https://github.com/coq/platform/releases][release page]]
+*** COMMENT
+  + This will add the Coq distribution as the ~C:\Coq~ directory
+- Add ~/cygdrive/c/coq/bin~ to ~PATH~
+  + By appending ~export PATH=${PATH}:/cygdrive/c/coq/bin/~ to
+    ~.bashrc~ for example
+** Method 3: cygwin + opam (Install MathComp using opam)
+The following results in a more comfortable working environment but
+the process is slow and may fail. Still, at least, it should leave you
+with a working OCaml compiler to compile Coq from the source and go on
+installing MathComp as in Method 1.
+*** Step 3-a: Install opam
+- For opam to work, add a few more useful programs by re-running the
+  cygwin installer
+  + ~rsync~, ~curl~, ~m4~, ~perl~, ~mingw64-x86_64-gcc-core~
+- [[https://github.com/fdopen/opam-repository-mingw/releases/download/0.0.0.2/opam64.tar.xz][Download]] opam
+- ~tar -xf opam64.tar.xz~
+- ~bash opam64/install.sh~
+- ~opam init default "https://github.com/fdopen/opam-repository-mingw.git#opam2" -c "ocaml-variants.4.07.1+mingw64c" --disable-sandboxing~
+  + this modifies ~.bash_profile~
+- ~eval $(opam config env)~
+- ~opam switch create 4.07.1+mingw64c~
+  + if the right OCaml compiler is not here
+*** Step 3-b: Install Coq
+- ~opam install camlp5~ ([2019-07-12 Fri]'s version: 7.06)
+- ~opam install ocamlfind~ ([2019-07-12 Fri]'s version: 1.8.0)
+- ~opam install depext~ ([2019-07-12 Fri]'s version: transition)
+- ~opam install depext-cygwinports~ ([2019-07-12 Fri]'s version: 0.0.7)
+  + Add ~/usr/x86_64-w64-mingw32/sys-root/mingw/bin~ to ~PATH~ as indicated
+- ~opam install pcre~
+  + mail fail partially, but this is no worry because it should not
+    prevent you from installing Coq, MathComp, etc.
+- try ~opam install lablgtk~
+  + the complete installation is likely to fail, this means no
+    ~coqIDE~, but this is no problem because there is Proof General
+- ~opam install num~ ([2019-07-12 Fri]'s version: 1.2)
+- ~opam repo add coq-released https://coq.inria.fr/opam/released~
+- ~opam install coq.8.9.1~
+*** Step 3-c: Install MathComp
+- ~export CAML=/home/username/.opam/4.07.1+mingw64c/bin/~
+- ~export COQBIN=/home/username/.opam/4.07.1+mingw64c/bin/~
+- ~opam install coq-mathcomp-ssreflect~ ([2019-07-12 Fri]'s version: 1.9.0)
+- ~opam install coq-mathcomp-fingroup~
+- ~opam install coq-mathcomp-algebra~
+- ~opam install coq-mathcomp-field~
 * Install Proof General
 - Install proof general following the instructions [[https://proofgeneral.github.io/][online]]
 - Add this point, you can already use Coq and /some version/ of
