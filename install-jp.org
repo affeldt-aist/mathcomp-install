@@ -15,6 +15,7 @@
 #+END_EXPORT
 
 * 設定成功報告
+- [2022-02-29 Sat]: Windows 11 21H2, Coq 8.15, MathComp 1.14 (WSL 2)
 - [2021-04-12 Mon]: Windows 10 Home, Coq 8.13.2, MathComp 1.12 (WSL 2)
 - [2020-11-20 Fri]: Debian 10.6, Coq 8.12.1 (opam), MathComp 1.11.0 (opam)
 - [2020-11-09 Mon]: Ubuntu 20.04.1 LTS, Coq github master, MathComp github master
@@ -84,7 +85,7 @@ SSReflectとMathCompを含むCoqライブラリが用意されています([[htt
   + 使えるパッケージのリスト: ~opam list -a~
 - 次に, OCamlの環境を設定します:
   + ~opam switch 4.11.2~
-    * 初めての設定なら, ~opam switch create 4.11.2~
+    * 初めての設定なら, ~opam switch create 4.11.2~ ([2022-02-19 Sat] または, ~opam switch create ocaml-base-compiler.4.11.2~ ?)
       - ~opam switch list-available~ で可能な選択肢が分かります
       - ~opam switch list~ ですでに用意されているOCamlのコンパイラを選べます
 　　　 - [2021-04-12 Mon] 時点, 4.13.0は最新です
@@ -217,8 +218,14 @@ Windowsで3つの設定方法を説明します:
 - 方法1: WSL 2 + opam (WSL 2でopamを用いてCoqをコンパイルします)
 - 方法2: cygwin + バイナリ (cygwin上Coqのバイナリを使います)
 - 方法3: cygwin + opam (customなopamを用いてCoqをコンパイルします)
+
 *** 事前準備
+
 **** [[https://docs.microsoft.com/ja-jp/windows/wsl/install-win10][方法1: WSL 2]] の設定
+
+NB: [2022-02-19 Sat]  Windows 10 version 2004から(Windows 11を含めて), ~wsl --install~で,
+virtualizationを設定し、最新のkernelのLinux distributionを設定します.
+
 - Windowsのバージョンを確認します: ~Windows Key + R~ を入力し, ~winver~ を実行します ([[https://support.microsoft.com/ja-jp/help/13443/windows-which-version-am-i-running][ref]]).
   + 必要であれば1903以降のバージョンにアップデートします
 - WSL 2本体と好きなLinuxディストリビューションをインストールします ([[https://docs.microsoft.com/ja-jp/windows/wsl/install-win10][ref]]):
