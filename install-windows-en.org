@@ -20,6 +20,11 @@ working environment, but installation is slow and may fail because
 opam support for Windows is rather new.
 
 * Method 1: WSL 2 + opam
+
+NB: From Windows 10 version 2004, it seems that there is an alternative installation method
+that is a bit shorter. ~wsl --install~ enables virtualization and install the default distribution
+with the latest kernel
+
 ** Step 0: Install WSL 2
 - Check the version of Windows 10: type ~Windows Key + R~, execute ~winver~.
   + Upgrade to 1903 if necessary
@@ -61,7 +66,7 @@ opam support for Windows is rather new.
   1. ~sudo apt install opam~
   2. ~opam init~
      * Don't worry if it takes time
-  3. ~opam switch create 4.11.2~
+  3. ~opam switch create 4.11.2~ (or ~opam switch create ocaml-base-compiler.4.11.2~ ?)
      * Takes time
   4. See [[https://opam.ocaml.org/doc/Install.html][opam website]] for other Linux distributions (not based on Debian)
 - ~opam install coq~
