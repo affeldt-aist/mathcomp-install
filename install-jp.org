@@ -15,6 +15,7 @@
 #+END_EXPORT
 
 * 設定成功報告
+- [2022-08-03 Wed]: Windows 11, Coq 8.15, MathComp 1.15 (WSL 2)
 - [2022-02-29 Sat]: Windows 11 21H2, Coq 8.15, MathComp 1.14 (WSL 2)
 - [2021-04-12 Mon]: Windows 10 Home, Coq 8.13.2, MathComp 1.12 (WSL 2)
 - [2020-11-20 Fri]: Debian 10.6, Coq 8.12.1 (opam), MathComp 1.11.0 (opam)
@@ -209,7 +210,7 @@ Coq <
 今後そのライブラリの ~_CoqProject~ を更新します.
 例えば, ~-R ../math-comp/mathcomp mathcomp~ の追加によって,
 ソースからコンパイルしたMathCompを指せます.
-** Windows 10の場合
+** Windows 10 & 11の場合
 注意: WindowsでのCoqの設定は長い歴史の問題がありますので, 複数の方法を説明しますが,
 設定のために時間があるなら「方法1: WSL 2 + opam」を勧めます.
 時間ない場合,「方法2: cygwin + バイナリ」を勧めます.
@@ -220,7 +221,6 @@ Windowsで3つの設定方法を説明します:
 - 方法3: cygwin + opam (customなopamを用いてCoqをコンパイルします)
 
 *** 事前準備
-
 **** [[https://docs.microsoft.com/ja-jp/windows/wsl/install-win10][方法1: WSL 2]] の設定
 
 NB: [2022-02-19 Sat]  Windows 10 version 2004から(Windows 11を含めて), ~wsl --install~で,
@@ -229,6 +229,10 @@ virtualizationを設定し、最新のkernelのLinux distributionを設定しま
 - Windowsのバージョンを確認します: ~Windows Key + R~ を入力し, ~winver~ を実行します ([[https://support.microsoft.com/ja-jp/help/13443/windows-which-version-am-i-running][ref]]).
   + 必要であれば1903以降のバージョンにアップデートします
 - WSL 2本体と好きなLinuxディストリビューションをインストールします ([[https://docs.microsoft.com/ja-jp/windows/wsl/install-win10][ref]]):
+  1. 管理者としてWindows PowerShellを起動し, 次のコマンドを実行します:
+    ~wsl --install~
+  2. 再起動すると、Ubuntuが起動する
+#+BEGIN_COMMENT
   1. 管理者としてWindows PowerShellを起動し, 次のコマンドを実行ます:
      ~dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart~
   2. 再起動します
@@ -240,25 +244,33 @@ virtualizationを設定し、最新のkernelのLinux distributionを設定しま
      ~wsl --set-default-version 2~
   7. Microsoft Storeから, Linuxのディストリビューションをダウンロード・設定します
      * Debian GNU/LinuxとUbuntuは広く使われています.
+#+END_COMMENT
 - スタートメニューまたはWindowsの検索窓からLinuxを起動します
   1. ユーザー名とパスワードを入力します
   2. パッケージマネージャーを使って, 基本的なソフトウェアをインストールします:
      - Ubuntu 18.04の場合には ~sudo add-apt-repository ppa:avsm/ppa~ を実行します.
      - ~sudo apt update~
-     - ~sudo apt-get install emacs~
-- WSL 2上でX上のemacs・vscodeなどを使うように, Xorgサーバーを設定します:
-  1. [[https://sourceforge.net/projects/vcxsrv/][VcXsrv]]をダウンロードして, インストールします
-  2. ~XLaunch~ アイコンでVcXsrvを起動します
-  3. ~multiple windows~ ・ ~start no client~ ・ ~Disable access control~ を選び, configurationを保存します
-  4. Windows 10の設定を調整します
-     + 設定の「ファイアウォールとネットワーク保護」を開きます
-     + 「パブリックネットワーク」の下にある「詳細設定」にクリックします
-     + 「受信の規則」の「VcXsrv windows xserver」を開きます
-     + 「全般」の「操作」を「接続を許可する」にします
-     + 「スクープ」に「192.168.0.0/16」,「172.17.0.0/16」,「172.18.0.0/16」,「172.19.0.0/16」,..., 「172.26.0.0/16」,「172.27.0.0/16」,「172.28.0.0/16」,「172.27.0.0/16」などを追加します。
-       実際に、どのアドレスが本当に必要なのか、WSLを起動して ~echo $DISPLAY~ で分かります。ただし、よく変わりますので、いくつかを先に登録しておいていいでしょう。
-- WSLのshellで ~DISPLAY~ という環境変数の設定も必要です
-  + ~./bashrc~ に ~export DISPLAY=$(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null):0~ を加えます
+     - ~sudo apt-get install 
+- *emacs*の場合：
+  + WSL 2上でX上のemacsなどを使うように, Xorgサーバーを設定します:
+    1. [[https://sourceforge.net/projects/vcxsrv/][VcXsrv]]をダウンロードして, インストールします
+    2. ~XLaunch~ アイコンでVcXsrvを起動します
+    3. ~multiple windows~ ・ ~start no client~ ・ ~Disable access control~ を選び, configurationを保存します
+    4. Windows 10の設定を調整します
+       * 設定の「ファイアウォールとネットワーク保護」を開きます
+       * 「パブリックネットワーク」の下にある「詳細設定」にクリックします
+       * 「受信の規則」の「VcXsrv windows xserver」を開きます
+       * 「全般」の「操作」を「接続を許可する」にします
+       * 「スクープ」に「192.168.0.0/16」,「172.17.0.0/16」,「172.18.0.0/16」,「172.19.0.0/16」,..., 「172.26.0.0/16」,「172.27.0.0/16」,「172.28.0.0/16」,「172.27.0.0/16」などを追加します。
+         実際に、どのアドレスが本当に必要なのか、WSLを起動して ~echo $DISPLAY~ で分かります。ただし、よく変わりますので、いくつかを先に登録しておいていいでしょう。
+  + WSLのshellで ~DISPLAY~ という環境変数の設定も必要です
+    + ~./bashrc~ に ~export DISPLAY=$(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null):0~ を加えます
+- *VSCode*の場合
+  1. VSCode(Windows版)をインストールする
+  2. 拡張機能で ~wsl~ と検索して、Remote - WSL をインストールする
+  3. Ubuntuを再起動する
+  4. ~code .~ を実行すると、VSCodeが開き連動していることが確認できる
+  5. 確認できたら、以降の設定は必要なく、2.1.1 「パッケージからの設定」と同じ手順で進める
 **** [[https://www.cygwin.com/][方法2・方法3: cygwin]]の設定
 - cygwinをインストールするよう, [[https://www.cygwin.com/][https://www.cygwin.com/]]から, ~setup-x86_64.exe~
   (最新版: 2.897 [2019-07-08 Mon])をダウンロードして, 実行します.
