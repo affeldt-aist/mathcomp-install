@@ -343,8 +343,17 @@ cygwinで配るopamで設定するOCamlを用いてCoqのコンパイルがで�
 - ~opam install coq-mathcomp-fingroup~
 - ~opam install coq-mathcomp-algebra~
 - ~opam install coq-mathcomp-field~
-** MacOSの場合
+** [WIP] MacOSの場合
 [[https://github.com/coq/platform][Coq platform]] または ~Homebrew~ を使えます: https://github.com/coq/coq/wiki/Installation-of-Coq-on-Mac
+
+emacsのインストール：
+#+BEGIN_SRC
+install macports
+PATH=/opt/local/bin:$PATH
+sudo port selfupdate
+sudo port install emacs-app
+#+END_SRC
+
 * IDEの設定
 ** IDEの基本的な使い方
 - ショートカット:
