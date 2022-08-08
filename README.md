@@ -2,7 +2,7 @@
 
 The purpose is to maintain instructions to install [MathComp](https://math-comp.github.io/)
 - that can be executed linearly
-- including Windows 10
+- including Windows 10 & 11
 - understandable with little guidance
 - all in one place
 - up-to-date
@@ -13,7 +13,7 @@ Here is the result:
 
 ## Additional information
 
-Translation of the instructions for Windows 10 in English:
+Translation of the instructions for Windows 10 & 11 in English:
 - [org file](install-windows-en.org)
 - [html file](http://htmlpreview.github.com/?https://github.com/affeldt-aist/mathcomp-install/blob/master/install-windows-en.html)
 
