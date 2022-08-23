@@ -250,7 +250,7 @@ virtualizationを設定し、最新のkernelのLinux distributionを設定しま
   2. パッケージマネージャーを使って, 基本的なソフトウェアをインストールします:
      - Ubuntu 18.04の場合には ~sudo add-apt-repository ppa:avsm/ppa~ を実行します.
      - ~sudo apt update~
-     - ~sudo apt-get install 
+     - ~sudo apt-get install~
 - *emacs*の場合：
   + WSL 2上でX上のemacsなどを使うように, Xorgサーバーを設定します:
     1. [[https://sourceforge.net/projects/vcxsrv/][VcXsrv]]をダウンロードして, インストールします
