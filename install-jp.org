@@ -15,6 +15,7 @@
 #+END_EXPORT
 
 * 設定成功報告
+- [2022-09-09 Fri]: Ubuntu 22.04.1, Coq 8.15, MathComp 1.15 (opam), ProofGeneral 4.6
 - [2022-08-03 Wed]: Windows 11, Coq 8.15, MathComp 1.15 (WSL 2)
 - [2022-02-29 Sat]: Windows 11 21H2, Coq 8.15, MathComp 1.14 (WSL 2)
 - [2021-04-12 Mon]: Windows 10 Home, Coq 8.13.2, MathComp 1.12 (WSL 2)
