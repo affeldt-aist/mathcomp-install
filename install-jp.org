@@ -15,6 +15,8 @@
 #+END_EXPORT
 
 * 設定成功報告
+
+- [2023-01-06 Fri]: Ubuntu 22.04.1, opam 2.1.4, ocaml 4.14.1, Coq 8.16.1, ProofGeneral 4.6, MathComp 1.15.0, MathComp-Analysys 0.6.0
 - [2022-09-09 Fri]: Ubuntu 22.04.1, Coq 8.15, MathComp 1.15 (opam), ProofGeneral 4.6
 - [2022-08-03 Wed]: Windows 11, Coq 8.15, MathComp 1.15 (WSL 2)
 - [2022-02-29 Sat]: Windows 11 21H2, Coq 8.15, MathComp 1.14 (WSL 2)
