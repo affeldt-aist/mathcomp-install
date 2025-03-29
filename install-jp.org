@@ -16,6 +16,7 @@
 
 * 設定成功報告
 
+- [2024-10-11 Fri]: Sonoma 14.6, Coq 8.20, MathComp 2.2.0
 - [2023-02-24 Fri]: Ubuntu 22.04.1 LTS, Coq 8.16.1, MathComp 1.16
 - [2023-01-06 Fri]: Ubuntu 22.04.1, opam 2.1.4, ocaml 4.14.1, Coq 8.16.1, ProofGeneral 4.6, MathComp 1.15.0, MathComp-Analysys 0.6.0
 - [2022-09-09 Fri]: Ubuntu 22.04.1, Coq 8.15, MathComp 1.15 (opam), ProofGeneral 4.6
@@ -227,7 +228,7 @@ Windowsで3つの設定方法を説明します:
 *** 事前準備
 **** [[https://docs.microsoft.com/ja-jp/windows/wsl/install-win10][方法1: WSL 2]] の設定
 
-NB: [2022-02-19 Sat]  Windows 10 version 2004から(Windows 11を含めて), ~wsl --install~で,
+NB: [2022-02-19 Sat]  Windows 10 version 2004から(Windows 11を含めて), ~wsl --install~ で,
 virtualizationを設定し、最新のkernelのLinux distributionを設定します.
 
 - Windowsのバージョンを確認します: ~Windows Key + R~ を入力し, ~winver~ を実行します ([[https://support.microsoft.com/ja-jp/help/13443/windows-which-version-am-i-running][ref]]).
@@ -276,8 +277,15 @@ virtualizationを設定し、最新のkernelのLinux distributionを設定しま
   4. ~code .~ を実行すると、VSCodeが開き連動していることが確認できる
   5. 確認できたら、以降の設定は必要なく、2.1.1 「パッケージからの設定」と同じ手順で進める
 **** [[https://www.cygwin.com/][方法2・方法3: cygwin]]の設定
+
+#+BEGIN_COMMENT
+Microsoft PowerToys 
+
+Microsoft Store
+#+END_COMMENT
+
 - cygwinをインストールするよう, [[https://www.cygwin.com/][https://www.cygwin.com/]]から, ~setup-x86_64.exe~
-  (最新版: 2.897 [2019-07-08 Mon])をダウンロードして, 実行します.
+  (最新版: 2.926 [2019-11-27 Wed])をダウンロードして, 実行します.
   + 最低限として, ~make~, ~unzip~, ~git~, ~patch~, ~diffutils~,
     ~emacs~, ~emacs-X11~, ~vim~, ~xinit~, ~texlive~ のパケージを選びま
     す.
@@ -285,12 +293,12 @@ virtualizationを設定し、最新のkernelのLinux distributionを設定しま
 - デスクトップの"Cygwin64 Terminal"アイコンをdouble-clickします.
 - Terminalにて, ~startxwin~ を実行して, X11を起動します.
   + そうすると, System Trayアイコンの中に, Cygwin-X11アイコンができるます.
-    * みどろの「X」が入っている黒い「C」
+    * みどりの「X」が入っている黒い「C」
   + 右クリックで「システムツール」のメニューからXTermの起動ができます.
     * そうすると, XTermからemacsの実行ができます
 - cygwinの設定に関して:
   + ~.bashrc~ に ~export LANG=C~ が望ましいです.
-  + 日本のキーボードを認識できるように, ~setxkbmap -model jp106 -layout jp~ を使えます.
+  + 日本のキーボードを認識しない場合, ~setxkbmap -model jp106 -layout jp~ を使えます.
   + CAPS LOCKをCTRLにするように, 次の内容を含む ~Xmodmap~ ファイルを用意してから,
     ~.bashrc~ に ~xmodmap /home/username/Xmodmap~ を加えます:
 #+BEGIN_SRC
@@ -313,6 +321,10 @@ add Control = Control_L
 cygwinで配るopamで設定するOCamlを用いてCoqのコンパイルができなかったので,
 その２つの方法を使っていません. 代わりに, opamのcustomな設定を用いて, MathCompの設定ができます.
 **** opamによるOCaml等の設定
+#+BEGIN_COMMENT
+opam 2.0.3-1
+#+END_COMMENT
+
 [[https://fdopen.github.io/opam-repository-mingw/installation/][このページ]]の手動の手順をまとめます:
 - cygwinで次のパケージを設定します:
   + ~rsync~, ~curl~, ~m4~, ~perl~, ~mingw64-x86_64-gcc-core~ (or
@@ -333,7 +345,7 @@ cygwinで配るopamで設定するOCamlを用いてCoqのコンパイルがで�
 - ~opam install depext-cygwinports~ ([2019-07-12 Fri]'s version: 0.0.7)
   + その後, ~/usr/x86_64-w64-mingw32/sys-root/mingw/bin~ をパスに加える.
 - ~opam install pcre~
-  + 成功することがあります；依存するライブラリの一分だけ成功しても大丈夫
+  + 成功することがあります; 依存するライブラリの一分だけ成功しても大丈夫
 - ~opam install lablgtk~
   + 成功したことはない
   + 基本的なエラー:
@@ -347,16 +359,29 @@ cygwinで配るopamで設定するOCamlを用いてCoqのコンパイルがで�
 - ~opam install coq-mathcomp-fingroup~
 - ~opam install coq-mathcomp-algebra~
 - ~opam install coq-mathcomp-field~
-** [WIP] MacOSの場合
-[[https://github.com/coq/platform][Coq platform]] または ~Homebrew~ を使えます: https://github.com/coq/coq/wiki/Installation-of-Coq-on-Mac
+** MacOSの場合
 
-emacsのインストール：
-#+BEGIN_SRC
-install macports
-PATH=/opt/local/bin:$PATH
-sudo port selfupdate
-sudo port install emacs-app
-#+END_SRC
+- Homebrewを設定します:
+  ~/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"~
+- opamを設定します: ~brew install opam~
+- ~opam init~
+  + ~.zshrc~　を更新したほうが便利でしょう.
+  + ocaml 5.2.0[2024-10-11 Fri]を設定されます.
+- ~opam repo add coq-released https://coq.inria.fr/opam/released~
+  + ~opam repository add coq-released --set-default~ を実行したほうがいいでしょう.
+- ~opam update~
+- ~opam install coq.8.20.0~
+  + まだ未設定なら, ~gmp~ と ~pkg-config~ の設定が求められます.
+- ~opam install coq-mathcomp-field~
+  + によって、MathCompの主なパッケージ設定されます。
+- emacsの設定：
+  + ~brew install emacs --cask~
+  + 日本のキーボードのbackslashを扱えるように:
+    * ~(define-key global-map [?YenMark] [?\\])~
+    * Keyboard -> Text Input -> Input Sources -> ABC and Japanese - Romaji -> Edit -> Japanese Romaji -> "YenMark" key generates -> \ (backslash)
+    * Keyboard -> Keyboard Shortcuts -> Input Sources -> disable Select the previous input source"
+
+MacOSで[[https://github.com/coq/platform][Coq platform]]も使えます.
 
 * IDEの設定
 ** IDEの基本的な使い方
@@ -386,7 +411,6 @@ Proof Generalの設定に, [[https://melpa.org/][MELPA]]とパッケージシス
 - ~.emacs~ に次のコードを加えます：
 #+BEGIN_SRC
 (require 'package)
-;; (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3") ; see remark below
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 #+END_SRC

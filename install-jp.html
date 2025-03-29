@@ -3,14 +3,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-02-24 Fri 17:10 -->
+<!-- 2025-03-29 Sat 23:27 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Coq/SSReflect/MathCompの設定</title>
-<meta name="generator" content="Org mode" />
 <meta name="author" content="Reynald Affeldt" />
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
   .title  { text-align: center;
              margin-bottom: .2em; }
   .subtitle { text-align: center;
@@ -31,8 +31,9 @@
   #postamble p, #preamble p { font-size: 90%; margin: .2em; }
   p.verse { margin-left: 3%; }
   pre {
-    border: 1px solid #ccc;
-    box-shadow: 3px 3px 3px #eee;
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
     padding: 8pt;
     font-family: monospace;
     overflow: auto;
@@ -40,22 +41,22 @@
   }
   pre.src {
     position: relative;
-    overflow: visible;
-    padding-top: 1.2em;
+    overflow: auto;
   }
   pre.src:before {
     display: none;
     position: absolute;
-    background-color: white;
-    top: -10px;
-    right: 10px;
+    top: -8px;
+    right: 12px;
     padding: 3px;
-    border: 1px solid black;
+    color: #555;
+    background-color: #f2f2f299;
   }
-  pre.src:hover:before { display: inline;}
+  pre.src:hover:before { display: inline; margin-top: 14px;}
   /* Languages per Org manual */
   pre.src-asymptote:before { content: 'Asymptote'; }
   pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
   pre.src-C:before { content: 'C'; }
   /* pre.src-C++ doesn't work in CSS */
   pre.src-clojure:before { content: 'Clojure'; }
@@ -190,99 +191,52 @@
     { font-size: 10px; font-weight: bold; white-space: nowrap; }
   .org-info-js_search-highlight
     { background-color: #ffff00; color: #000000; font-weight: bold; }
-  .org-svg { width: 90%; }
-  /*]]>*/-->
+  .org-svg { }
 </style>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="../index.css">
 <style>.vspace {  margin-bottom: 20cm;  }</style>
 <style type="text/css"> body {width: 70em; font-family: Arial, Helvetica; margin-left: 5em; font-size: large;} </style>
-<script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2020 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
 </head>
 <body>
-<div id="content">
+<div id="content" class="content">
 <h1 class="title">Coq/SSReflect/MathCompの設定</h1>
-<div id="table-of-contents">
+<div id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
-<div id="text-table-of-contents">
+<div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgd0bbadd">1. 設定成功報告</a></li>
-<li><a href="#orge0e1088">2. Coq/SSReflect/MathCompの設定</a>
+<li><a href="#org4f4c8cf">1. 設定成功報告</a></li>
+<li><a href="#org26a1904">2. Coq/SSReflect/MathCompの設定</a>
 <ul>
-<li><a href="#org8e31f8d">2.1. Unix系のオペレーティングシステムの場合</a>
+<li><a href="#orge5b683c">2.1. Unix系のオペレーティングシステムの場合</a>
 <ul>
-<li><a href="#org09f0ea8">2.1.1. パッケージからの設定</a></li>
+<li><a href="#orgc312806">2.1.1. パッケージからの設定</a></li>
 </ul>
 </li>
-<li><a href="#org3eba099">2.2. Windows 10 &amp; 11の場合</a>
+<li><a href="#orgb0b1bcb">2.2. Windows 10 &amp; 11の場合</a>
 <ul>
-<li><a href="#org3ce2333">2.2.1. 事前準備</a></li>
-<li><a href="#orgf1e89ac">2.2.2. 方法1 (WSL 2 + opam)</a></li>
-<li><a href="#org5ebfdd8">2.2.3. 方法2 (cygwin + バイナリ)</a></li>
-<li><a href="#org1c9ea37">2.2.4. [ADVANCED] 方法3 (cygwin + opam)</a></li>
+<li><a href="#orgd04e7ad">2.2.1. 事前準備</a></li>
+<li><a href="#org411f6d2">2.2.2. 方法1 (WSL 2 + opam)</a></li>
+<li><a href="#orgfab6544">2.2.3. 方法2 (cygwin + バイナリ)</a></li>
+<li><a href="#orgcb18c3a">2.2.4. [ADVANCED] 方法3 (cygwin + opam)</a></li>
 </ul>
 </li>
-<li><a href="#org13145df">2.3. [WIP] MacOSの場合</a></li>
+<li><a href="#org8b7b93d">2.3. MacOSの場合</a></li>
 </ul>
 </li>
-<li><a href="#orgc9a81d3">3. IDEの設定</a>
+<li><a href="#orgf018a25">3. IDEの設定</a>
 <ul>
-<li><a href="#org93ea030">3.1. IDEの基本的な使い方</a></li>
-<li><a href="#org88ce704">3.2. Proof Generalの設定</a>
+<li><a href="#org0417057">3.1. IDEの基本的な使い方</a></li>
+<li><a href="#org61cff09">3.2. Proof Generalの設定</a>
 <ul>
-<li><a href="#orgc1d9faa">3.2.1. 特別な設定の読み込み</a></li>
+<li><a href="#orgd78dd75">3.2.1. 特別な設定の読み込み</a></li>
 </ul>
 </li>
-<li><a href="#org2ed3e93">3.3. CoqIDEの設定</a></li>
-<li><a href="#org357ea8d">3.4. vscodeの設定</a></li>
+<li><a href="#org929dc9f">3.3. CoqIDEの設定</a></li>
+<li><a href="#orgf1b6068">3.4. vscodeの設定</a></li>
 </ul>
 </li>
-<li><a href="#org96a7862">4. 追加情報</a></li>
+<li><a href="#org258b89f">4. 追加情報</a></li>
 </ul>
 </div>
 </div>
@@ -293,10 +247,11 @@ for the JavaScript code in this tag.
 </span>
 </p>
 
-<div id="outline-container-orgd0bbadd" class="outline-2">
-<h2 id="orgd0bbadd"><span class="section-number-2">1</span> 設定成功報告</h2>
+<div id="outline-container-org4f4c8cf" class="outline-2">
+<h2 id="org4f4c8cf"><span class="section-number-2">1.</span> 設定成功報告</h2>
 <div class="outline-text-2" id="text-1">
 <ul class="org-ul">
+<li><span class="timestamp-wrapper"><span class="timestamp">[2024-10-11 Fri]</span></span>: Sonoma 14.6, Coq 8.20, MathComp 2.2.0</li>
 <li><span class="timestamp-wrapper"><span class="timestamp">[2023-02-24 Fri]</span></span>: Ubuntu 22.04.1 LTS, Coq 8.16.1, MathComp 1.16</li>
 <li><span class="timestamp-wrapper"><span class="timestamp">[2023-01-06 Fri]</span></span>: Ubuntu 22.04.1, opam 2.1.4, ocaml 4.14.1, Coq 8.16.1, ProofGeneral 4.6, MathComp 1.15.0, MathComp-Analysys 0.6.0</li>
 <li><span class="timestamp-wrapper"><span class="timestamp">[2022-09-09 Fri]</span></span>: Ubuntu 22.04.1, Coq 8.15, MathComp 1.15 (opam), ProofGeneral 4.6</li>
@@ -340,8 +295,8 @@ Ubuntu Server 14.04.1 LTS, (source)</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orge0e1088" class="outline-2">
-<h2 id="orge0e1088"><span class="section-number-2">2</span> Coq/SSReflect/MathCompの設定</h2>
+<div id="outline-container-org26a1904" class="outline-2">
+<h2 id="org26a1904"><span class="section-number-2">2.</span> Coq/SSReflect/MathCompの設定</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 設定はUnix系のオペレーティングシステムでスムーズです. ただし, Linuxの
@@ -357,12 +312,12 @@ Ubuntu Server 14.04.1 LTS, (source)</li>
 Windowsの場合, バイナリが用意されています. ソースコードからコンパイルすることは手間がかかります.
 </p>
 </div>
-<div id="outline-container-org8e31f8d" class="outline-3">
-<h3 id="org8e31f8d"><span class="section-number-3">2.1</span> Unix系のオペレーティングシステムの場合</h3>
+<div id="outline-container-orge5b683c" class="outline-3">
+<h3 id="orge5b683c"><span class="section-number-3">2.1.</span> Unix系のオペレーティングシステムの場合</h3>
 <div class="outline-text-3" id="text-2-1">
 </div>
-<div id="outline-container-org09f0ea8" class="outline-4">
-<h4 id="org09f0ea8"><span class="section-number-4">2.1.1</span> パッケージからの設定</h4>
+<div id="outline-container-orgc312806" class="outline-4">
+<h4 id="orgc312806"><span class="section-number-4">2.1.1.</span> パッケージからの設定</h4>
 <div class="outline-text-4" id="text-2-1-1">
 <p>
 OCamlの専用パッケージマネージャー<a href="https://opam.ocaml.org/"> opam</a> でCoqのパッケージを設定ができます. Debianのaptほど遅れていません.
@@ -464,8 +419,8 @@ SSReflectとMathCompを含むCoqライブラリが用意されています(<a hr
 </div>
 </div>
 </div>
-<div id="outline-container-org3eba099" class="outline-3">
-<h3 id="org3eba099"><span class="section-number-3">2.2</span> Windows 10 &amp; 11の場合</h3>
+<div id="outline-container-orgb0b1bcb" class="outline-3">
+<h3 id="orgb0b1bcb"><span class="section-number-3">2.2.</span> Windows 10 &amp; 11の場合</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 注意: WindowsでのCoqの設定は長い歴史の問題がありますので, 複数の方法を説明しますが,
@@ -483,15 +438,15 @@ Windowsで3つの設定方法を説明します:
 </ul>
 </div>
 
-<div id="outline-container-org3ce2333" class="outline-4">
-<h4 id="org3ce2333"><span class="section-number-4">2.2.1</span> 事前準備</h4>
+<div id="outline-container-orgd04e7ad" class="outline-4">
+<h4 id="orgd04e7ad"><span class="section-number-4">2.2.1.</span> 事前準備</h4>
 <div class="outline-text-4" id="text-2-2-1">
 </div>
 <ol class="org-ol">
-<li><a id="org2e4175c"></a><a href="https://docs.microsoft.com/ja-jp/windows/wsl/install-win10">方法1: WSL 2</a> の設定<br />
+<li><a id="org687b589"></a><a href="https://docs.microsoft.com/ja-jp/windows/wsl/install-win10">方法1: WSL 2</a> の設定<br />
 <div class="outline-text-5" id="text-2-2-1-1">
 <p>
-NB: <span class="timestamp-wrapper"><span class="timestamp">[2022-02-19 Sat]  </span></span>  Windows 10 version 2004から(Windows 11を含めて), ~wsl &#x2013;install~で,
+NB: <span class="timestamp-wrapper"><span class="timestamp">[2022-02-19 Sat]  </span></span>  Windows 10 version 2004から(Windows 11を含めて), <code>wsl --install</code> で,
 virtualizationを設定し、最新のkernelのLinux distributionを設定します.
 </p>
 
@@ -552,11 +507,11 @@ virtualizationを設定し、最新のkernelのLinux distributionを設定しま
 </ul>
 </div>
 </li>
-<li><a id="orgfda46d5"></a><a href="https://www.cygwin.com/">方法2・方法3: cygwin</a>の設定<br />
+<li><a id="orgc650e39"></a><a href="https://www.cygwin.com/">方法2・方法3: cygwin</a>の設定<br />
 <div class="outline-text-5" id="text-2-2-1-2">
 <ul class="org-ul">
 <li>cygwinをインストールするよう, <a href="https://www.cygwin.com/">https://www.cygwin.com/</a>から, <code>setup-x86_64.exe</code>
-(最新版: 2.897 <span class="timestamp-wrapper"><span class="timestamp">[2019-07-08 Mon]</span></span>)をダウンロードして, 実行します.
+(最新版: 2.926 <span class="timestamp-wrapper"><span class="timestamp">[2019-11-27 Wed]</span></span>)をダウンロードして, 実行します.
 <ul class="org-ul">
 <li>最低限として, <code>make</code>, <code>unzip</code>, <code>git</code>, <code>patch</code>, <code>diffutils</code>,
 <code>emacs</code>, <code>emacs-X11</code>, <code>vim</code>, <code>xinit</code>, <code>texlive</code> のパケージを選びま
@@ -568,7 +523,7 @@ virtualizationを設定し、最新のkernelのLinux distributionを設定しま
 <ul class="org-ul">
 <li>そうすると, System Trayアイコンの中に, Cygwin-X11アイコンができるます.
 <ul class="org-ul">
-<li>みどろの「X」が入っている黒い「C」</li>
+<li>みどりの「X」が入っている黒い「C」</li>
 </ul></li>
 <li>右クリックで「システムツール」のメニューからXTermの起動ができます.
 <ul class="org-ul">
@@ -578,7 +533,7 @@ virtualizationを設定し、最新のkernelのLinux distributionを設定しま
 <li>cygwinの設定に関して:
 <ul class="org-ul">
 <li><code>.bashrc</code> に <code>export LANG=C</code> が望ましいです.</li>
-<li>日本のキーボードを認識できるように, <code>setxkbmap -model jp106 -layout jp</code> を使えます.</li>
+<li>日本のキーボードを認識しない場合, <code>setxkbmap -model jp106 -layout jp</code> を使えます.</li>
 <li>CAPS LOCKをCTRLにするように, 次の内容を含む <code>Xmodmap</code> ファイルを用意してから,
 <code>.bashrc</code> に <code>xmodmap /home/username/Xmodmap</code> を加えます:</li>
 </ul></li>
@@ -595,8 +550,8 @@ add Control = Control_L
 </li>
 </ol>
 </div>
-<div id="outline-container-orgf1e89ac" class="outline-4">
-<h4 id="orgf1e89ac"><span class="section-number-4">2.2.2</span> 方法1 (WSL 2 + opam)</h4>
+<div id="outline-container-org411f6d2" class="outline-4">
+<h4 id="org411f6d2"><span class="section-number-4">2.2.2.</span> 方法1 (WSL 2 + opam)</h4>
 <div class="outline-text-4" id="text-2-2-2">
 <ul class="org-ul">
 <li>WSL 2の設定が済んでいるなら, 上記の
@@ -604,16 +559,16 @@ add Control = Control_L
 </ul>
 </div>
 </div>
-<div id="outline-container-org5ebfdd8" class="outline-4">
-<h4 id="org5ebfdd8"><span class="section-number-4">2.2.3</span> 方法2 (cygwin + バイナリ)</h4>
+<div id="outline-container-orgfab6544" class="outline-4">
+<h4 id="orgfab6544"><span class="section-number-4">2.2.3.</span> 方法2 (cygwin + バイナリ)</h4>
 <div class="outline-text-4" id="text-2-2-3">
 <ul class="org-ul">
 <li><a href="https://github.com/coq/platform/releases">Coq Platformのreleaseページ</a> から, バイナリーをダウンロードと実行します.</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org1c9ea37" class="outline-4">
-<h4 id="org1c9ea37"><span class="section-number-4">2.2.4</span> [ADVANCED] 方法3 (cygwin + opam)</h4>
+<div id="outline-container-orgcb18c3a" class="outline-4">
+<h4 id="orgcb18c3a"><span class="section-number-4">2.2.4.</span> [ADVANCED] 方法3 (cygwin + opam)</h4>
 <div class="outline-text-4" id="text-2-2-4">
 <p>
 過去にcygwinのOCamlパッケージの問題はよくあった(ライブラリは足りないこと; <code>flexdll</code> のありなし)し,
@@ -622,7 +577,7 @@ cygwinで配るopamで設定するOCamlを用いてCoqのコンパイルがで�
 </p>
 </div>
 <ol class="org-ol">
-<li><a id="org43f1264"></a>opamによるOCaml等の設定<br />
+<li><a id="org6b5b1ce"></a>opamによるOCaml等の設定<br />
 <div class="outline-text-5" id="text-2-2-4-1">
 <p>
 <a href="https://fdopen.github.io/opam-repository-mingw/installation/">このページ</a>の手動の手順をまとめます:
@@ -658,7 +613,7 @@ mingw64-i686-gcc-core)</li>
 </ul></li>
 <li><code>opam install pcre</code>
 <ul class="org-ul">
-<li>成功することがあります；依存するライブラリの一分だけ成功しても大丈夫</li>
+<li>成功することがあります; 依存するライブラリの一分だけ成功しても大丈夫</li>
 </ul></li>
 <li><code>opam install lablgtk</code>
 <ul class="org-ul">
@@ -669,7 +624,7 @@ mingw64-i686-gcc-core)</li>
 </ul>
 </div>
 </li>
-<li><a id="org9c33726"></a>opamによるCoqやMathCompの設定<br />
+<li><a id="org1947a87"></a>opamによるCoqやMathCompの設定<br />
 <div class="outline-text-5" id="text-2-2-4-2">
 <ul class="org-ul">
 <li><code>opam repo add coq-released https://coq.inria.fr/opam/released</code></li>
@@ -686,32 +641,56 @@ mingw64-i686-gcc-core)</li>
 </ol>
 </div>
 </div>
-<div id="outline-container-org13145df" class="outline-3">
-<h3 id="org13145df"><span class="section-number-3">2.3</span> [WIP] MacOSの場合</h3>
+<div id="outline-container-org8b7b93d" class="outline-3">
+<h3 id="org8b7b93d"><span class="section-number-3">2.3.</span> MacOSの場合</h3>
 <div class="outline-text-3" id="text-2-3">
-<p>
-<a href="https://github.com/coq/platform">Coq platform</a> または <code>Homebrew</code> を使えます: <a href="https://github.com/coq/coq/wiki/Installation-of-Coq-on-Mac">https://github.com/coq/coq/wiki/Installation-of-Coq-on-Mac</a>
-</p>
+<ul class="org-ul">
+<li>Homebrewを設定します:
+<code>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</code></li>
+<li>opamを設定します: <code>brew install opam</code></li>
+<li><code>opam init</code>
+<ul class="org-ul">
+<li><code>.zshrc</code>　を更新したほうが便利でしょう.</li>
+<li>ocaml 5.2.0<span class="timestamp-wrapper"><span class="timestamp">[2024-10-11 Fri]</span></span>を設定されます.</li>
+</ul></li>
+<li><code>opam repo add coq-released https://coq.inria.fr/opam/released</code>
+<ul class="org-ul">
+<li><code>opam repository add coq-released --set-default</code> を実行したほうがいいでしょう.</li>
+</ul></li>
+<li><code>opam update</code></li>
+<li><code>opam install coq.8.20.0</code>
+<ul class="org-ul">
+<li>まだ未設定なら, <code>gmp</code> と <code>pkg-config</code> の設定が求められます.</li>
+</ul></li>
+<li><code>opam install coq-mathcomp-field</code>
+<ul class="org-ul">
+<li>によって、MathCompの主なパッケージ設定されます。</li>
+</ul></li>
+<li>emacsの設定：
+<ul class="org-ul">
+<li><code>brew install emacs --cask</code></li>
+<li>日本のキーボードのbackslashを扱えるように:
+<ul class="org-ul">
+<li><code>(define-key global-map [?YenMark] [?\\])</code></li>
+<li>Keyboard -&gt; Text Input -&gt; Input Sources -&gt; ABC and Japanese - Romaji -&gt; Edit -&gt; Japanese Romaji -&gt; "YenMark" key generates -&gt; \ (backslash)</li>
+<li>Keyboard -&gt; Keyboard Shortcuts -&gt; Input Sources -&gt; disable Select the previous input source"</li>
+</ul></li>
+</ul></li>
+</ul>
 
 <p>
-emacsのインストール：
+MacOSで<a href="https://github.com/coq/platform">Coq platform</a>も使えます.
 </p>
-<pre class="example">
-install macports
-PATH=/opt/local/bin:$PATH
-sudo port selfupdate
-sudo port install emacs-app
-</pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgc9a81d3" class="outline-2">
-<h2 id="orgc9a81d3"><span class="section-number-2">3</span> IDEの設定</h2>
+<div id="outline-container-orgf018a25" class="outline-2">
+<h2 id="orgf018a25"><span class="section-number-2">3.</span> IDEの設定</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-org93ea030" class="outline-3">
-<h3 id="org93ea030"><span class="section-number-3">3.1</span> IDEの基本的な使い方</h3>
+<div id="outline-container-org0417057" class="outline-3">
+<h3 id="org0417057"><span class="section-number-3">3.1.</span> IDEの基本的な使い方</h3>
 <div class="outline-text-3" id="text-3-1">
 <ul class="org-ul">
 <li>ショートカット:</li>
@@ -805,8 +784,8 @@ sudo port install emacs-app
 </div>
 </div>
 
-<div id="outline-container-org88ce704" class="outline-3">
-<h3 id="org88ce704"><span class="section-number-3">3.2</span> Proof Generalの設定</h3>
+<div id="outline-container-org61cff09" class="outline-3">
+<h3 id="org61cff09"><span class="section-number-3">3.2.</span> Proof Generalの設定</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 インターフェースとして, emacsに慣れているのでしたら, <a href="https://proofgeneral.github.io/">Proof General</a>という<a href="https://www.gnu.org/software/emacs/">emacs</a>エディターモードをお勧めします.
@@ -824,7 +803,6 @@ Proof Generalの設定に, <a href="https://melpa.org/">MELPA</a>とパッケー
 </ul>
 <pre class="example">
 (require 'package)
-;; (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3") ; see remark below
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 </pre>
@@ -853,8 +831,8 @@ Proof Generalの一番快適な表示はhybridと言い, 次のように設定�
 Proof Generalを設定したように, <a href="https://github.com/cpitclaudel/company-coq">company-coq</a> を追加で設定すると, 数学的な記号はきれいに表示されますので, おすすめです。
 </p>
 </div>
-<div id="outline-container-orgc1d9faa" class="outline-4">
-<h4 id="orgc1d9faa"><span class="section-number-4">3.2.1</span> 特別な設定の読み込み</h4>
+<div id="outline-container-orgd78dd75" class="outline-4">
+<h4 id="orgd78dd75"><span class="section-number-4">3.2.1.</span> 特別な設定の読み込み</h4>
 <div class="outline-text-4" id="text-3-2-1">
 <p>
 SSReflectとMathCompのバイナリは <code>PATH</code> にない場合, デフォルトな場所で置いていない場合, Coqに教える必要がありますので,
@@ -875,8 +853,8 @@ SSReflectとMathCompのバイナリは <code>PATH</code> にない場合, デフ
 </div>
 </div>
 
-<div id="outline-container-org2ed3e93" class="outline-3">
-<h3 id="org2ed3e93"><span class="section-number-3">3.3</span> CoqIDEの設定</h3>
+<div id="outline-container-org929dc9f" class="outline-3">
+<h3 id="org929dc9f"><span class="section-number-3">3.3.</span> CoqIDEの設定</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 伝統的なIDEです. <code>opam</code> を用いて, 設定できます:
@@ -890,8 +868,8 @@ SSReflectとMathCompのバイナリは <code>PATH</code> にない場合, デフ
 </ul>
 </div>
 </div>
-<div id="outline-container-org357ea8d" class="outline-3">
-<h3 id="org357ea8d"><span class="section-number-3">3.4</span> vscodeの設定</h3>
+<div id="outline-container-orgf1b6068" class="outline-3">
+<h3 id="orgf1b6068"><span class="section-number-3">3.4.</span> vscodeの設定</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 <a href="https://code.visualstudio.com/">Visual Studio Code</a> から <code>.deb</code> や <code>.rpm</code> をダウンロードし,
@@ -906,8 +884,8 @@ SSReflectとMathCompのバイナリは <code>PATH</code> にない場合, デフ
 </div>
 </div>
 </div>
-<div id="outline-container-org96a7862" class="outline-2">
-<h2 id="org96a7862"><span class="section-number-2">4</span> 追加情報</h2>
+<div id="outline-container-org258b89f" class="outline-2">
+<h2 id="org258b89f"><span class="section-number-2">4.</span> 追加情報</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 ソースコードやバイナリのダウンロードのまとめ：
@@ -932,8 +910,8 @@ SSReflectとMathCompのバイナリは <code>PATH</code> にない場合, デフ
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Reynald Affeldt</p>
-<p class="date">Created: 2023-02-24 Fri 17:10</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+<p class="date">Created: 2025-03-29 Sat 23:27</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>
