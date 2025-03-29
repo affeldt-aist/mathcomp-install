@@ -15,7 +15,7 @@ Here is the result:
 
 Translation of the instructions for Windows 10 & 11 in English:
 - [org file](install-windows-en.org)
-- [html file](http://htmlpreview.github.com/?https://github.com/affeldt-aist/mathcomp-install/blob/master/install-windows-en.html)
+- [html file](http://htmlpreview.github.io/?https://github.com/affeldt-aist/mathcomp-install/blob/master/install-windows-en.html)
 
 The html files are generated from [org](https://orgmode.org/) files using [emacs](https://www.gnu.org/software/emacs/):
 - e.g., open `install.org`, press `C-c C-e` and then `h` `h` to generate `install.html`
