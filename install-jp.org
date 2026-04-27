@@ -16,6 +16,7 @@
 
 * 設定成功報告
 
+- [2026-04-27 Mon]: Sequoia 15.6, Rocq 9.1.1, MathComp 2.5.0
 - [2024-10-11 Fri]: Sonoma 14.6, Coq 8.20, MathComp 2.2.0
 - [2023-02-24 Fri]: Ubuntu 22.04.1 LTS, Coq 8.16.1, MathComp 1.16
 - [2023-01-06 Fri]: Ubuntu 22.04.1, opam 2.1.4, ocaml 4.14.1, Coq 8.16.1, ProofGeneral 4.6, MathComp 1.15.0, MathComp-Analysys 0.6.0
@@ -364,16 +365,20 @@ opam 2.0.3-1
 - Homebrewを設定します:
   ~/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"~
 - opamを設定します: ~brew install opam~
+  + opam 2.5.1設定されます[2026-04-27 Mon].
 - ~opam init~
   + ~.zshrc~　を更新したほうが便利でしょう.
-  + ocaml 5.2.0[2024-10-11 Fri]を設定されます.
-- ~opam repo add coq-released https://coq.inria.fr/opam/released~
-  + ~opam repository add coq-released --set-default~ を実行したほうがいいでしょう.
+  + ocaml 5.4.1[2026-04-27 Mon]を設定されます.
+  + ~eval $(opam env --switch=default)~を実行します.
+- ~opam repo add rocq-released https://rocq-prover.org/opam/released~
+  + ~opam repository add rocq-released --set-default~ を実行したほうがいいでしょう.
 - ~opam update~
-- ~opam install coq.8.20.0~
-  + まだ未設定なら, ~gmp~ と ~pkg-config~ の設定が求められます.
-- ~opam install coq-mathcomp-field~
+- ~opam install rocq-core.9.1.1~
+  + まだ未設定なら, ~gmp~ と ~pkg-config~ の設定が求められます(~brew~で行えます).
+- ~opam install rocq-mathcomp-field~
   + によって、MathCompの主なパッケージ設定されます。
+  + [2026-04-27 Mon]時点: version 2.5.0
+- MathComp-Analysisの設定: ~opam install rocq-mathcomp-analysis~
 - emacsの設定：
   + ~brew install emacs --cask~
   + 日本のキーボードのbackslashを扱えるように:
@@ -381,7 +386,7 @@ opam 2.0.3-1
     * Keyboard -> Text Input -> Input Sources -> ABC and Japanese - Romaji -> Edit -> Japanese Romaji -> "YenMark" key generates -> \ (backslash)
     * Keyboard -> Keyboard Shortcuts -> Input Sources -> disable Select the previous input source"
 
-MacOSで[[https://github.com/coq/platform][Coq platform]]も使えます.
+MacOSで[[https://github.com/rocq-prover/platform][Rocq platform]]も使えます.
 
 * IDEの設定
 ** IDEの基本的な使い方
@@ -419,7 +424,7 @@ Proof Generalの設定に, [[https://melpa.org/][MELPA]]とパッケージシス
   + install Proof General
     * ~M-x package-install RET proof-general RET~
     * あるいは, ~M-x package-list RET~, ~proof-general~ の行で ~i~ を押して, ~x~ を押すと, 設定されます.
-- ちゃんと ~coqtop~ が見えるターミナルから, ~emacs tt.v~ を実行して,
+- ちゃんと ~rocq top~ が見えるターミナルから, ~emacs tt.v~ を実行して,
   ~From mathcomp Require Import eqtype~ を書いて, ~C-c C-n~ で実行できるかどうか設定の確認できます.
 
 Proof Generalの一番快適な表示はhybridと言い, 次のように設定します:
@@ -455,15 +460,15 @@ SSReflectとMathCompのバイナリは ~PATH~ にない場合, デフォルト�
 * 追加情報
 
 ソースコードやバイナリのダウンロードのまとめ：
-- [[http://coq.inria.fr/download][Coq]] ([[https://github.com/coq/coq][github]], [[https://github.com/coq/coq/releases/][beta版など]])
+- [[https://rocq-prover.org][Rocq]]: [[https://github.com/rocq-prover/rocq/][github]], [[https://github.com/rocq-prover/rocq/releases][beta版など]]
 - [[http://math-comp.github.io/][Mathematical Components]] ([[https://github.com/math-comp/math-comp][github]])
 - [[https://proofgeneral.github.io/][Proof General]]
 
 設定に関する追加情報：
-- [[https://coq.inria.fr/opam/www/using.html][Coqのサイトによるopamの設定方法]]
+- [[https://rocq-prover.org/docs/using-opam][Rocqのサイトによるopamの設定方法]]
 - [[https://github.com/math-comp/math-comp/blob/master/INSTALL.md][MathCompによる設定の説明]]
 - [[http://www.mathlibre.org/index-ja.html][MathLibre]]のDVDにCoqとSSReflectとMathCompが入っています.
-- [[https://github.com/coq/coq/wiki/Installation%20of%20Coq%20on%20Windows][Coqのwiki]] でWindowsに関して詳細な情報があります.
+- [[https://github.com/coq/coq/wiki/Installation%20of%20Coq%20on%20Windows][Rocqのwiki]] でWindowsに関して詳細な情報があります.
 
 * COMMENT [参考のため] Coq/SSReflect/MathCompの設定 Windowsの場合 過去の設定報告メモ
 - [2017-01-12 Thu] にcygwin64が ~flexdll~ 0.35を含みます. mingw64のパッケージが ~mingw64-x86_64-xxx~ となりました.
