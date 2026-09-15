@@ -1,4 +1,4 @@
-#+TITLE: Coq/SSReflect/MathCompの設定
+#+TITLE: Rocq/SSReflect/MathCompの設定
 #+HTML_HEAD: <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../index.css">
 #+HTML_HEAD: <style>.vspace {  margin-bottom: 20cm;  }</style>
@@ -16,6 +16,7 @@
 
 * 設定成功報告
 
+- [2026-09-15 Tue]: Ubuntu 24.04.4 LTS, Rocq 9.1.1, MathComp 2.6.0
 - [2026-04-27 Mon]: Sequoia 15.6, Rocq 9.1.1, MathComp 2.5.0
 - [2024-10-11 Fri]: Sonoma 14.6, Coq 8.20, MathComp 2.2.0
 - [2023-02-24 Fri]: Ubuntu 22.04.1 LTS, Coq 8.16.1, MathComp 1.16
@@ -58,7 +59,7 @@
 - [2015-06-08 Mon]: Windows 8.1 cygwin64, coq-installer-8.5beta2.exe, ssreflectmathcomp-1.5.coq85beta2.exe
 - [2015-04-04 Sat]: Windows 8.1 cygwin64, ssreflectmathcomp-1.5.coq85beta1
 - [2014-11-19 Wed]: Ubuntu Server 14.04.1 LTS, OCaml 4.01.0, camlp5 6.11, Coq 8.4pl5, SSReflect 1.5, MathComp 1.5
-* Coq/SSReflect/MathCompの設定
+* Rocq/SSReflect/MathCompの設定
 設定はUnix系のオペレーティングシステムでスムーズです. ただし, Linuxの
 パッケージマネージャー(Debianのapt等)のバージョンはいつも遅れています
 ので, 勧められません. 使える設定方法は２つあります.  opamによる設定は
@@ -70,61 +71,60 @@
 Windowsの場合, バイナリが用意されています. ソースコードからコンパイルすることは手間がかかります.
 ** Unix系のオペレーティングシステムの場合
 *** パッケージからの設定
-OCamlの専用パッケージマネージャー[[https://opam.ocaml.org/][ opam]] でCoqのパッケージを設定ができます. Debianのaptほど遅れていません.
-SSReflectとMathCompを含むCoqライブラリが用意されています([[https://coq.inria.fr/opam/www/][Coq OPAM packages]]).
-現時点[2023-02-24 Fri], ~opam show coq-mathcomp-ssreflect~ によると,
-1.16.0版のパッケージがあります.
+OCamlの専用パッケージマネージャー[[https://opam.ocaml.org/][ opam]] でRocqのパッケージを設定ができます. Debianのaptほど遅れていません.
+SSReflectとMathCompを含むCoqライブラリが用意されています([[https://rocq-prover.org/packages][Rocq OPAM packages]]).
+現時点[2023-02-24 Fri], ~opam show rocq-mathcomp-ssreflect~ によると,
+2.6.0版のパッケージがあります.
 
 - 最初に, [[https://opam.ocaml.org/doc/Install.html][opamを設定]]します:  
   + opamをダウンロードします
-    * オペレーティングシステムのパッケージマネージャーを使います(例えば, ~sudo apt-get install opam~).
-      [2023-02-24 Fri] 時点、Debian系のOS上のバージョンは2.1.1ですので, 大丈夫でしょう.
+    * オペレーティングシステムのパッケージマネージャーを使います(例えば, ~sudo apt install opam~).
+      [2026-09-15 Tue] 時点、Debian系のOS上のバージョンは2.1.5ですので, 大丈夫でしょう.
     * あるいは, ~sh <(curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh)~
       - superuserの権利が要るかもしれません
       - ~/usr/local/bin~ にインストールされます
   + ~opam init~
     * ~make~, ~m4~, ~gcc~ が要ります
-    * ~/.profile~ が更新されます
+    * ~/.profile~ が更新されるように設定ができます
       - 次のログイン, 反映されます(~.bashrc~ から同じ更新しなくてもいいでしょう)
     * コンパイラを指定できます; 例えば, ~opam init --comp=4.11.2~
     * ~eval $(opam env)~ で設定が完了します
   + opamは既に設定された場合, 最新のパッケージの情報を取得: ~opam update~
   + 使えるパッケージのリスト: ~opam list -a~
 - 次に, OCamlの環境を設定します:
-  + ~opam switch 4.14.1~
-    * 初めての設定なら, ~opam switch create 4.14.1~ ([2023-02-24 Fri] または, ~opam switch create ocaml-base-compiler.4.14.1~ ?)
-      - ~opam switch list-available~ で可能な選択肢が分かります
-      - ~opam switch list~ ですでに用意されているOCamlのコンパイラを選べます
-　　　 - [2023-02-24 Fri] 時点, 5.0.0は最新ですが、急いで使う必要はないです
-  + ~eval `opam config env`~ また ~eval $(opam env)~
+  + ~opam switch create 5.5.1~ によってOCamlの新しいバージョン設定されます
+    * ~opam switch list-available~ で可能な選択肢が分かります
+    * ~opam switch list~ ですでに用意されているOCamlのコンパイラを選べます
+  + ~eval $(opam env)~
     * ~opam switch~ を行った後, 必要です
-  + 次にCoqに必要なOCamlのプログラムを設定します(個人の環境の整備によって, 他のプログラムを設定する必要があるかもしれませんが, opamが教えます):
+  + 次にRocqに必要なOCamlのプログラムを設定します(個人の環境の整備によって, 他のプログラムを設定する必要があるかもしれませんが, opamが教えます):
     * ~opam update~ で最新バージョンの情報を取得します
-    * ~opam install ocamlfind~ ([2023-02-24 Fri]時点, 1.9.5は最新です)
-    * ~opam install num~ ([2023-02-24 Fri]時点, 1.4は最新です; Ocaml 4.06.0から必要です)
-- 次に, Coqを設定します:
-  + Coqのリポジトリを追加: ~opam repo add coq-released https://coq.inria.fr/opam/released~
-    * ~opam repo add coq-released --set-default~ を行うと、これから新しい ~switch~ を作ると、Coqのリポジトリを自動的に追加されます
-    * [[https://github.com/coq/opam-coq-archive/tree/master/released/packages][Coqのopamパッケージ]] (prefixは ~coq-~ です)
+    * ~opam install ocamlfind~ ([2026-09-15 Tue]時点, 1.9.9は最新です)
+    * ~opam install num~ ([2026-09-15 Tue]時点, 1.6は最新です)
+- 次に, Rocqを設定します:
+  + Rocqのリポジトリを追加: ~opam repo add rocq-released https://rocq-prover.org/opam/released~
+    * ~opam repo add rocq-released --set-default~ を行うと、これから新しい ~switch~ を作ると、Rocqのリポジトリを自動的に追加されます
+    * [[https://github.com/rocq-prover/opam/tree/master/released/packages][Rocqのopamパッケージ]] (prefixは ~rocq-~ です)
     * ~opam repo~ でリポジトリをリストアップできます
-  + ~opam install coq.8.16.1~ ([2023-02-24 Fri]時点, 最新版)
-    * ~conf-findutils~, ~conf-gmp~, ~zarith~, ~dune~ に依存します
+  + ~opam install rocq-core.9.1.1.~ ([2025-09-15 Mon]時点, 最新版は9.2.0ですが)
+    * ~conf-gmp~, ~zarith~, ~dune~ などに依存します
       - Debian/Ubuntuで 新しいライブラリの設定が要るかもしれません: ~libgmp-dev~
 - 最後に, MathCompを設定します:
-  + ~opam install coq-mathcomp-ssreflect.1.16.0~
-  + その他のMathCompのパッケージ(prefixは ~coq-mathcomp~ です):
-    * ~coq-mathcomp-fingroup~
-    * ~coq-mathcomp-algebra~
-    * ~coq-mathcomp-solvable~
-    * ~coq-mathcomp-field~
-    * ~coq-mathcomp-character~
-    * ~coq-mathcomp-finmap~
-    * ~coq-mathcomp-bigenough~
-    * ~coq-mathcomp-sum-of-two-square~, ~coq-mathcomp-multinomials~ (user contrib)
-    * ~coq-mathcomp-odd-order~ (先端な応用ですので, 要らないかもしれません)
-- 今度の更新は, ~opam update~ , ~opam upgrade coq.8.16.1~ (例えば) で済みます.
-  要らなくなったパッケージは ~opam remove coq-mathcomp-odd-order~ (例えば)で消せます.
-  問題が生じる場合, ~opam reinstall coq~ もできます.
+  + ~opam install rocq-mathcomp-ssreflect.2.6.0~
+  + その他のMathCompのパッケージ(prefixは ~rocq-mathcomp~ です):
+    * ~rocq-mathcomp-algebra~
+    * ~rocq-mathcomp-fingroup~
+    * ~rocq-mathcomp-solvable~
+    * ~rocq-mathcomp-field~
+    * ~rocq-mathcomp-character~
+    * ~rocq-mathcomp-finmap~
+    * ~rocq-mathcomp-multinomials~ (user contrib)
+    * ~rocq-mathcomp-analysis~
+    * ~rocq-mathcomp-odd-order~ (先端な応用ですので, 要らないかもしれません)
+    * など
+- 今度の更新は, ~opam update~ , ~opam upgrade rocq-core.9.2.0 (例えば) で済みます.
+  要らなくなったパッケージは ~opam remove rocq-mathcomp-odd-order~ (例えば)で消せます.
+  問題が生じる場合, ~opam reinstall rocq-core~ もできます.
 *** COMMENT [ADVANCED] ソースコードからのコンパイル
 
 コンパイルのために必要なソフトウェアは通常のシステムで既にあるオープンソースソフトウェアです.
